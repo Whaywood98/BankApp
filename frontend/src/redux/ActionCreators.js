@@ -64,9 +64,9 @@ export const dbaCheckingAccountsFailed = (errmess) => ({
     payload: errmess
 })
 
-export const addSavingsAccount  = (accounts) => ({
+export const addSavingsAccount  = (account) => ({
     type: ActionTypes.ADD_SAVINGS_ACCOUNT,
-    payload: accounts
+    payload: account
 })
 
 export const addCheckingAccount  = (accounts) => ({

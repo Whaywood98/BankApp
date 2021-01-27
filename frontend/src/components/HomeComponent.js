@@ -1,40 +1,28 @@
 import React from 'react';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
-// function RenderUserAccounts({ account }){
-//   if(account != null){
-//     return(
-//           <Card>
-//             <Link to={`/${account.accountType}`}>
-//               <CardTitle>{account.accountType}</CardTitle>
-//               <CardBody>{account.amount}</CardBody>
-//             </Link>
-//           </Card>
-//     )
-//   } else{
-//     return(
-//       <Card>
-//         <CardTitle>Create Account?</CardTitle>
-//       </Card>
-//     )
-//   }
-// }
+import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard } from './AccountHomeDisplayComponent';
 
 function Home(props) {
-    
-//   const userAccounts = props.accounts.map((account) => {
-//     return(
-//       <div key={account.accountType} className="col-12">
-//         <RenderUserAccounts account={account} />
-//       </div>
-//     )
-//   });
 
   return(
       <div className="container">
         <h4>Home</h4>
-     {/* {userAccounts} */}
+      <div className="col-12 col-md-6 m-1">
+        <SavingsAccountCard account={props.savingsAccount} />
+      </div>
+      <div className="col-12 col-md-6 m-1">
+        <CheckingAccountsCard accounts={props.checkingAccounts} />
+      </div>
+      <div className="col-12 col-md-6 m-1">
+        <CDAccountsCard accounts={props.cdAccounts} />
+      </div>
+      <div className="col-12 col-md-6 m-1">
+        <PersonalCheckingAccountCard account={props.personalCheckingAccount} />
+      </div>
+      <div className="col-12 col-md-6 m-1">
+        <DBACheckingAccountsCard accounts={props.dbaCheckingAccount} />
+      </div>
       </div>
     );
 }

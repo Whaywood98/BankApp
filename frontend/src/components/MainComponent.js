@@ -45,11 +45,11 @@ class Main extends Component {
 
         const HomePage = () => {
             return(
-                <Home savingsAccount={this.props.savingsAccount.savingsAccount}
-                checkingAccounts={this.props.checkingAccounts.checkingAccounts}
-                cdAccounts={this.props.cdAccounts.cdAccounts}
-                personalCheckingAccount={this.props.personalCheckingAccount.personalCheckingAccount}
-                dbaCheckingAccount={this.props.dbaCheckingAccount.dbaCheckingAccount}/>
+                <Home savingsAccount={this.props.savingsAccount.account}
+                checkingAccounts={this.props.checkingAccounts.accounts}
+                cdAccounts={this.props.cdAccounts.accounts}
+                personalCheckingAccount={this.props.personalCheckingAccount.account}
+                dbaCheckingAccount={this.props.dbaCheckingAccount.accounts}/>
             );
         }
 
