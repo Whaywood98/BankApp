@@ -12,7 +12,7 @@ function getCummulativeBalance(accounts){
 }
 
 export const SavingsAccountCard = ({ account }) => {
-    if(account.balance != null)
+    if(JSON.stringify(account) != '{}')
     return(
         <Card>
             <Link to="/savingsaccount">
@@ -33,7 +33,7 @@ export const SavingsAccountCard = ({ account }) => {
 }
 
 export const CheckingAccountsCard = (accounts) => {
-    if(accounts.accounts === undefined || accounts.accounts.length === 0)
+    if(accounts.accounts.length)
     return(
         <Card>
             <Link to="/checkingaccounts">
@@ -54,7 +54,7 @@ export const CheckingAccountsCard = (accounts) => {
 }
 
 export const CDAccountsCard = (accounts) => {
-    if(getCummulativeBalance(accounts.accounts) != 0)
+    if(accounts.accounts.length)
     return(
         <Card>
             <Link to="cdAccounts">
@@ -75,7 +75,7 @@ export const CDAccountsCard = (accounts) => {
 }
 
 export const PersonalCheckingAccountCard = ({ account }) => {
-    if(account.balance != null)
+    if(JSON.stringify(account) != '{}')
     return(
         <Card>
             <Link to="personalcheckingaccount">
@@ -96,7 +96,7 @@ export const PersonalCheckingAccountCard = ({ account }) => {
 }
 
 export const DBACheckingAccountsCard = (accounts) => {
-    if(getCummulativeBalance(accounts.accounts) != 0)
+    if(accounts.accounts.length)
     return(
         <Card>
             <Link to="dbacheckingaccounts">

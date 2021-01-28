@@ -34,7 +34,7 @@ class Header extends Component {
                 <div className="nav-content">Dashboard</div>
                 <NavbarToggler onClick={this.toggleNav}/>
                     <NavbarBrand className="mr-auto" href="/home">
-                        <img src="/logo192.png" height="50" width="50" />
+                        <img src="/logo192.png" height="70" width="70" />
                     </NavbarBrand>
                         <Nav navbar>
                             <NavItem>
