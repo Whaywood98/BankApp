@@ -4,9 +4,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-@DiscriminatorValue("Savings")
-public class SavingsAccount extends BankAccount {
-	public SavingsAccount() {
+@DiscriminatorValue("Roth")
+public class RothIRA extends IRAccount {
+
+	public RothIRA() {
 		
 	}
 }

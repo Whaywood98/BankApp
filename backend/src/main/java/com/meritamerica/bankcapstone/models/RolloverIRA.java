@@ -1,5 +1,13 @@
 package com.meritamerica.bankcapstone.models;
 
-public class RolloverIRA {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
+@Entity
+@DiscriminatorValue("Rollover")
+public class RolloverIRA extends IRAccount {
+
+	public RolloverIRA() {
+		
+	}
 }
