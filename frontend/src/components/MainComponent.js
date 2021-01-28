@@ -5,6 +5,8 @@ import Home from './HomeComponent';
 import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form'
 import { connect } from 'react-redux';
+import AboutUs from './AboutComponent';
+import CreateAccount from './CreateAccountComponent';
 
 
 const mapStateToProps = state => {
@@ -18,6 +20,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
+    resetFeedbackForm: () => { dispatch(actions.reset('newAccount'))},
     fetchSavingsAccount: () =>  dispatch(fetchSavingsAccount()) ,
     fetchCheckingAccounts: () =>  dispatch(fetchCheckingAccounts()) ,
     fetchCdAccounts: () =>  dispatch(fetchCdAccounts()) ,
@@ -58,6 +61,8 @@ class Main extends Component {
                 <Header/>
                 <Switch>
                     <Route path='/home' component={HomePage} />
+                    <Route path='/aboutus' component={() => <AboutUs />} />
+                    {/* <Route path='/createaccount' component={() => <CreateAccount />} /> */}
                 </Switch>
             </div>
         );
