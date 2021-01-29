@@ -1,9 +1,14 @@
 package com.meritamerica.bankcapstone.models;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class CDOffering {
 	
 	// Class attributes:
 	
+	@Id
 	private long id;
 	private int term;
 	private double interestRate;

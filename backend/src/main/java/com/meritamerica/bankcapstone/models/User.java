@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -59,6 +60,10 @@ public class User {
 
 	// If sets don't work, use lists instead:
 	@OneToMany
+	@JoinColumn(name = "UserId")
+	private Set<BankAccount> bankAccounts = new HashSet<>();
+	/*
+	@OneToMany
 	private Set<CheckingAccount> checkingAccounts = new HashSet<>(); // Can have multiple.
 	@OneToMany
 	private Set<SavingsAccount> savingsAccount = new HashSet<>(); // Can only have one.
@@ -70,6 +75,7 @@ public class User {
 	private Set<CDAccount> cdAccounts = new HashSet<>(); // Can have multiple.
 	@OneToMany
 	private Set<IRAccount> irAccounts = new HashSet<>(); // Can have 1 of each type up to three total.
+	*/
 	// Constructors:
 
 	// JPA requires an empty constructor:
@@ -160,7 +166,8 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-/*
+
+	/*
 	public Set<CheckingAccount> getCheckingAccounts() {
 		return checkingAccounts;
 	}
@@ -208,7 +215,7 @@ public class User {
 	public void setIrAccounts(Set<IRAccount> irAccounts) {
 		this.irAccounts = irAccounts;
 	}
-	*/
+*/
 	// Hashcode, toString, and equals methods:
 
 	@Override
