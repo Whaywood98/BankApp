@@ -46,6 +46,7 @@ public class User {
 	private String email;
 	@Column
 	@NotNull
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Date accountOpened = new Date();
 	@Column
 	@NotNull
