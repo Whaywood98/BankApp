@@ -11,6 +11,16 @@ function getCummulativeBalance(accounts){
     return cummulativeBalance;
 }
 
+export const UserCard = (user) => {
+    return(
+        <Card>
+            <Link to="/userprofile">
+            <CardTitle>{user.firstName}</CardTitle>
+            </Link>
+        </Card>
+    )
+}
+
 export const SavingsAccountCard = ({ account }) => {
     if(JSON.stringify(account) != '{}')
     return(

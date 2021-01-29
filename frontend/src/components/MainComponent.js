@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Home from './HomeComponent';
-import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts } from '../redux/ActionCreators';
+import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts, fetchUser } from '../redux/ActionCreators';
 import { actions } from 'react-redux-form'
 import { connect } from 'react-redux';
 import AboutUs from './AboutComponent';
@@ -11,6 +11,7 @@ import CreateAccount from './CreateAccountComponent';
 
 const mapStateToProps = state => {
     return {
+        user: state.user,
         savingsAccount: state.savingsAccount,
         checkingAccounts: state.checkingAccounts,
         cdAccounts: state.cdAccounts,
@@ -20,7 +21,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    resetFeedbackForm: () => { dispatch(actions.reset('newAccount'))},
+    fetchUser: () => dispatch(fetchUser()),
     fetchSavingsAccount: () =>  dispatch(fetchSavingsAccount()) ,
     fetchCheckingAccounts: () =>  dispatch(fetchCheckingAccounts()) ,
     fetchCdAccounts: () =>  dispatch(fetchCdAccounts()) ,
@@ -37,6 +38,7 @@ class Main extends Component {
     }
 
     componentDidMount() {
+        this.props.fetchUser();
         this.props.fetchSavingsAccount();
         this.props.fetchCheckingAccounts();
         this.props.fetchCdAccounts();
@@ -48,7 +50,8 @@ class Main extends Component {
 
         const HomePage = () => {
             return(
-                <Home savingsAccount={this.props.savingsAccount.account}
+                <Home user={this.props.user}
+                savingsAccount={this.props.savingsAccount.account}
                 checkingAccounts={this.props.checkingAccounts.accounts}
                 cdAccounts={this.props.cdAccounts.accounts}
                 personalCheckingAccount={this.props.personalCheckingAccount.account}

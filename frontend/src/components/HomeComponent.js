@@ -1,13 +1,16 @@
 import React from 'react';
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard } from './AccountHomeDisplayComponent';
+import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard, UserCard } from './AccountHomeDisplayComponent';
 
 function Home(props) {
 
   return(
       <div className="container">
         <h4>Home</h4>
+      <div className="col-12 col-md-6 m-1">
+        <UserCard user={props.user} />
+      </div>
       <div className="col-12 col-md-6 m-1">
         <SavingsAccountCard account={props.savingsAccount} />
       </div>

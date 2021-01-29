@@ -6,7 +6,16 @@ import { PERSONAL_CHECKING_ACCOUNT } from '../shared/personalCheckingAccount';
 import { DBA_CHECKING_ACCOUNTS } from '../shared/dbaCheckingAccounts';
 import { IRA } from '../shared/ira';
 import baseUrl from '../shared/baseUrl';
+import UserServices from '../services/UserServices';
 
+
+export const fetchUser = () => (dispatch) => {
+    dispatch(userLoading(true));
+
+    return UserServices.getUser()
+            .then(response => dispatch(addUser(response.data)))
+            .catch(error => dispatch(userFailed(error.message)));
+}
 
 export const fetchSavingsAccount = () => (dispatch) => {
     
@@ -43,6 +52,11 @@ export const fetchDbaCheckingAccounts = () => (dispatch) => {
     dispatch(addDbaCheckingAccount(DBA_CHECKING_ACCOUNTS));
 }
 
+export const userFailed = (errmess) => ({
+    type: ActionTypes.USER_FAILED,
+    payload: errmess
+})
+
 export const savingsAccountFailed = (errmess) => ({
     type: ActionTypes.SAVINGS_ACCOUNT_FAILED,
     payload: errmess
@@ -62,6 +76,11 @@ export const personalCheckingAccountFailed = (errmess) => ({
 export const dbaCheckingAccountsFailed = (errmess) => ({
     type: ActionTypes.DBA_CHECKING_ACCOUNT_FAILED,
     payload: errmess
+})
+
+export const addUser = (user) => ({
+    type: ActionTypes.ADD_USER,
+    payload: user
 })
 
 export const addSavingsAccount  = (account) => ({
@@ -87,6 +106,10 @@ export const addPersonalCheckingAccount  = (accounts) => ({
 export const addDbaCheckingAccount  = (accounts) => ({
     type: ActionTypes.ADD_DBA_CHECKING_ACCOUNT,
     payload: accounts
+})
+
+export const userLoading = () => ({
+    type: ActionTypes.USER_LOADING
 })
 
 export const savingsAccountLoading = () => ({
