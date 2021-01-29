@@ -37,7 +37,7 @@ public class UserAccountController {
 	
 	// Get user by id:
 	
-	@GetMapping("/Users/{id}/")
+	@GetMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Optional<User> fetchUserById(@PathVariable("id") Long id) {
 		return service.getUserById(id);
@@ -45,16 +45,16 @@ public class UserAccountController {
 	
 	// Post user:
 	
-	@PostMapping(value = "/Users", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String addUser(User user) {
+	public User addUser(@RequestBody User user) { //validation goes here, too.
 		service.addUser(user);
-		return user.toString();
+		return user;
 	}
 	
 	// Delete user:
 	
-	@DeleteMapping("/Users/{id}/")
+	@DeleteMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Optional<User> removeUserById(@PathVariable("id") Long id) {
 		service.removeUserById(id);
@@ -79,21 +79,5 @@ public class UserAccountController {
 			return service.getSavingsAccountById(id);
 		}
 		
-		// Post savings account:
-		
-		@PostMapping(value = "/Users", consumes = "application/json", produces = "application/json")
-		@ResponseStatus(HttpStatus.CREATED)
-		public String addUser(User user) {
-			service.addUser(user);
-			return user.toString();
-		}
-		
-		// Delete user:
-		
-		@DeleteMapping("/Users/{id}/")
-		@ResponseStatus(HttpStatus.OK)
-		public Optional<User> removeUserById(@PathVariable("id") Long id) {
-			service.removeUserById(id);
-			return null;
-		}
+
 }
