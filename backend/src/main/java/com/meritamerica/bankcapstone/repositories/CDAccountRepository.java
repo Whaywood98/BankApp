@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.meritamerica.bankcapstone.models.CDAccount;
 
+
 @Repository
 public interface CDAccountRepository extends JpaRepository<CDAccount, Long> {
 

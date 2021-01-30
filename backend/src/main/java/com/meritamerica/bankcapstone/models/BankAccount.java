@@ -31,8 +31,8 @@ public abstract class BankAccount {
 	
 	private double interestRate;
 	private double balance;
-	@ManyToOne
-	private User bankAccountHolder;					// A bank account should only have one user.
+	//@ManyToOne
+	//private User bankAccountHolder;					// A bank account should only have one user.
 	private Date bankAccountOpened = new Date();
 	
 	// Constructors:
@@ -67,7 +67,7 @@ public abstract class BankAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-
+/*
 	public User getBankAccountHolder() {
 		return bankAccountHolder;
 	}
@@ -75,7 +75,7 @@ public abstract class BankAccount {
 	public void setBankAccountHolder(User bankAccountHolder) {
 		this.bankAccountHolder = bankAccountHolder;
 	}
-
+*/
 	public Date getBankAccountOpened() {
 		return bankAccountOpened;
 	}
