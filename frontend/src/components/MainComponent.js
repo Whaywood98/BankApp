@@ -65,7 +65,7 @@ class Main extends Component {
                 <Switch>
                     <Route path='/home' component={HomePage} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
-                    <Route path='/createaccount' component={() => <CreateUser />} />
+                    {/* <Route path='/createaccount' component={() => <CreateUser />} /> */}
                 </Switch>
             </div>
         );
