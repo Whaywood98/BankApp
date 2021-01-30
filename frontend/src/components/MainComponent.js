@@ -3,10 +3,10 @@ import Header from './HeaderComponent';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Home from './HomeComponent';
 import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts, fetchUser } from '../redux/ActionCreators';
-import { actions } from 'react-redux-form'
+import { actions, Form } from 'react-redux-form'
 import { connect } from 'react-redux';
 import AboutUs from './AboutComponent';
-import CreateAccount from './CreateAccountComponent';
+import CreateUser from './CreateUserComponent';
 
 
 const mapStateToProps = state => {
@@ -65,7 +65,7 @@ class Main extends Component {
                 <Switch>
                     <Route path='/home' component={HomePage} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
-                    {/* <Route path='/createaccount' component={() => <CreateAccount />} /> */}
+                    <Route path='/createaccount' component={() => <CreateUser />} />
                 </Switch>
             </div>
         );

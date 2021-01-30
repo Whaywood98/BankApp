@@ -10,8 +10,12 @@ export const User = (state = {
 }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_USER:
-            return { ...state, isLoading: false, errMess: null, accounts: [], firstName: action.payload[0].firstname,
-                middleName: action.payload.middleName, lastName: action.payload.lastName}
+            console.log("action: ", action);
+            console.log("payload: ", action.payload);
+            console.log("user object: ", action.payload[0]);
+            console.log("user's first name: ", action.payload[0].firstName);
+            return { ...state, isLoading: false, errMess: null, accounts: [], firstName: action.payload[0].firstName,
+                middleName: action.payload[0].middleName, lastName: action.payload[0].lastName}
 
         case ActionTypes.USER_LOADING:
             return { ...state, isLoading: true, errMess: null, accounts: [], firstName: '',

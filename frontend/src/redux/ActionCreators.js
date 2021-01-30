@@ -12,9 +12,10 @@ import UserServices from '../services/UserServices';
 export const fetchUser = () => (dispatch) => {
     dispatch(userLoading(true));
 
-    return UserServices.getUser()
-            .then(response => dispatch(addUser(response.data)))
+    UserServices.getUser()
+            .then((response) => dispatch(addUser(response.data)))
             .catch(error => dispatch(userFailed(error.message)));
+    
 }
 
 export const fetchSavingsAccount = () => (dispatch) => {

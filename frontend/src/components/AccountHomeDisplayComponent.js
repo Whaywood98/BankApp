@@ -11,11 +11,11 @@ function getCummulativeBalance(accounts){
     return cummulativeBalance;
 }
 
-export const UserCard = (user) => {
+export const UserCard = ({ user }) => {
     return(
         <Card>
             <Link to="/userprofile">
-            <CardTitle>{user.firstName}</CardTitle>
+            <CardTitle>{user.firstName} {user.lastName}</CardTitle>
             </Link>
         </Card>
     )
