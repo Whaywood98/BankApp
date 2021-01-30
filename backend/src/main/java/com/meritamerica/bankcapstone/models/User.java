@@ -50,7 +50,7 @@ public class User {
 	private Date accountOpened = new Date();
 	@Column
 	@NotNull
-	private int dob;
+	private Date dob;
 	@Column
 	@NotNull
 	private int ssn;
@@ -83,7 +83,7 @@ public class User {
 
 	}
 
-	public User(String firstName, String middleName, String lastName, String userName, String email, int dob, int ssn) {
+	public User(String firstName, String middleName, String lastName, String userName, String email, Date dob, int ssn) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -143,11 +143,11 @@ public class User {
 		return accountOpened;
 	}
 
-	public int getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(int dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 

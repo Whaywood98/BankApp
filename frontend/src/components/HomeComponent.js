@@ -4,10 +4,14 @@ import {homeObjOne} from '../shared/data';
 import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard, UserCard } from './AccountCardsComponent';
 
 function Home(props) {
+
+    
+
+
     return (
         <>
         <div className="col-12 col-md-6 m-1">
-        <UserCard user={props.user} />
+          <UserCard user={props.user} />
         </div>
         <div className="col-12 col-md-6 m-1">
           <SavingsAccountCard account={props.savingsAccount} />

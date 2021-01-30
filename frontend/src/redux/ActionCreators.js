@@ -132,3 +132,7 @@ export const personalCheckingAccountLoading = () => ({
 export const dbaCheckingAccountLoading = () => ({
     type: ActionTypes.DBA_CHECKING_ACCOUNT_LOADING
 })
+
+export const postUser = (user) => {
+    UserServices.postUser(user);
+}

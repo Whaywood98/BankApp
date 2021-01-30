@@ -7,8 +7,8 @@ class UserServices {
         return axios.get('http://localhost:8080/users');
     }
 
-    postUser(){
-        return axios.post(baseUrlLocal + '/users')
+    postUser({ user }){
+        return axios.post(baseUrlLocal + '/users', user);
     }
 }
 

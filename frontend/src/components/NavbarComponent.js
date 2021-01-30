@@ -62,6 +62,12 @@ function Navbar() {
                                 Accounts
                             </Link>
                         </li>
+
+                        <li className='nav-item'>
+                            <Link to= '/register' className= 'nav-links' onClick={closeMobileMenu}>
+                                Register
+                            </Link>
+                        </li>
                        
                         <li className="nav-btn">
                             {button ? (
