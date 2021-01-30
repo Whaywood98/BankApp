@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Header from './HeaderComponent';
+import Navbar from './NavbarComponent';
+import Footer from './FooterComponent';
+import LoginPage from './LoginPageComponent';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Home from './HomeComponent';
 import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts, fetchUser } from '../redux/ActionCreators';
@@ -61,12 +63,14 @@ class Main extends Component {
 
         return(
             <div>
-                <Header/>
+                <Navbar/>
                 <Switch>
                     <Route path='/home' component={HomePage} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
+                    <Route path='/signin' component={() => <LoginPage />} />
                     {/* <Route path='/createaccount' component={() => <CreateUser />} /> */}
                 </Switch>
+                <Footer/>
             </div>
         );
     }
