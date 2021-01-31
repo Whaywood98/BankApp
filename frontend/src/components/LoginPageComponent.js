@@ -1,33 +1,45 @@
+import axios from 'axios';
 import React from 'react';
 import'../css/LoginPage.css';
+import { addUser } from '../redux/ActionCreators';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { baseUrlLocal } from '../shared/baseUrl';
+import UserServices from '../services/UserServices';
 
+
+
+
+const mapDispatchToProps = (dispatch) => ({
+    addUser: () => dispatch(addUser()),
+});
 
 class LoginPage extends React.Component {
 
 
-     constructor() {
-         super();
+     constructor(props) {
+         super(props);
          this.state = {
-             err: ''
-
-
+             err: '',
+             userName: '',
+             password: ''
          };
 
+    }
+
+     handleSubmit = (event) =>{
+        event.preventDefault();
+        const user = this.state.userName
+        alert(user);
+        UserServices.getUserById(user)
+            .then((response) => this.props.dispatch(addUser(response.data)));
      }
-    login(e) {
-        e.preventDefault();
-        var username = e.target.elements.username.value;
-        var password = e.target.elements.password.value;
-        if (username == 'abc' && password == '123') {
-            this.props.history.push('/Home/' + username);
-        
-        } else {
-            this.setState({
-                err: 'Invalid'
 
-            });
-        }
-
+     handleInputChange = (event) => {
+        event.preventDefault()
+        this.setState({
+            [event.target.name]: event.target.value
+        })
     }
 
     render() {
@@ -41,10 +53,10 @@ class LoginPage extends React.Component {
                 
                 <h3> Login</h3>
                 <span style={format}>{this.state.err != '' ? this.state.err : ''}</span>
-                <form method="post">
-                    Username <input type= "text" name="username"/>
+                <form onSubmit={this.handleSubmit}>
+                    Username <input type= "text" name="userName" onChange={this.handleInputChange}/>
                     <br/>
-                    Password <input type= "password" name= "password"/>
+                    Password <input type= "password" name= "password" onChange={this.handleInputChange}/>
                     <br/>
                     <input type ="submit" value= "Login"/>
 
@@ -55,4 +67,4 @@ class LoginPage extends React.Component {
 
 }
 
-export default LoginPage;
+export default withRouter(connect(mapDispatchToProps)(LoginPage));

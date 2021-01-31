@@ -79,8 +79,8 @@ public class UserAccountService {
 	}
 	
 	// Search for user by id:
-	public Optional<User> getUserById(long id) {
-		return userRepository.findById(id);
+	public User getUserById(String userName) {
+		return userRepository.findUserById(userName);
 	}
 	
 	// Remove user by id:
@@ -96,14 +96,6 @@ public class UserAccountService {
 	
 	public List<SavingsAccount> getSavingsAccounts(){
 		return savingsAccountRepository.findAll();
-	}
-	
-	public Optional<SavingsAccount> getSavingsAccountById(long id) {
-		return savingsAccountRepository.findById(id);
-	}
-	
-	public void removeSavingsAccountById(long id) {
-		savingsAccountRepository.deleteById(id);
 	}
 	
 	// Checking account methods:

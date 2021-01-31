@@ -1,20 +1,17 @@
 package com.meritamerica.bankcapstone.models;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.sun.istack.NotNull;
 
@@ -59,23 +56,25 @@ public class User {
 	private boolean active;
 
 	// If sets don't work, use lists instead:
+	
 	@OneToMany
-	@JoinColumn(name = "UserId")
-	private Set<BankAccount> bankAccounts = new HashSet<>();
-	/*
+	private List<CheckingAccount> checkingAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToOne
+	@JoinColumn
+	private SavingsAccount savingsAccount; // Can only have one.
+	@OneToOne
+	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToMany
-	private Set<CheckingAccount> checkingAccounts = new HashSet<>(); // Can have multiple.
+	private List<DBAAccount> dbaAccounts = new ArrayList<>(); // Can only have 3.
 	@OneToMany
-	private Set<SavingsAccount> savingsAccount = new HashSet<>(); // Can only have one.
-	@OneToMany
-	private Set<PersonalCheckingAccount> personalCheckingAccount = new HashSet<>(); // Can only have one.
-	@OneToMany
-	private Set<DBAAccount> dbaAccounts = new HashSet<>(); // Can only have 3.
-	@OneToMany
-	private Set<CDAccount> cdAccounts = new HashSet<>(); // Can have multiple.
-	@OneToMany
-	private Set<IRAccount> irAccounts = new HashSet<>(); // Can have 1 of each type up to three total.
-	*/
+	private List<CDAccount> cdAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToOne
+	private RegularIRA regularIra;
+	@OneToOne
+	private RolloverIRA rolloverIra;
+	@OneToOne
+	private RothIRA rothIra;
+	
 	// Constructors:
 
 	// JPA requires an empty constructor:

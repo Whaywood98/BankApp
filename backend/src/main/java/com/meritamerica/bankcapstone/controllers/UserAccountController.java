@@ -2,16 +2,15 @@ package com.meritamerica.bankcapstone.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +18,7 @@ import com.meritamerica.bankcapstone.models.SavingsAccount;
 import com.meritamerica.bankcapstone.models.User;
 import com.meritamerica.bankcapstone.services.UserAccountService;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserAccountController {
 
@@ -39,8 +39,8 @@ public class UserAccountController {
 	
 	@GetMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<User> fetchUserById(@PathVariable("id") Long id) {
-		return service.getUserById(id);
+	public User fetchUserById(@PathVariable("id") String userName) {
+		return service.getUserById(userName);
 	}
 	
 	// Post user:
@@ -63,21 +63,16 @@ public class UserAccountController {
 	
 	// Savings Account APIs =======================================================
 
-	// Get all saving accounts:
+	// Get saving account:
 	
-		@GetMapping(value = "/Users/SavingsAccount")
-		@ResponseStatus(HttpStatus.OK)
-		public List<SavingsAccount> getSavings(){
-			return service.getSavingsAccounts();
-		}
+//	@GetMapping(value = "/Users/{id}/SavingsAccount")
+//	@ResponseStatus(HttpStatus.OK)
+//	public SavingsAccount getSavings(){
+//		return service.getgetSavingsAccounts();
+//	}
+//		
+	
 		
-		// Get savings account by id:
-		
-		@GetMapping("/Users/SavingsAccount/{id}/")
-		@ResponseStatus(HttpStatus.OK)
-		public Optional<SavingsAccount> fetchSavingsById(@PathVariable("id") Long id) {
-			return service.getSavingsAccountById(id);
-		}
 		
 
 }

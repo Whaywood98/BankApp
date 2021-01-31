@@ -4,11 +4,15 @@ import { baseUrlLocal } from '../shared/baseUrl';
 class UserServices {
 
     getUser(){
-        return axios.get('http://localhost:8080/users');
+        return axios.get('http://localhost:8080/Users');
     }
 
-    postUser({ user }){
-        return axios.post(baseUrlLocal + '/users', user);
+    getUserById(userName){
+        return axios.get(baseUrlLocal + '/Users/' + userName);
+    }
+
+    postUser(user){
+        return axios.post(baseUrlLocal + '/Users', user);
     }
 }
 

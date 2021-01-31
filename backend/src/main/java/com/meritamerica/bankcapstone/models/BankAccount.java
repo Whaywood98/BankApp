@@ -29,7 +29,10 @@ public abstract class BankAccount {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	@Column
 	private double interestRate;
+	
+	@Column
 	private double balance;
 	//@ManyToOne
 	//private User bankAccountHolder;					// A bank account should only have one user.

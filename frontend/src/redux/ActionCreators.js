@@ -5,7 +5,8 @@ import { CDACCOUNTS } from '../shared/cdAccounts';
 import { PERSONAL_CHECKING_ACCOUNT } from '../shared/personalCheckingAccount';
 import { DBA_CHECKING_ACCOUNTS } from '../shared/dbaCheckingAccounts';
 import { IRA } from '../shared/ira';
-import baseUrl from '../shared/baseUrl';
+import axios from 'axios';
+import { baseUrlLocal } from '../shared/baseUrl';
 import UserServices from '../services/UserServices';
 
 
@@ -15,7 +16,7 @@ export const fetchUser = () => (dispatch) => {
     UserServices.getUser()
             .then((response) => dispatch(addUser(response.data)))
             .catch(error => dispatch(userFailed(error.message)));
-    
+
 }
 
 export const fetchSavingsAccount = () => (dispatch) => {
@@ -132,7 +133,3 @@ export const personalCheckingAccountLoading = () => ({
 export const dbaCheckingAccountLoading = () => ({
     type: ActionTypes.DBA_CHECKING_ACCOUNT_LOADING
 })
-
-export const postUser = (user) => {
-    UserServices.postUser(user);
-}

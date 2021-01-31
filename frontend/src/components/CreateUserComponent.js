@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Control, LocalForm, Form, Errors } from 'react-redux-form';
 import { Row, Col, Label, Button, Input } from 'reactstrap';
 import { postUser } from '../redux/ActionCreators';
+import axios from 'axios';
+import { baseUrlLocal } from '../shared/baseUrl';
 
 class CreateUser extends Component {
 
@@ -23,7 +25,7 @@ class CreateUser extends Component {
         event.preventDefault()
         const data = this.state
         data.dob = new Date(data.dob);
-        postUser(data);
+        axios.post(baseUrlLocal + '/Users', data);
         alert(JSON.stringify(data));
     }
 
@@ -56,7 +58,6 @@ class CreateUser extends Component {
                     SSN: <input type= "text" name= "ssn" onChange={this.handleInputChange}/>
                     <br/>
                     <input type ="submit" value= "Create Account" onChange={this.handleInputChange}/>
-
                 </form>
             </div>
         );
