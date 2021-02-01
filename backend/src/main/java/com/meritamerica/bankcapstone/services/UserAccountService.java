@@ -11,6 +11,7 @@ import com.meritamerica.bankcapstone.models.CDOffering;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
 import com.meritamerica.bankcapstone.models.RegularIRA;
+import com.meritamerica.bankcapstone.models.Role;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
 import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
@@ -21,6 +22,7 @@ import com.meritamerica.bankcapstone.repositories.CheckingAccountRepository;
 import com.meritamerica.bankcapstone.repositories.DBARepository;
 import com.meritamerica.bankcapstone.repositories.PersonalCheckingAccountRepository;
 import com.meritamerica.bankcapstone.repositories.RegularIRARepository;
+import com.meritamerica.bankcapstone.repositories.RoleRepository;
 import com.meritamerica.bankcapstone.repositories.RolloverIRARepository;
 import com.meritamerica.bankcapstone.repositories.RothIRARepository;
 import com.meritamerica.bankcapstone.repositories.SavingsAccountRepository;
@@ -61,14 +63,17 @@ public class UserAccountService {
 	@Autowired
 	CDAccountRepository cdAccountRepository;
 	
-	// User methods:
+	@Autowired
+	RoleRepository roleRepository;
 	
-	// Add a new user. Admin only.
+	// User methods =====================================================================
+	
+	// Add a new user:
 	public User addUser(User user) {
 		return userRepository.save(user);
 	}
 	
-	// Get a list of all users. Admin Only.
+	// Get a list of all users:
 	public List<User> getUsers(){
 		return userRepository.findAll();
 	}
@@ -83,7 +88,7 @@ public class UserAccountService {
 		userRepository.deleteById(id);
 	}
 	
-	// Savings account methods:
+	// Savings account methods =====================================================================
 	
 	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount, long id) {
 		return savingsAccountRepository.save(savingsAccount);
@@ -101,7 +106,7 @@ public class UserAccountService {
 		savingsAccountRepository.deleteById(id);
 	}
 	
-	// Checking account methods:
+	// Checking account methods =====================================================================
 	
 	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount, long id) {
 		return checkingAccountRepository.save(checkingAccount);
@@ -119,7 +124,7 @@ public class UserAccountService {
 		checkingAccountRepository.deleteById(id);
 	}
 	
-	// CD Account methods:
+	// CD Account methods =====================================================================
 	
 	public CDAccount addCDAccount(CDAccount cdAccount, long id) {
 		return cdAccountRepository.save(cdAccount);
@@ -137,7 +142,7 @@ public class UserAccountService {
 		cdAccountRepository.deleteById(id);
 	}
 	
-	// CD Offering methods:
+	// CD Offering methods =====================================================================
 	
 	public CDOffering addCDOffering(CDOffering cdOffering, long id) {
 		return cdOfferingRepository.save(cdOffering);
@@ -155,7 +160,7 @@ public class UserAccountService {
 		cdOfferingRepository.deleteById(id);
 	}
 	
-	// DBA Account methods:
+	// DBA Account methods =====================================================================
 	
 	public DBAAccount addDBAAccount(DBAAccount dbaAccount, long id) {
 		return dbaRepository.save(dbaAccount);
@@ -173,7 +178,7 @@ public class UserAccountService {
 		dbaRepository.deleteById(id);
 	}
 	
-	// RegularIRAccount methods:
+	// RegularIRAccount methods =====================================================================
 	
 	public RegularIRA addRegularIRAccount(RegularIRA irAccount, long id) {
 		return regularIRARepository.save(irAccount);
@@ -191,7 +196,7 @@ public class UserAccountService {
 		regularIRARepository.deleteById(id);
 	}
 	
-	// RolloverIRAccount methods:
+	// RolloverIRAccount methods =====================================================================
 	
 	public RolloverIRA addRolloverIRAccount(RolloverIRA irAccount, long id) {
 		return rolloverIRARepository.save(irAccount);
@@ -209,7 +214,7 @@ public class UserAccountService {
 		rolloverIRARepository.deleteById(id);
 	}
 	
-	// RothIRAccount methods:
+	// RothIRAccount methods =====================================================================
 	
 	public RothIRA addRothIRAccount(RothIRA irAccount, long id) {
 		return rothIRARepository.save(irAccount);
@@ -225,5 +230,23 @@ public class UserAccountService {
 	
 	public void removeRothIRAccountById(long id) {
 		rothIRARepository.deleteById(id);
+	}
+	
+	// Role methods =====================================================================
+	
+	public Role addRole(Role role) {
+		return roleRepository.save(role);
+	}
+	
+	public List<Role> getRoles(){
+		return roleRepository.findAll();
+	}
+	
+	public Optional<Role> getRoleById(long id) {
+		return roleRepository.findById(id);
+	}
+	
+	public void removeRoleById(long id) {
+		roleRepository.deleteById(id);
 	}
 }

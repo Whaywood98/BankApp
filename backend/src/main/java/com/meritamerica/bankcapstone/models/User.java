@@ -47,6 +47,9 @@ public class User {
 	private String email;
 	@Column
 	@NotNull
+	private String password;
+	@Column
+	@NotNull
 	private Date accountOpened = new Date();
 	@Column
 	@NotNull
@@ -57,6 +60,7 @@ public class User {
 	@Column
 	@NotNull
 	private boolean active;
+	private String roles;
 
 	// If sets don't work, use lists instead:
 	@OneToMany
@@ -83,12 +87,13 @@ public class User {
 
 	}
 
-	public User(String firstName, String middleName, String lastName, String userName, String email, int dob, int ssn) {
+	public User(String firstName, String middleName, String lastName, String userName, String email, String password, int dob, int ssn) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.email = email;
+		this.password = password;
 		this.dob = dob;
 		this.ssn = ssn;
 	}
@@ -158,6 +163,14 @@ public class User {
 	public void setSsn(int ssn) {
 		this.ssn = ssn;
 	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
 
 	public boolean isActive() {
 		return active;
@@ -167,55 +180,14 @@ public class User {
 		this.active = active;
 	}
 
-	/*
-	public Set<CheckingAccount> getCheckingAccounts() {
-		return checkingAccounts;
+	public String getRoles() {
+		return roles;
 	}
 
-	public void setCheckingAccounts(Set<CheckingAccount> checkingAccounts) {
-		this.checkingAccounts = checkingAccounts;
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
-
-	public Set<SavingsAccount> getSavingsAccount() {
-		return savingsAccount;
-	}
-
-	public void setSavingsAccount(Set<SavingsAccount> savingsAccount) {
-		this.savingsAccount = savingsAccount;
-	}
-
-	public Set<PersonalCheckingAccount> getPersonalCheckingAccount() {
-		return personalCheckingAccount;
-	}
-
-	public void setPersonalCheckingAccount(Set<PersonalCheckingAccount> personalCheckingAccount) {
-		this.personalCheckingAccount = personalCheckingAccount;
-	}
-
-	public Set<DBAAccount> getDbaAccounts() {
-		return dbaAccounts;
-	}
-
-	public void setDbaAccounts(Set<DBAAccount> dbaAccounts) {
-		this.dbaAccounts = dbaAccounts;
-	}
-
-	public Set<CDAccount> getCdAccounts() {
-		return cdAccounts;
-	}
-
-	public void setCdAccounts(Set<CDAccount> cdAccounts) {
-		this.cdAccounts = cdAccounts;
-	}
-
-	public Set<IRAccount> getIrAccounts() {
-		return irAccounts;
-	}
-
-	public void setIrAccounts(Set<IRAccount> irAccounts) {
-		this.irAccounts = irAccounts;
-	}
-*/
+	
 	// Hashcode, toString, and equals methods:
 
 	@Override
