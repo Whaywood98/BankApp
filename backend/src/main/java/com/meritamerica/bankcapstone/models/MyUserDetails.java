@@ -1,3 +1,4 @@
+
 package com.meritamerica.bankcapstone.models;
 
 import java.util.Arrays;
@@ -28,14 +29,14 @@ public class MyUserDetails implements UserDetails {
 		this.password = user.getPassword();
 		this.active = user.isActive();
 		
-		// This mess below converts a user instance that we get from the
-		// database into this user details object.
+		// This takes in a comma separated list of roles from a string
+		// and splits them into a list of authorities:
 		this.authorities = Arrays.stream(user.getRoles().split(","))
 				.map(SimpleGrantedAuthority::new)
 				.collect(Collectors.toList());
 	}
 	
-	// Needed methods:
+	// Needed methods from implementing UserDetails:
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,20 +1,16 @@
 package com.meritamerica.bankcapstone.models;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.sun.istack.NotNull;
 
@@ -53,33 +49,36 @@ public class User {
 	private Date accountOpened = new Date();
 	@Column
 	@NotNull
-	private int dob;
+	private Date dob;
 	@Column
 	@NotNull
 	private int ssn;
 	@Column
 	@NotNull
 	private boolean active;
+	@Column
+	@NotNull
 	private String roles;
 
 	// If sets don't work, use lists instead:
+	
 	@OneToMany
-	@JoinColumn(name = "UserId")
-	private Set<BankAccount> bankAccounts = new HashSet<>();
-	/*
+	private List<CheckingAccount> checkingAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToOne
+	private SavingsAccount savingsAccounts; // Can only have one.
+	@OneToOne
+	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToMany
-	private Set<CheckingAccount> checkingAccounts = new HashSet<>(); // Can have multiple.
+	private List<DBAAccount> dbaAccounts = new ArrayList<>(); // Can only have 3.
 	@OneToMany
-	private Set<SavingsAccount> savingsAccount = new HashSet<>(); // Can only have one.
-	@OneToMany
-	private Set<PersonalCheckingAccount> personalCheckingAccount = new HashSet<>(); // Can only have one.
-	@OneToMany
-	private Set<DBAAccount> dbaAccounts = new HashSet<>(); // Can only have 3.
-	@OneToMany
-	private Set<CDAccount> cdAccounts = new HashSet<>(); // Can have multiple.
-	@OneToMany
-	private Set<IRAccount> irAccounts = new HashSet<>(); // Can have 1 of each type up to three total.
-	*/
+	private List<CDAccount> cdAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToOne
+	private RegularIRA regularIra;
+	@OneToOne
+	private RolloverIRA rolloverIra;
+	@OneToOne
+	private RothIRA rothIra;
+	
 	// Constructors:
 
 	// JPA requires an empty constructor:
@@ -87,15 +86,16 @@ public class User {
 
 	}
 
-	public User(String firstName, String middleName, String lastName, String userName, String email, String password, int dob, int ssn) {
+	public User(String firstName, String middleName, String lastName, String userName, String password, String roles, String email, Date dob, int ssn) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.email = email;
-		this.password = password;
 		this.dob = dob;
 		this.ssn = ssn;
+		this.password = password;
+		this.roles = roles;
 	}
 
 	// Getters and setters:
@@ -148,11 +148,11 @@ public class User {
 		return accountOpened;
 	}
 
-	public int getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-	public void setDob(int dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 
@@ -163,14 +163,6 @@ public class User {
 	public void setSsn(int ssn) {
 		this.ssn = ssn;
 	}
-	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public String getPassword() {
-		return this.password;
-	}
 
 	public boolean isActive() {
 		return active;
@@ -178,6 +170,78 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public List<CheckingAccount> getCheckingAccounts() {
+		return checkingAccounts;
+	}
+
+	public void addCheckingAccount(CheckingAccount checkingAccount) {
+		this.checkingAccounts.add(checkingAccount);
+	}
+
+	public SavingsAccount getSavingsAccount() {
+		return savingsAccounts;
+	}
+
+	public void setSavingsAccount(SavingsAccount savingsAccount) {
+		this.savingsAccounts = savingsAccount;
+	}
+
+	public PersonalCheckingAccount getPersonalCheckingAccount() {
+		return personalCheckingAccount;
+	}
+
+	public void setPersonalCheckingAccount(PersonalCheckingAccount personalCheckingAccount) {
+		this.personalCheckingAccount = personalCheckingAccount;
+	}
+
+	public List<DBAAccount> getDbaAccounts() {
+		return dbaAccounts;
+	}
+
+	public void addDbaAccount(DBAAccount dbaAccount) {
+		this.dbaAccounts.add(dbaAccount);
+	}
+
+	public List<CDAccount> getCdAccounts() {
+		return cdAccounts;
+	}
+
+	public void addCdAccount(CDAccount cdAccount) {
+		this.cdAccounts.add(cdAccount);
+	}
+
+	public RegularIRA getRegularIra() {
+		return regularIra;
+	}
+
+	public void setRegularIra(RegularIRA regularIra) {
+		this.regularIra = regularIra;
+	}
+
+	public RolloverIRA getRolloverIra() {
+		return rolloverIra;
+	}
+
+	public void setRolloverIra(RolloverIRA rolloverIra) {
+		this.rolloverIra = rolloverIra;
+	}
+
+	public RothIRA getRothIra() {
+		return rothIra;
+	}
+
+	public void setRothIra(RothIRA rothIra) {
+		this.rothIra = rothIra;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getRoles() {
@@ -211,14 +275,5 @@ public class User {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", userName=" + userName + ", email=" + email + ", accountOpened=" + accountOpened + ", dob=" + dob
-				+ ", ssn=" + ssn + ", active=" + active + "]";
-	}
-
-	
 
 }

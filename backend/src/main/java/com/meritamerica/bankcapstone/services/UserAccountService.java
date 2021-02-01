@@ -1,17 +1,23 @@
 package com.meritamerica.bankcapstone.services;
 
+
+import org.springframework.stereotype.Service;
+
+
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.meritamerica.bankcapstone.models.CDAccount;
 import com.meritamerica.bankcapstone.models.CDOffering;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
+import com.meritamerica.bankcapstone.models.PersonalCheckingAccount;
 import com.meritamerica.bankcapstone.models.RegularIRA;
-import com.meritamerica.bankcapstone.models.Role;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
 import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
@@ -22,7 +28,6 @@ import com.meritamerica.bankcapstone.repositories.CheckingAccountRepository;
 import com.meritamerica.bankcapstone.repositories.DBARepository;
 import com.meritamerica.bankcapstone.repositories.PersonalCheckingAccountRepository;
 import com.meritamerica.bankcapstone.repositories.RegularIRARepository;
-import com.meritamerica.bankcapstone.repositories.RoleRepository;
 import com.meritamerica.bankcapstone.repositories.RolloverIRARepository;
 import com.meritamerica.bankcapstone.repositories.RothIRARepository;
 import com.meritamerica.bankcapstone.repositories.SavingsAccountRepository;
@@ -63,53 +68,52 @@ public class UserAccountService {
 	@Autowired
 	CDAccountRepository cdAccountRepository;
 	
-	@Autowired
-	RoleRepository roleRepository;
+	PasswordEncoder passwordEncoder;
 	
-	// User methods =====================================================================
+	// Constructor:
 	
-	// Add a new user:
+	public UserAccountService() {
+		this.passwordEncoder = new BCryptPasswordEncoder();
+	}
+	
+	// User methods:
+	
 	public User addUser(User user) {
+		String encodedPassword = this.passwordEncoder.encode(user.getPassword()); // Before saving, we encode the password!
+		user.setPassword(encodedPassword);
 		return userRepository.save(user);
 	}
 	
-	// Get a list of all users:
 	public List<User> getUsers(){
 		return userRepository.findAll();
 	}
 	
-	// Search for user by id:
-	public Optional<User> getUserById(long id) {
-		return userRepository.findById(id);
+	public User getUserById(String userName) {
+		return userRepository.findUserById(userName);
 	}
 	
-	// Remove user by id:
 	public void removeUserById(long id) {
 		userRepository.deleteById(id);
 	}
 	
-	// Savings account methods =====================================================================
+	// Savings account methods:
 	
-	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount, long id) {
-		return savingsAccountRepository.save(savingsAccount);
+	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount, String userName) {
+		getUserById(userName).setSavingsAccount(savingsAccount);
+		savingsAccountRepository.save(savingsAccount);
+		return savingsAccount;
 	}
 	
 	public List<SavingsAccount> getSavingsAccounts(){
 		return savingsAccountRepository.findAll();
 	}
 	
-	public Optional<SavingsAccount> getSavingsAccountById(long id) {
-		return savingsAccountRepository.findById(id);
-	}
+	// Checking account methods:
 	
-	public void removeSavingsAccountById(long id) {
-		savingsAccountRepository.deleteById(id);
-	}
-	
-	// Checking account methods =====================================================================
-	
-	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount, long id) {
-		return checkingAccountRepository.save(checkingAccount);
+	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount, String userName) {
+		getUserById(userName).addCheckingAccount(checkingAccount);
+		checkingAccountRepository.save(checkingAccount);
+		return checkingAccount;
 	}
 	
 	public List<CheckingAccount> getCheckingAccounts(){
@@ -124,10 +128,12 @@ public class UserAccountService {
 		checkingAccountRepository.deleteById(id);
 	}
 	
-	// CD Account methods =====================================================================
+	// CD Account methods:
 	
-	public CDAccount addCDAccount(CDAccount cdAccount, long id) {
-		return cdAccountRepository.save(cdAccount);
+	public CDAccount addCDAccount(CDAccount cdAccount, String userName) {
+		getUserById(userName).addCdAccount(cdAccount);
+		cdAccountRepository.save(cdAccount);
+		return cdAccount;
 	}
 	
 	public List<CDAccount> getCDAccounts(){
@@ -142,7 +148,7 @@ public class UserAccountService {
 		cdAccountRepository.deleteById(id);
 	}
 	
-	// CD Offering methods =====================================================================
+	// CD Offering methods:
 	
 	public CDOffering addCDOffering(CDOffering cdOffering, long id) {
 		return cdOfferingRepository.save(cdOffering);
@@ -160,10 +166,12 @@ public class UserAccountService {
 		cdOfferingRepository.deleteById(id);
 	}
 	
-	// DBA Account methods =====================================================================
+	// DBA Account methods:
 	
-	public DBAAccount addDBAAccount(DBAAccount dbaAccount, long id) {
-		return dbaRepository.save(dbaAccount);
+	public DBAAccount addDBAAccount(DBAAccount dbaAccount, String userName) {
+		getUserById(userName).addDbaAccount(dbaAccount);
+		dbaRepository.save(dbaAccount);
+		return dbaAccount;
 	}
 	
 	public List<DBAAccount> getDBAAccount(){
@@ -178,10 +186,12 @@ public class UserAccountService {
 		dbaRepository.deleteById(id);
 	}
 	
-	// RegularIRAccount methods =====================================================================
+	// RegularIRAccount methods:
 	
-	public RegularIRA addRegularIRAccount(RegularIRA irAccount, long id) {
-		return regularIRARepository.save(irAccount);
+	public RegularIRA addRegularIraAccount(RegularIRA iraAccount, String userName) {
+		getUserById(userName).setRegularIra(iraAccount);
+		regularIRARepository.save(iraAccount);
+		return iraAccount;
 	}
 	
 	public List<RegularIRA> getRegularIRAccount(){
@@ -196,10 +206,12 @@ public class UserAccountService {
 		regularIRARepository.deleteById(id);
 	}
 	
-	// RolloverIRAccount methods =====================================================================
+	// RolloverIRAccount methods:
 	
-	public RolloverIRA addRolloverIRAccount(RolloverIRA irAccount, long id) {
-		return rolloverIRARepository.save(irAccount);
+	public RolloverIRA addRolloverIraAccount(RolloverIRA iraAccount, String userName) {
+		getUserById(userName).setRolloverIra(iraAccount);
+		rolloverIRARepository.save(iraAccount);
+		return iraAccount;
 	}
 	
 	public List<RolloverIRA> getRolloverIRAccount(){
@@ -214,10 +226,12 @@ public class UserAccountService {
 		rolloverIRARepository.deleteById(id);
 	}
 	
-	// RothIRAccount methods =====================================================================
+	// RothIRAccount methods:
 	
-	public RothIRA addRothIRAccount(RothIRA irAccount, long id) {
-		return rothIRARepository.save(irAccount);
+	public RothIRA addRothIraAccount(RothIRA iraAccount, String userName) {
+		getUserById(userName).setRothIra(iraAccount);
+		rothIRARepository.save(iraAccount);
+		return iraAccount;
 	}
 	
 	public List<RothIRA> getRothIRAccount(){
@@ -232,21 +246,11 @@ public class UserAccountService {
 		rothIRARepository.deleteById(id);
 	}
 	
-	// Role methods =====================================================================
+	// Personal Checking Account Methods
 	
-	public Role addRole(Role role) {
-		return roleRepository.save(role);
-	}
-	
-	public List<Role> getRoles(){
-		return roleRepository.findAll();
-	}
-	
-	public Optional<Role> getRoleById(long id) {
-		return roleRepository.findById(id);
-	}
-	
-	public void removeRoleById(long id) {
-		roleRepository.deleteById(id);
+	public PersonalCheckingAccount addPersonalCheckingAccount(PersonalCheckingAccount personalCheckingAccount, String userName) {
+		getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
+		personalCheckingAccountRepository.save(personalCheckingAccount);
+		return personalCheckingAccount;
 	}
 }

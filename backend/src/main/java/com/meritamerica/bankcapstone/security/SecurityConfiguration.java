@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.meritamerica.bankcapstone.services.MyUserDetailsService;
@@ -30,21 +30,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().sameOrigin();
-		http.csrf().disable();
-		http.authorizeRequests()
+		http.csrf().disable()
+			.authorizeRequests()
 			.antMatchers("/h2-console").permitAll()
-			.antMatchers("/secured-test").hasAnyRole("USER", "ADMIN")
-			.antMatchers("/admin-test").hasRole("ADMIN")
+			.antMatchers("/secured-test").hasAnyAuthority("USER", "ADMIN")
+			.antMatchers("/admin-test").hasAuthority("ADMIN")
 			.antMatchers("/").permitAll()
-			.antMatchers("/roles").permitAll()
-			.antMatchers("/users").permitAll()
+			// Finish locking down endpoints here:
 			.and().formLogin();
 	}
 	
-	// Replace this!!!
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
-		return NoOpPasswordEncoder.getInstance();
+		return new BCryptPasswordEncoder();
 	}
 
 }
