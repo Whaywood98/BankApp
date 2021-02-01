@@ -34,7 +34,7 @@ public class UserAccountController {
 	
 	// Test APIs =======================================================
 	
-	@GetMapping(value = "/")
+	@GetMapping(value = "/home")
 	@ResponseStatus(HttpStatus.OK)
 	public String homeTest() {
 		return "Homepage!";

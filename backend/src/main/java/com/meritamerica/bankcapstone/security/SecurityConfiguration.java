@@ -35,7 +35,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/h2-console").permitAll()
 			.antMatchers("/secured-test").hasAnyAuthority("USER", "ADMIN")
 			.antMatchers("/admin-test").hasAuthority("ADMIN")
-			.antMatchers("/").permitAll()
+			.antMatchers("/home").permitAll()
+			.antMatchers("/Users").permitAll() // This will be removed after an admin is either hard-coded or already placed in a persistent database!
 			// Finish locking down endpoints here:
 			.and().formLogin();
 	}
