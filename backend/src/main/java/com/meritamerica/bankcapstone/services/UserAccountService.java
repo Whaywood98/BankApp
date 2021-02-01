@@ -181,10 +181,10 @@ public class UserAccountService {
 	
 	// RegularIRAccount methods:
 	
-	public RegularIRA addRegularIraAccount(RegularIRA iraAccount, String userName) {
-		getUserById(userName).setRegularIra(iraAccount);
-		regularIRARepository.save(iraAccount);
-		return iraAccount;
+	public RegularIRA addRegularIraAccount(RegularIRA regularIra, String userName) {
+		getUserById(userName).setRegularIra(regularIra);
+		regularIRARepository.save(regularIra);
+		return regularIra;
 	}
 	
 	public List<RegularIRA> getRegularIRAccount(){
@@ -201,10 +201,10 @@ public class UserAccountService {
 	
 	// RolloverIRAccount methods:
 	
-	public RolloverIRA addRolloverIraAccount(RolloverIRA iraAccount, String userName) {
-		getUserById(userName).setRolloverIra(iraAccount);
-		rolloverIRARepository.save(iraAccount);
-		return iraAccount;
+	public RolloverIRA addRolloverIraAccount(RolloverIRA rolloverIra, String userName) {
+		getUserById(userName).setRolloverIra(rolloverIra);
+		rolloverIRARepository.save(rolloverIra);
+		return rolloverIra;
 	}
 	
 	public List<RolloverIRA> getRolloverIRAccount(){
@@ -221,10 +221,10 @@ public class UserAccountService {
 	
 	// RothIRAccount methods:
 	
-	public RothIRA addRothIraAccount(RothIRA iraAccount, String userName) {
-		getUserById(userName).setRothIra(iraAccount);
-		rothIRARepository.save(iraAccount);
-		return iraAccount;
+	public RothIRA addRothIraAccount(RothIRA rothIra, String userName) {
+		getUserById(userName).setRothIra(rothIra);
+		rothIRARepository.save(rothIra);
+		return rothIra;
 	}
 	
 	public List<RothIRA> getRothIRAccount(){

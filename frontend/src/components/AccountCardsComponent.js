@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 function getCummulativeBalance(accounts){
 
     var cummulativeBalance;
-    cummulativeBalance = accounts.reduce(function(tot, arr) {
-        console.log('hello: ' + arr.balance + ' : ' + tot);    
+    cummulativeBalance = accounts.reduce(function(tot, arr) {  
         return tot + arr.balance;
     }, 0);
     return cummulativeBalance;
@@ -35,7 +34,7 @@ export const SavingsAccountCard = ({ account }) => {
     else{
         return(
             <Card>
-                <Link to="/accountsummary">
+                <Link to="/createaccount">
                 <CardTitle>Create Savings Account?</CardTitle>
                 </Link>
             </Card>
@@ -56,7 +55,7 @@ export const CheckingAccountsCard = (accounts) => {
     else{
         return(
             <Card>
-                <Link to="/accountsummary">
+                <Link to="/createaccount">
                 <CardTitle>Create Checking Account?</CardTitle>
                 </Link>
             </Card>

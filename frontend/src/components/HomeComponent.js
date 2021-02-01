@@ -26,13 +26,13 @@ function Home(props) {
           <DBACheckingAccountsCard accounts={props.user.dbaAccounts} />
         </div>
         <div className="col-12 col-md-6 m-1">
-          <RegularIraCard accounts={props.user.regularIra} />
+          <RegularIraCard account={props.user.regularIra} />
         </div>
         <div className="col-12 col-md-6 m-1">
-          <RolloverIraCard accounts={props.user.rolloverIra} />
+          <RolloverIraCard account={props.user.rolloverIra} />
         </div>
         <div className="col-12 col-md-6 m-1">
-          <RothIraCard accounts={props.user.rothIra} />
+          <RothIraCard account={props.user.rothIra} />
         </div>
         <HomeSection {...homeObjOne} />
         </>
