@@ -13,15 +13,7 @@ import { InitialState } from './forms';
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
-            user: User,
-            savingsAccount: SavingsAccount,
-            checkingAccounts: CheckingAccounts,
-            cdAccounts: CDAccounts,
-            personalCheckingAccount: PersonalCheckingAccount,
-            dbaCheckingAccount: DBACheckingAccounts,
-            ...createForms({
-                newAccount: InitialState
-            })
+            user: User
         }),
         applyMiddleware(thunk, logger)
     );

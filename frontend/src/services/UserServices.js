@@ -8,11 +8,15 @@ class UserServices {
     }
 
     getUserById(userName){
-        return axios.get(baseUrlLocal + '/Users/' + userName);
+        return axios.get(baseUrlLocal + '/Users/' + userName); 
     }
 
     postUser(user){
         return axios.post(baseUrlLocal + '/Users', user);
+    }
+
+    postAccount(accountType, userName, data){
+        return axios.post(baseUrlLocal + '/Users/' + userName + '/' + accountType, data);
     }
 }
 

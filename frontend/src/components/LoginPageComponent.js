@@ -30,7 +30,6 @@ class LoginPage extends React.Component {
      handleSubmit = (event) =>{
         event.preventDefault();
         const user = this.state.userName
-        alert(user);
         UserServices.getUserById(user)
             .then((response) => this.props.dispatch(addUser(response.data)));
      }

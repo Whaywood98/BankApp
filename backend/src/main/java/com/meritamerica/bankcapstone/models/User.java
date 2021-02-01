@@ -60,8 +60,7 @@ public class User {
 	@OneToMany
 	private List<CheckingAccount> checkingAccounts = new ArrayList<>(); // Can have multiple.
 	@OneToOne
-	@JoinColumn
-	private SavingsAccount savingsAccount; // Can only have one.
+	private SavingsAccount savingsAccounts; // Can only have one.
 	@OneToOne
 	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToMany
@@ -166,56 +165,73 @@ public class User {
 		this.active = active;
 	}
 
-	/*
-	public Set<CheckingAccount> getCheckingAccounts() {
+	
+	
+	// Hashcode, toString, and equals methods:
+
+	public List<CheckingAccount> getCheckingAccounts() {
 		return checkingAccounts;
 	}
 
-	public void setCheckingAccounts(Set<CheckingAccount> checkingAccounts) {
-		this.checkingAccounts = checkingAccounts;
+	public void addCheckingAccount(CheckingAccount checkingAccount) {
+		this.checkingAccounts.add(checkingAccount);
 	}
 
-	public Set<SavingsAccount> getSavingsAccount() {
-		return savingsAccount;
+	public SavingsAccount getSavingsAccount() {
+		return savingsAccounts;
 	}
 
-	public void setSavingsAccount(Set<SavingsAccount> savingsAccount) {
-		this.savingsAccount = savingsAccount;
+	public void setSavingsAccount(SavingsAccount savingsAccount) {
+		this.savingsAccounts = savingsAccount;
 	}
 
-	public Set<PersonalCheckingAccount> getPersonalCheckingAccount() {
+	public PersonalCheckingAccount getPersonalCheckingAccount() {
 		return personalCheckingAccount;
 	}
 
-	public void setPersonalCheckingAccount(Set<PersonalCheckingAccount> personalCheckingAccount) {
+	public void setPersonalCheckingAccount(PersonalCheckingAccount personalCheckingAccount) {
 		this.personalCheckingAccount = personalCheckingAccount;
 	}
 
-	public Set<DBAAccount> getDbaAccounts() {
+	public List<DBAAccount> getDbaAccounts() {
 		return dbaAccounts;
 	}
 
-	public void setDbaAccounts(Set<DBAAccount> dbaAccounts) {
-		this.dbaAccounts = dbaAccounts;
+	public void addDbaAccount(DBAAccount dbaAccount) {
+		this.dbaAccounts.add(dbaAccount);
 	}
 
-	public Set<CDAccount> getCdAccounts() {
+	public List<CDAccount> getCdAccounts() {
 		return cdAccounts;
 	}
 
-	public void setCdAccounts(Set<CDAccount> cdAccounts) {
-		this.cdAccounts = cdAccounts;
+	public void addCdAccount(CDAccount cdAccount) {
+		this.cdAccounts.add(cdAccount);
 	}
 
-	public Set<IRAccount> getIrAccounts() {
-		return irAccounts;
+	public RegularIRA getRegularIra() {
+		return regularIra;
 	}
 
-	public void setIrAccounts(Set<IRAccount> irAccounts) {
-		this.irAccounts = irAccounts;
+	public void setRegularIra(RegularIRA regularIra) {
+		this.regularIra = regularIra;
 	}
-*/
-	// Hashcode, toString, and equals methods:
+
+	public RolloverIRA getRolloverIra() {
+		return rolloverIra;
+	}
+
+	public void setRolloverIra(RolloverIRA rolloverIra) {
+		this.rolloverIra = rolloverIra;
+	}
+
+	public RothIRA getRothIra() {
+		return rothIra;
+	}
+
+	public void setRothIra(RothIRA rothIra) {
+		this.rothIra = rothIra;
+	}
 
 	@Override
 	public int hashCode() {
