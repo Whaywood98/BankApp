@@ -4,12 +4,12 @@
     padding-top:0px;
     margin-top:0 px;
     font-size: 28px;
-    color: #4bafa7;
+    color: #97db86;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #e6e7eb;
+    background-color: #051944;
    }
    
   /*Header*/
@@ -25,7 +25,7 @@
     outline: none;
     border: solid 2px #4bafa7;
     border-radius: 4px;
-    color: #292929;
+    color: #051944;
     width: 100%;
     padding: 12px;
     font-size: 14px;
@@ -39,13 +39,13 @@
     margin-top: 20px;
     width: 100%;
     min-width: 280px;
-    color: #565656;
+    color: #051944;
     padding: 12px;
     font-size: 14px;
     font-weight: bold;
-    border: solid 2px #4bafa7;
+    border: solid 2px #97db86;
     border-radius: 4px;
-    background:  #4bafa7;
+    background:  #97db86;
     cursor: pointer;
     }
     .loginpage-icon {

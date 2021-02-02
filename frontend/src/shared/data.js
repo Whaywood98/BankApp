@@ -8,7 +8,7 @@ export const homeObjOne = {
     //'Get access to our exclusive platnium card that allows you to  send unlimited transactions without getting charged any fees',
     buttonLabel:'Learn More',
     imgStart: '',
-    img: 'Images-Bank-Site/public/images/svg-1.svg',
+    img: 'Images-Bank-Site/public/images/svg-5.svg',
     alt: 'Credit card'
 
 
