@@ -65,15 +65,23 @@ function Navbar() {
                        
                         <li className="nav-btn">
                             {button ? (
+<<<<<<< Updated upstream:frontend-1/src/Components/Navbar.js
                                 <Link to= 'signin' className= "btn-link" >
                                    <Button  buttonStyle= 'btn--outline'>Login</Button> 
                                 </Link>
                             ): (
                                 <Link to= 'signIn' className="btn-link" onClick={closeMobileMenu}>
+=======
+                                <Link to= '/LoginPage' className= "btn-link" >
+                                   <Button  buttonStyle= 'btn--outline'>Login</Button> 
+                                </Link>
+                            ): (
+                                <Link to= '/LoginPage' className="btn-link" onClick={closeMobileMenu}>
+>>>>>>> Stashed changes:frontend/src/components/NavbarComponent.js
                                     <Button buttonStyle='btn--outline'
                                     buttonSize= 'btn--mobile'>
 
-                                        SIGN IN
+                                        LOGIN
                                         </Button>
                                 </Link>
                                  

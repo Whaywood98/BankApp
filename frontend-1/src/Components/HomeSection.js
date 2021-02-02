@@ -44,7 +44,7 @@ function HomeSection({
                 >
                   {description}
                 </p>
-                <Link to='/sign-up'>
+                <Link to='/login'>
                   <Button buttonSize='btn--wide' buttonColor='blue'>
                     {buttonLabel}
                   </Button>
