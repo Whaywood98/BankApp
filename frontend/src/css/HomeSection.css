@@ -32,7 +32,7 @@
 }
 
 .top-line {
-  color: #4bafa7;
+  color: #97db86;
   font-size: 16px;
   line-height: 16px;
   font-weight: 700;
@@ -46,15 +46,15 @@
   font-size: 48px;
   line-height: 1.1;
   font-weight: 600;
-  color: #f7f8fa;
+  color: #97db86;
 }
 
 .dark {
-  color: #999999;
+  color: #051944;
 }
 
 .darkBg {
-  background-color: #e6e7eb;
+  background-color: #051944;
 }
 
 .home__home-subtitle {

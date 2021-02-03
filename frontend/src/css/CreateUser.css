@@ -1,0 +1,14 @@
+/*Page*/
+
+.RegisterWrapper {
+    height: 100vh;
+    padding-top:0px;
+    margin-top:0 px;
+    font-size: 28px;
+    color: #4bafa7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6e7eb;
+   }

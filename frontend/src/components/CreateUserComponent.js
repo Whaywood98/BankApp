@@ -7,6 +7,7 @@ import { baseUrlLocal } from '../shared/baseUrl';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addUser } from '../redux/ActionCreators';
+import'../css/CreateUser.css';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
@@ -47,7 +48,8 @@ class CreateUser extends Component {
         return(
             
             <div>
-                
+                <div class= "RegisterWrapper"/>
+
                 <h3>Register</h3>
                 <form onSubmit={this.handleSubmit}>
                     First Name: <input type= "text" name="firstName" onChange={this.handleInputChange}/>
