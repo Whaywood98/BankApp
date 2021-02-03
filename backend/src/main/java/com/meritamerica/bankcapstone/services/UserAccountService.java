@@ -85,8 +85,8 @@ public class UserAccountService {
 	}
 	
 	// Remove user by id:
-	public void removeUserById(long id) {
-		userRepository.deleteById(id);
+	public void removeUserById(String userName) {
+		userRepository.deleteUserById(userName);
 	}
 	
 	// Savings account methods:

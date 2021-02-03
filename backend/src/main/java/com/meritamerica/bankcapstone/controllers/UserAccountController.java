@@ -65,9 +65,8 @@ public class UserAccountController {
 	
 	@DeleteMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<User> removeUserById(@PathVariable("id") Long id) {
-		service.removeUserById(id);
-		return null;
+	public void removeUserById(@PathVariable("id") String userName) {
+		service.removeUserById(userName);
 	}
 	
 	// Get APIs =======================================================
