@@ -6,7 +6,7 @@ import CreateAccount from './CreateAccountComponent';
 import AboutUs from './AboutComponent';
 import CreateUser from './CreateUserComponent';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
-import Home from './HomeComponent';
+import Dashboard from './DashboardComponent';
 import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts, fetchUser, postUser, addUser } from '../redux/ActionCreators';
 import { actions, Form } from 'react-redux-form'
 import { connect } from 'react-redux';
@@ -34,9 +34,9 @@ class Main extends Component {
 
     render() {
 
-        const HomePage = () => {
+        const DashDisplay = () => {
             return(
-                <Home user={this.props.user}/>
+                <Dashboard user={this.props.user}/>
             );
         }
 
@@ -44,7 +44,7 @@ class Main extends Component {
             <div>
                 <Navbar/>
                 <Switch>
-                    <Route path='/home' component={HomePage} />
+                    <Route path='/dashboard' component={DashDisplay} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
                     <Route path='/signin' component={() => <LoginPage addUser={this.props.addUser}/>} />
                     <Route path='/createaccount' component={() => <CreateAccount user={this.props.user}/>} />

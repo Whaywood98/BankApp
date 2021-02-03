@@ -1,5 +1,5 @@
 .footer-container {
-    background-color: #253a66;
+    background-color: #353b38;
     padding: 4rem 0 2rem 0;
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@
     border: none;
     font-size: 18px;
     margin-bottom: 16px;
-    border: 1px solid #97db86;
+    border: 1px solid #fff;
   }
   
   .footer-links {
@@ -70,11 +70,11 @@
   }
   
   .footer-link-items > h2 {
-    color: #28be73;
+    color: #fff;
   }
   
   .footer-link-items a {
-    color: #97db86;
+    color: #fff;
     text-decoration: none;
     margin-bottom: 0.5rem;
   }

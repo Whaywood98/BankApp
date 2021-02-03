@@ -1,58 +1,47 @@
-/*Page*/
-.LoginWrapper {
-    height: 100vh;
-    padding-top:0px;
-    margin-top:0 px;
-    font-size: 28px;
-    color: #97db86;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login {
+    display:flex;
+    flex-direction:column;
     justify-content: center;
-    background-color: #051944;
-   }
-   
-  /*Header*/
-   h3 {
-    position: absolute;
-    align-items:center;
-    top: 150px;
-    font-size: 36px;
-   }
-     /*Input Boxes*/
-  .Input-Box {
-    box-sizing: border-box;
-    outline: none;
-    border: solid 2px #4bafa7;
-    border-radius: 4px;
-    color: #051944;
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    background: rgba(255, 255, 255, 1);
-   }
-   
-    /*Login Button*/
+    height:100vh;
+    align-items: center;
+    font-family: "Inter";
+}
 
-    .btn.btn-success {
-     display:block; 
-    margin-top: 20px;
-    width: 100%;
-    min-width: 280px;
-    color: #051944;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: bold;
-    border: solid 2px #97db86;
-    border-radius: 4px;
-    background:  #97db86;
-    cursor: pointer;
-    }
-    .loginpage-icon {
-        align-items: center;
-        size: 20px;
-        margin-top: 40px;
-        margin-bottom: 80px;
-        transform: translate(5%, 50%);
-      }
+.login__form {
+    display:flex;
+    flex-direction: coloumn;
 
+}
+
+.login__form > h1 {
+    font-size: 35px;
+    margin-bottom: 15px;
+    padding-bottom:10px;
+    letter-spacing: -1px;
+
+}
+
+.login_form > input {
+    min-width:380px;
+    padding: 20px 0;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    outline:none;
+    border: 1px solid rgba(0,0,0,0.24);
+    font-family: "Inter";
+    border-radius:2px;
+    font-size:15px;
+
+
+}
+
+.submit__btn {
+    padding:17px 30px;
+    margin-top:10px;
+    background:black;
+    border:none;
+    color:black;
+    font-size:14px;
+    font-family: "Inter";
+    border-radius: 3px;
+}

@@ -26,12 +26,15 @@ class CreateAccount extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         const data = this.state;
-        UserServices.postAccount(this.state.accountType, this.props.user.userName, data);
+        await UserServices.postAccount(this.state.accountType, this.props.user.userName, data);
         UserServices.getUserById(this.props.user.userName)
-            .then((response) => this.props.dispatch(addUser(response.data)));
+            .then((response) => {
+                console.log(response);
+                this.props.dispatch(addUser(response.data));
+            });
     }
 
     handleInputChange = (event) => {
