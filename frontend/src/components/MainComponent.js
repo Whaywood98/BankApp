@@ -12,6 +12,7 @@ import { actions, Form } from 'react-redux-form'
 import { connect } from 'react-redux';
 import UserServices from '../services/UserServices';
 import AccountSummary from './AccountSummaryComponent';
+import Home from './HomeComponent';
 
 
 const mapStateToProps = state => {
@@ -44,6 +45,7 @@ class Main extends Component {
             <div>
                 <Navbar/>
                 <Switch>
+                    <Route path='/home' component={() => <Home />} />
                     <Route path='/dashboard' component={DashDisplay} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
                     <Route path='/signin' component={() => <LoginPage addUser={this.props.addUser}/>} />

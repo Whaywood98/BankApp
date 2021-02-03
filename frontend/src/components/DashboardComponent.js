@@ -1,6 +1,5 @@
 import React from 'react'
 import HomeSection from './HomeSectionComponent';
-import {homeObjOne} from '../shared/data';
 import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard, UserCard,
           RegularIraCard, RolloverIraCard, RothIraCard } from './AccountCardsComponent';
 
@@ -34,7 +33,6 @@ function Dashboard(props) {
         <div className="col-12 col-md-6 m-1">
           <RothIraCard account={props.user.rothIra} />
         </div>
-        <HomeSection {...homeObjOne} />
         </>
     );
 }
