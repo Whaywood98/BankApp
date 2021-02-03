@@ -52,9 +52,9 @@ class LoginPage extends React.Component {
             <div class= "LoginWrapper">
 
 
-
+                     
                     <MdFingerprint size={80} style={{ fill: 'white' }}  className='loginpage-icon' />
-
+                    
                 <div class = "Header"/> <h3> User Login</h3>
                 <span style={format}>{this.state.err != '' ? this.state.err : ''}</span>
                 <form onSubmit={this.handleSubmit}>
