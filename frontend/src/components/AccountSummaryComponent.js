@@ -26,17 +26,17 @@ const AccountSummary = (props) => {
             )
         })
         return(
-        <div>
+        <>
             <p>{props.accountType}</p>
             <p>{summary}</p>
-        </div>
+        </>
         );
     } else {
         return(
-            <div>
+            <>
                 <p>{props.accountType}</p>
                 <p><AccountSummaryCard account={props.accounts} /></p>
-            </div>
+            </>
         );
     }
 }
