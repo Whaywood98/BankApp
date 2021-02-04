@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import UserServices from '../services/UserServices';
 import AccountSummary from './AccountSummaryComponent';
 import Home from './HomeComponent';
-
+import MyProfile from './MyProfileComponent';
 
 const mapStateToProps = state => {
     return {
@@ -59,6 +59,7 @@ class Main extends Component {
                     <Route path='/accountsummary/regular' component={() => <AccountSummary accountType="Regular IRA" accounts={this.props.user.regularIra} />} />
                     <Route path='/accountsummary/rollover' component={() => <AccountSummary accountType="Rollover IRA" accounts={this.props.user.rolloverIra} />} />
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
+                    <Route path='/myprofile' component={() => <MyProfile user={this.props.user} />} />
                 </Switch>
                 <Footer/>
             </div>

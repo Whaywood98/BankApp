@@ -14,7 +14,7 @@ function getCummulativeBalance(accounts){
 export const UserCard = ({ user }) => {
     return(
         <Card>
-            <Link to="/home">
+            <Link to="/myprofile">
             <CardTitle>{user.firstName} {user.lastName}</CardTitle>
             </Link>
         </Card>
