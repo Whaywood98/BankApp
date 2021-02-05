@@ -5,7 +5,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.meritamerica.bankcapstone.models.CDAccount;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
+import com.meritamerica.bankcapstone.models.JwtRequest;
+import com.meritamerica.bankcapstone.models.JwtResponse;
 import com.meritamerica.bankcapstone.models.PersonalCheckingAccount;
 import com.meritamerica.bankcapstone.models.RegularIRA;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
 import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
 import com.meritamerica.bankcapstone.models.User;
+import com.meritamerica.bankcapstone.services.MyUserDetailsService;
 import com.meritamerica.bankcapstone.services.UserAccountService;
+import com.meritamerica.bankcapstone.utility.JWTUtility;
 
 //@CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -31,6 +40,15 @@ public class UserAccountController {
 
 	@Autowired
 	UserAccountService service;
+	
+	@Autowired
+	private JWTUtility jwtUtility;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
 	
 	// Test APIs =======================================================
 	
@@ -52,18 +70,43 @@ public class UserAccountController {
 		return "Secured test passed.";
 	}
 	
+	@CrossOrigin(origins = "http://localhost:3000") // Allow access from hosts from within a private network. Remove when deployed to cloud.
+	@PostMapping(value = "/authenticate")
+	public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(
+							jwtRequest.getUserName(),
+							jwtRequest.getPassword()
+					)
+			);
+		} catch (BadCredentialsException e) {
+			throw new Exception("Invalid credentials.", e);
+		}
+		
+		// Now that authentication is done, let's create a token. First, get the user details:
+		
+		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(jwtRequest.getUserName());
+		
+		// Now we generate a token using the user details as a parameter:
+		
+		final String token = jwtUtility.generateToken(userDetails);
+		
+		// Return the token in a JwtResponse:
+		
+		return new JwtResponse(token);
+	}
+	
 	// User APIs =======================================================
 	
 	// Get all users:
-	
-	@GetMapping(value = "/Users")
+	@GetMapping(value = "/api/users")
 	@ResponseStatus(HttpStatus.OK)
 	public List<User> getUsers(){
 		return service.getUsers();
 	}
 	
 	// Get user by id:
-	
 	@GetMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public User fetchUserById(@PathVariable("id") String userName) {
@@ -71,7 +114,6 @@ public class UserAccountController {
 	}
 	
 	// Post user:
-	
 	@PostMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.CREATED)
 	public User addUser(@RequestBody User user) {
@@ -80,7 +122,6 @@ public class UserAccountController {
 	}
 	
 	// Delete user:
-	
 	@DeleteMapping("/Users/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public Optional<User> removeUserById(@PathVariable("id") Long id) {
@@ -88,7 +129,7 @@ public class UserAccountController {
 		return null;
 	}
 	
-	// Get APIs =======================================================
+	// Savings Account APIs =======================================================
 	
 	@GetMapping(value = "/Users/{id}/Checking Account")
 	@ResponseStatus(HttpStatus.OK)
@@ -102,25 +143,18 @@ public class UserAccountController {
 		return service.getUserById(userName).getSavingsAccount();
 	}
 	
-	
-	// Post APIs ======================================================
-	
-	@PostMapping(value = "/Users/{id}/Checking Account")
-	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount postCheckingAccount(@PathVariable("id") String userName, @RequestBody @Validated CheckingAccount checkingAccount) {
-		return service.addCheckingAccount(checkingAccount, userName);
-	}
-	
 	@PostMapping(value = "/Users/{id}/Savings Account")
 	@ResponseStatus(HttpStatus.CREATED)
 	public SavingsAccount postSavingsAccount(@PathVariable("id") String userName, @RequestBody @Validated SavingsAccount savingsAccount) {
 		return service.addSavingsAccount(savingsAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Personal Checking Account")
+	// Checking Account APIs ======================================================
+	
+	@PostMapping(value = "/Users/{id}/Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("id") String userName, @RequestBody @Validated PersonalCheckingAccount personalCheckingAccount) {
-		return service.addPersonalCheckingAccount(personalCheckingAccount, userName);
+	public CheckingAccount postCheckingAccount(@PathVariable("id") String userName, @RequestBody @Validated CheckingAccount checkingAccount) {
+		return service.addCheckingAccount(checkingAccount, userName);
 	}
 	
 	@PostMapping(value = "/Users/{id}/DBA Checking Account")
@@ -129,11 +163,23 @@ public class UserAccountController {
 		return service.addDBAAccount(dbaAccount, userName);
 	}
 	
+	// Personal Checking Account APIs =============================================
+	
+	@PostMapping(value = "/Users/{id}/Personal Checking Account")
+	@ResponseStatus(HttpStatus.CREATED)
+	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("id") String userName, @RequestBody @Validated PersonalCheckingAccount personalCheckingAccount) {
+		return service.addPersonalCheckingAccount(personalCheckingAccount, userName);
+	}
+	
+	// CD Account APIs =============================================================
+	
 	@PostMapping(value = "/Users/{id}/Certificate of Deposit Account")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CDAccount postCDAccount(@PathVariable("id") String userName, @RequestBody @Validated CDAccount cdAccount) {
 		return service.addCDAccount(cdAccount, userName);
 	}
+	
+	// Regular IRA APIs ============================================================
 	
 	@PostMapping(value = "/Users/{id}/Regular IRA")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -141,19 +187,20 @@ public class UserAccountController {
 		return service.addRegularIraAccount(regularIra, userName);
 	}
 	
+	// Rollover IRA APIs ===========================================================
+	
 	@PostMapping(value = "/Users/{id}/Rollover IRA")
 	@ResponseStatus(HttpStatus.CREATED)
 	public RolloverIRA postRolloverIRA(@PathVariable("id") String userName, @RequestBody @Validated RolloverIRA rolloverIra) {
 		return service.addRolloverIraAccount(rolloverIra, userName);
 	}
 	
+	// Roth IRA APIs ===============================================================
+	
 	@PostMapping(value = "/Users/{id}/Roth IRA")
 	@ResponseStatus(HttpStatus.CREATED)
 	public RothIRA postRothIRA(@PathVariable("id") String userName, @RequestBody @Validated RothIRA rothIra) {
 		return service.addRothIraAccount(rothIra, userName);
 	}
-	
-		
-		
 
 }

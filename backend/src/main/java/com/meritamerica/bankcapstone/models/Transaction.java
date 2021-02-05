@@ -8,15 +8,23 @@
 
 package com.meritamerica.bankcapstone.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Transaction {
 	
 	// Class attributes:
 	
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private User targetAccount;
-	private User sourceAccount;
+	private String targetAccountId;
+	private String sourceAccountId;
 	private double amount;
 	private String type; 		// Check, cash, ATM, or transfer?
 	
@@ -26,9 +34,9 @@ public class Transaction {
 		
 	}
 
-	public Transaction(User targetAccount, User sourceAccount, double amount, String type) {
-		this.targetAccount = targetAccount;
-		this.sourceAccount = sourceAccount;
+	public Transaction(String targetAccountId, String sourceAccountId, double amount, String type) {
+		this.targetAccountId = targetAccountId;
+		this.sourceAccountId = sourceAccountId;
 		this.amount = amount;
 		this.type = type;
 	}
@@ -39,20 +47,24 @@ public class Transaction {
 		return id;
 	}
 
-	public User getTargetAccount() {
-		return targetAccount;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public void setTargetAccount(User targetAccount) {
-		this.targetAccount = targetAccount;
+	public String getTargetAccountId() {
+		return targetAccountId;
 	}
 
-	public User getSourceAccount() {
-		return sourceAccount;
+	public void setTargetAccountId(String targetAccountId) {
+		this.targetAccountId = targetAccountId;
 	}
 
-	public void setSourceAccount(User sourceAccount) {
-		this.sourceAccount = sourceAccount;
+	public String getSourceAccountId() {
+		return sourceAccountId;
+	}
+
+	public void setSourceAccountId(String sourceAccountId) {
+		this.sourceAccountId = sourceAccountId;
 	}
 
 	public double getAmount() {
@@ -70,7 +82,5 @@ public class Transaction {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	// Class methods:
 	
 }

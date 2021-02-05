@@ -14,8 +14,6 @@ import javax.persistence.OneToOne;
 
 import com.sun.istack.NotNull;
 
-
-
 // It is good practice to name the entity.
 @Entity(name = "User")
 public class User {
@@ -55,23 +53,23 @@ public class User {
 	private int ssn;
 	@Column
 	@NotNull
-	private boolean active;
+	private boolean active = true;
 	@Column
 	@NotNull
-	private String roles;
-
-	// If sets don't work, use lists instead:
+	private String roles = "USER";	// Initialize to user since I only want one admin account.
 	
 	@OneToMany
 	private List<CheckingAccount> checkingAccounts = new ArrayList<>(); // Can have multiple.
-	@OneToOne
-	private SavingsAccount savingsAccounts; // Can only have one.
-	@OneToOne
-	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToMany
 	private List<DBAAccount> dbaAccounts = new ArrayList<>(); // Can only have 3.
 	@OneToMany
 	private List<CDAccount> cdAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToMany
+	private List<Transaction> transactions = new ArrayList<>();
+	@OneToOne
+	private SavingsAccount savingsAccounts; // Can only have one.
+	@OneToOne
+	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToOne
 	private RegularIRA regularIra;
 	@OneToOne
@@ -250,6 +248,14 @@ public class User {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 	
 	// Hashcode, toString, and equals methods:

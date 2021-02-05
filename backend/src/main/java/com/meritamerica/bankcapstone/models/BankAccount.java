@@ -26,7 +26,6 @@ public abstract class BankAccount {
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
 	private double interestRate;
 	private double balance;
 	//@ManyToOne
