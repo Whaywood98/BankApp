@@ -7,7 +7,8 @@ import AboutUs from './AboutComponent';
 import CreateUser from './CreateUserComponent';
 import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
 import Dashboard from './DashboardComponent';
-import { fetchSavingsAccount, fetchCheckingAccounts, fetchCdAccounts, fetchPersonalCheckingAccount, fetchDbaCheckingAccounts, fetchUser, postUser, addUser } from '../redux/ActionCreators';
+import Transactions from './TransactionsComponent';
+import { addUser } from '../redux/ActionCreators';
 import { actions, Form } from 'react-redux-form'
 import { connect } from 'react-redux';
 import UserServices from '../services/UserServices';
@@ -59,6 +60,7 @@ class Main extends Component {
                     <Route path='/accountsummary/regular' component={() => <AccountSummary accountType="Regular IRA" accounts={this.props.user.regularIra} />} />
                     <Route path='/accountsummary/rollover' component={() => <AccountSummary accountType="Rollover IRA" accounts={this.props.user.rolloverIra} />} />
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
+                    <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user}/>} />
                     <Route path='/myprofile' component={() => <MyProfile user={this.props.user} />} />
                 </Switch>
                 <Footer/>

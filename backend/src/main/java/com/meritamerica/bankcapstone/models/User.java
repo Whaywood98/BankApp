@@ -164,8 +164,6 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	
 	
 	// Hashcode, toString, and equals methods:
 
@@ -173,6 +171,10 @@ public class User {
 		return checkingAccounts;
 	}
 
+	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
+		this.checkingAccounts = checkingAccounts;
+	}
+	
 	public void addCheckingAccount(CheckingAccount checkingAccount) {
 		this.checkingAccounts.add(checkingAccount);
 	}
@@ -197,6 +199,10 @@ public class User {
 		return dbaAccounts;
 	}
 
+	public void setDbaAccounts(List<DBAAccount> dbaAccounts) {
+		this.dbaAccounts = dbaAccounts;
+	}
+	
 	public void addDbaAccount(DBAAccount dbaAccount) {
 		this.dbaAccounts.add(dbaAccount);
 	}
@@ -205,6 +211,10 @@ public class User {
 		return cdAccounts;
 	}
 
+	public void setCdAccounts(List<CDAccount> cdAccounts) {
+		this.cdAccounts = cdAccounts;
+	}
+	
 	public void addCdAccount(CDAccount cdAccount) {
 		this.cdAccounts.add(cdAccount);
 	}

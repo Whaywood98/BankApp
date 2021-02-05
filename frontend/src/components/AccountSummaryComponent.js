@@ -1,9 +1,11 @@
 import React from 'react';
 import {Card, CardTitle, CardBody } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function AccountSummaryCard(props) {
         return(
         <>
+        <Link to={`/transactions/${props.accountType}/${props.account.id}`}>
             <Card>
                 <CardTitle>Summary</CardTitle>
                 <CardBody>
@@ -12,6 +14,7 @@ function AccountSummaryCard(props) {
                     <p>Interest Rate: {props.account.interestRate}</p>
                 </CardBody>
             </Card>
+        </Link>
         </>
         );     
 }
@@ -21,21 +24,23 @@ const AccountSummary = (props) => {
         const summary = props.accounts.map((account) => {
             return(
                 <div key={account.id}>
-                    <AccountSummaryCard account={account} />
+                    <AccountSummaryCard account={account} accountType={props.accountType} />
                 </div>
             )
         })
         return(
         <>
             <p>{props.accountType}</p>
-            <p>{summary}</p>
+            <Link to={`/transactions/${props.accountType}`}>
+                <p>{summary}</p>
+            </Link>
         </>
         );
     } else {
         return(
             <>
                 <p>{props.accountType}</p>
-                <p><AccountSummaryCard account={props.accounts} /></p>
+                    <p><AccountSummaryCard account={props.accounts} accountType={props.accountType} /></p>
             </>
         );
     }

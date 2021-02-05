@@ -1,7 +1,6 @@
 package com.meritamerica.bankcapstone.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -10,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -134,7 +134,54 @@ public class UserAccountController {
 		return service.addRothIraAccount(rothIra, userName);
 	}
 	
+	// Patch Mapping ======================================================
+	
+	@PatchMapping(value = "/Users/{id}/Checking Account")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeCheckingAccount(@PathVariable("id") String userName, @RequestBody List<CheckingAccount> checkingAccounts) {
+		service.getUserById(userName).setCheckingAccounts(checkingAccounts);
+	}
 		
-		
+	@PatchMapping(value = "/Users/{id}/Savings Account")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeSavingsAccount(@PathVariable("id") String userName, @RequestBody SavingsAccount savingsAccount) {
+		service.getUserById(userName).setSavingsAccount(savingsAccount);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/Personal Checking Account")
+	@ResponseStatus(HttpStatus.OK)
+	public void removePersonalAccount(@PathVariable("id") String userName, @RequestBody PersonalCheckingAccount personalCheckingAccount) {
+		service.getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/DBA Checking Account")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeDBAAccount(@PathVariable("id") String userName, @RequestBody List<DBAAccount> dbaAccounts) {
+		service.getUserById(userName).setDbaAccounts(dbaAccounts);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/CD Account")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeCDAccount(@PathVariable("id") String userName, @RequestBody List<CDAccount> cdAccounts) {
+		service.getUserById(userName).setCdAccounts(cdAccounts);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/Regular IRA")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRegularIra(@PathVariable("id") String userName, @RequestBody RegularIRA regularIra) {
+		service.getUserById(userName).setRegularIra(regularIra);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/Rollover IRA")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRolloverIra(@PathVariable("id") String userName, @RequestBody RolloverIRA rolloverIra) {
+		service.getUserById(userName).setRolloverIra(rolloverIra);
+	}
+	
+	@PatchMapping(value = "/Users/{id}/Roth IRA")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRothIra(@PathVariable("id") String userName, @RequestBody RothIRA rothIra) {
+		service.getUserById(userName).setRothIra(rothIra);
+	}
 
 }

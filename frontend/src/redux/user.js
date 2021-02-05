@@ -37,6 +37,9 @@ export const User = (state = {
             return { ...state, isLoading: false, errMess: null, accounts: [], firstName: '',
                 middleName: '', lastName: '' }
 
+        case ActionTypes.DELETE_CHECKING_ACCOUNT:
+            return { ...state, isLoading: false, errMess: null, checkingAccounts: action.payload}
+            
         default: 
             return state;
     }
