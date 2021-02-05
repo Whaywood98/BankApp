@@ -24,8 +24,3 @@ export const addUser = (user) => ({
 export const userLoading = () => ({
     type: ActionTypes.USER_LOADING
 })
-
-export const deleteCheckingAccount = (account) => ({
-    type: ActionTypes.DELETE_CHECKING_ACCOUNT,
-    payload: account
-})

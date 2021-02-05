@@ -33,11 +33,13 @@ class CreateAccount extends Component {
             alert("Cannot create any more DBA Checking Accounts! (3 Max)");
         } else if(this.props.user.savingsAccount != null && this.state.accountType == 'Savings Account'){
             alert("Cannot create any more than 1 Savings Account!");
-        } else if(this.props.user.regularIra != null && this.state.accountType == 'Regular IRA'){
+        } else if(this.props.user.personalCheckingAccount != null && this.state.accountType == 'Personal Checking Account'){
+            alert("Cannot create any more than 1 Personal Checking Account!");
+        }else if(this.props.user.regularIra != null && this.state.accountType == 'Regular IRA'){
             alert("Cannot create any more than 1 Regular IRA!");
         } else if(this.props.user.rolloverIra != null && this.state.accountType == 'Rollover IRA'){
             alert("Cannot create any more than 1 Rollover IRA!");
-        } else if(this.props.user.dbaAccounts != null && this.state.accountType == 'Roth IRA'){
+        } else if(this.props.user.rothIra != null && this.state.accountType == 'Roth IRA'){
             alert("Cannot create any more than 1 Roth IRA!");
         }else{
             await UserServices.postAccount(this.state.accountType, this.props.user.userName, data);

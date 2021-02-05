@@ -243,6 +243,55 @@ public class User {
 		this.rothIra = rothIra;
 	}
 
+	public CheckingAccount deleteCheckingAccount(long id) {
+		for(int i = 0; i < this.checkingAccounts.size(); i++) {
+			if(checkingAccounts.get(i).getId() == id) {
+				return this.checkingAccounts.remove(i);
+			}
+		}
+		return null;
+	}
+	
+	public void deleteSavingsAccount() {
+		this.savingsAccounts = null;
+	}
+	
+	public void deletePersonalCheckingAccount() {
+		this.personalCheckingAccount = null;
+	}
+	
+	public void deleteDbaAccount(long id) {
+		for(int i = 0; i < this.dbaAccounts.size(); i++) {
+			if(dbaAccounts.get(i).getId() == id) {
+				dbaAccounts.remove(i);
+				return;
+			}
+		}
+		return;
+	}
+	
+	public void deleteCdAccount(long id) {
+		for(int i = 0; i < this.cdAccounts.size(); i++) {
+			if(cdAccounts.get(i).getId() == id) {
+				cdAccounts.remove(i);
+				return;
+			}
+		}
+		return;
+	}
+	
+	public void deleteRegularIra() {
+		this.regularIra = null;
+	}
+	
+	public void deleteRolloverIra() {
+		this.rolloverIra = null;
+	}
+	
+	public void deleteRothIra() {
+		this.rothIra = null;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -22,6 +22,10 @@ class UserServices {
     deleteUser(userName){
         axios.delete(baseUrlLocal + '/Users/' + userName);
     }
+
+    deleteAccount(userName, accoutType, id){
+        return axios.patch(baseUrlLocal + '/Users/' + userName + '/' + accoutType + '/' + id);
+    }
 }
 
 export default  new UserServices();

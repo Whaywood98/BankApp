@@ -97,6 +97,10 @@ public class UserAccountService {
 		return savingsAccount;
 	}
 	
+	public void deleteSavingsAccount(Long id) {
+		savingsAccountRepository.deleteById(id);
+	}
+	
 	public List<SavingsAccount> getSavingsAccounts(){
 		return savingsAccountRepository.findAll();
 	}
@@ -107,6 +111,10 @@ public class UserAccountService {
 		getUserById(userName).addCheckingAccount(checkingAccount);
 		checkingAccountRepository.save(checkingAccount);
 		return checkingAccount;
+	}
+	
+	public void deleteCheckingAccount(Long id) {
+		checkingAccountRepository.deleteById(id);
 	}
 	
 	public List<CheckingAccount> getCheckingAccounts(){
@@ -127,6 +135,10 @@ public class UserAccountService {
 		getUserById(userName).addCdAccount(cdAccount);
 		cdAccountRepository.save(cdAccount);
 		return cdAccount;
+	}
+	
+	public void deleteCdAccount(Long id) {
+		cdAccountRepository.deleteById(id);
 	}
 	
 	public List<CDAccount> getCDAccounts(){
@@ -167,6 +179,10 @@ public class UserAccountService {
 		return dbaAccount;
 	}
 	
+	public void deleteDbaAccount(Long id) {
+		dbaRepository.deleteById(id);
+	}
+	
 	public List<DBAAccount> getDBAAccount(){
 		return dbaRepository.findAll();
 	}
@@ -185,6 +201,10 @@ public class UserAccountService {
 		getUserById(userName).setRegularIra(regularIra);
 		regularIRARepository.save(regularIra);
 		return regularIra;
+	}
+	
+	public void deleteRegularIra(Long id) {
+		regularIRARepository.deleteById(id);
 	}
 	
 	public List<RegularIRA> getRegularIRAccount(){
@@ -207,6 +227,10 @@ public class UserAccountService {
 		return rolloverIra;
 	}
 	
+	public void deleteRolloverIra(Long id) {
+		rolloverIRARepository.deleteById(id);
+	}
+	
 	public List<RolloverIRA> getRolloverIRAccount(){
 		return rolloverIRARepository.findAll();
 	}
@@ -227,6 +251,10 @@ public class UserAccountService {
 		return rothIra;
 	}
 	
+	public void deleteRothIra(Long id) {
+		rothIRARepository.deleteById(id);
+	}
+	
 	public List<RothIRA> getRothIRAccount(){
 		return rothIRARepository.findAll();
 	}
@@ -245,5 +273,9 @@ public class UserAccountService {
 		getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
 		personalCheckingAccountRepository.save(personalCheckingAccount);
 		return personalCheckingAccount;
+	}
+	
+	public void deletePersonalCheckingAccount(Long id) {
+		personalCheckingAccountRepository.deleteById(id);
 	}
 }

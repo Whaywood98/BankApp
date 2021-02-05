@@ -46,9 +46,9 @@ public class UserAccountController {
 	
 	// Get user by id:
 	
-	@GetMapping("/Users/{id}")
+	@GetMapping("/Users/{userName}")
 	@ResponseStatus(HttpStatus.OK)
-	public User fetchUserById(@PathVariable("id") String userName) {
+	public User fetchUserById(@PathVariable("userName") String userName) {
 		return service.getUserById(userName);
 	}
 	
@@ -63,125 +63,133 @@ public class UserAccountController {
 	
 	// Delete user:
 	
-	@DeleteMapping("/Users/{id}")
+	@DeleteMapping("/Users/{userName}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeUserById(@PathVariable("id") String userName) {
+	public void removeUserById(@PathVariable("userName") String userName) {
 		service.removeUserById(userName);
 	}
 	
 	// Get APIs =======================================================
 	
-	@GetMapping(value = "/Users/{id}/Checking Account")
+	@GetMapping(value = "/Users/{userName}/Checking Account")
 	@ResponseStatus(HttpStatus.OK)
-	public List<CheckingAccount> getCheckingAccounts(@PathVariable("id") String userName){
+	public List<CheckingAccount> getCheckingAccounts(@PathVariable("userName") String userName){
 		return service.getUserById(userName).getCheckingAccounts();
 	}
 	
-	@GetMapping(value = "/Users/{id}/Savings Account")
+	@GetMapping(value = "/Users/{userName}/Savings Account")
 	@ResponseStatus(HttpStatus.OK)
-	public SavingsAccount getSavingsAccount(@PathVariable("id") String userName){
+	public SavingsAccount getSavingsAccount(@PathVariable("userName") String userName){
 		return service.getUserById(userName).getSavingsAccount();
 	}
 	
 	
 	// Post APIs ======================================================
 	
-	@PostMapping(value = "/Users/{id}/Checking Account")
+	@PostMapping(value = "/Users/{userName}/Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount postCheckingAccount(@PathVariable("id") String userName, @RequestBody @Valid CheckingAccount checkingAccount) {
+	public CheckingAccount postCheckingAccount(@PathVariable("userName") String userName, @RequestBody @Valid CheckingAccount checkingAccount) {
 		return service.addCheckingAccount(checkingAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Savings Account")
+	@PostMapping(value = "/Users/{userName}/Savings Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public SavingsAccount postSavingsAccount(@PathVariable("id") String userName, @RequestBody @Valid SavingsAccount savingsAccount) {
+	public SavingsAccount postSavingsAccount(@PathVariable("userName") String userName, @RequestBody @Valid SavingsAccount savingsAccount) {
 		return service.addSavingsAccount(savingsAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Personal Checking Account")
+	@PostMapping(value = "/Users/{userName}/Personal Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("id") String userName, @RequestBody @Valid PersonalCheckingAccount personalCheckingAccount) {
+	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("userName") String userName, @RequestBody @Valid PersonalCheckingAccount personalCheckingAccount) {
 		return service.addPersonalCheckingAccount(personalCheckingAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/DBA Checking Account")
+	@PostMapping(value = "/Users/{userName}/DBA Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public DBAAccount postDBAAccount(@PathVariable("id") String userName, @RequestBody @Valid DBAAccount dbaAccount) {
+	public DBAAccount postDBAAccount(@PathVariable("userName") String userName, @RequestBody @Valid DBAAccount dbaAccount) {
 		return service.addDBAAccount(dbaAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Certificate of Deposit Account")
+	@PostMapping(value = "/Users/{userName}/Certificate of Deposit Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CDAccount postCDAccount(@PathVariable("id") String userName, @RequestBody @Valid CDAccount cdAccount) {
+	public CDAccount postCDAccount(@PathVariable("userName") String userName, @RequestBody @Valid CDAccount cdAccount) {
 		return service.addCDAccount(cdAccount, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Regular IRA")
+	@PostMapping(value = "/Users/{userName}/Regular IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public RegularIRA postRegularIraAccount(@PathVariable("id") String userName, @RequestBody @Valid RegularIRA regularIra) {
+	public RegularIRA postRegularIraAccount(@PathVariable("userName") String userName, @RequestBody @Valid RegularIRA regularIra) {
 		return service.addRegularIraAccount(regularIra, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Rollover IRA")
+	@PostMapping(value = "/Users/{userName}/Rollover IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public RolloverIRA postRolloverIRA(@PathVariable("id") String userName, @RequestBody @Valid RolloverIRA rolloverIra) {
+	public RolloverIRA postRolloverIRA(@PathVariable("userName") String userName, @RequestBody @Valid RolloverIRA rolloverIra) {
 		return service.addRolloverIraAccount(rolloverIra, userName);
 	}
 	
-	@PostMapping(value = "/Users/{id}/Roth IRA")
+	@PostMapping(value = "/Users/{userName}/Roth IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public RothIRA postRothIRA(@PathVariable("id") String userName, @RequestBody @Valid RothIRA rothIra) {
+	public RothIRA postRothIRA(@PathVariable("userName") String userName, @RequestBody @Valid RothIRA rothIra) {
 		return service.addRothIraAccount(rothIra, userName);
 	}
 	
 	// Patch Mapping ======================================================
 	
-	@PatchMapping(value = "/Users/{id}/Checking Account")
+	@PatchMapping(value = "/Users/{userName}/Checking Accounts/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeCheckingAccount(@PathVariable("id") String userName, @RequestBody List<CheckingAccount> checkingAccounts) {
-		service.getUserById(userName).setCheckingAccounts(checkingAccounts);
+	public void removeCheckingAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteCheckingAccount(id);
+		service.deleteCheckingAccount(id);
 	}
 		
-	@PatchMapping(value = "/Users/{id}/Savings Account")
+	@PatchMapping(value = "/Users/{userName}/Savings Account/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeSavingsAccount(@PathVariable("id") String userName, @RequestBody SavingsAccount savingsAccount) {
-		service.getUserById(userName).setSavingsAccount(savingsAccount);
+	public void removeSavingsAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteSavingsAccount();
+		service.deleteSavingsAccount(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/Personal Checking Account")
+	@PatchMapping(value = "/Users/{userName}/Personal Checking Account/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removePersonalAccount(@PathVariable("id") String userName, @RequestBody PersonalCheckingAccount personalCheckingAccount) {
-		service.getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
+	public void removePersonalAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deletePersonalCheckingAccount();
+		service.deletePersonalCheckingAccount(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/DBA Checking Account")
+	@PatchMapping(value = "/Users/{userName}/DBA Checking Accounts/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeDBAAccount(@PathVariable("id") String userName, @RequestBody List<DBAAccount> dbaAccounts) {
-		service.getUserById(userName).setDbaAccounts(dbaAccounts);
+	public void removeDBAAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteDbaAccount(id);
+		service.deleteDbaAccount(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/CD Account")
+	@PatchMapping(value = "/Users/{userName}/Certificate of Deposit Accounts/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeCDAccount(@PathVariable("id") String userName, @RequestBody List<CDAccount> cdAccounts) {
-		service.getUserById(userName).setCdAccounts(cdAccounts);
+	public void removeCDAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteCdAccount(id);
+		service.deleteCdAccount(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/Regular IRA")
+	@PatchMapping(value = "/Users/{userName}/Regular IRA/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRegularIra(@PathVariable("id") String userName, @RequestBody RegularIRA regularIra) {
-		service.getUserById(userName).setRegularIra(regularIra);
+	public void removeRegularIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteRegularIra();
+		service.deleteRegularIra(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/Rollover IRA")
+	@PatchMapping(value = "/Users/{userName}/Rollover IRA/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRolloverIra(@PathVariable("id") String userName, @RequestBody RolloverIRA rolloverIra) {
-		service.getUserById(userName).setRolloverIra(rolloverIra);
+	public void removeRolloverIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteRolloverIra();
+		service.deleteRolloverIra(id);
 	}
 	
-	@PatchMapping(value = "/Users/{id}/Roth IRA")
+	@PatchMapping(value = "/Users/{userName}/Roth IRA/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRothIra(@PathVariable("id") String userName, @RequestBody RothIRA rothIra) {
-		service.getUserById(userName).setRothIra(rothIra);
+	public void removeRothIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteRothIra();
+		service.deleteRothIra(id);
 	}
 
 }

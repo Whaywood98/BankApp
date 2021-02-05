@@ -40,7 +40,7 @@ const AccountSummary = (props) => {
         return(
             <>
                 <p>{props.accountType}</p>
-                    <p><AccountSummaryCard account={props.accounts} accountType={props.accountType} /></p>
+                <p><AccountSummaryCard account={props.accounts} accountType={props.accountType} /></p>
             </>
         );
     }
