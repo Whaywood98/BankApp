@@ -23,8 +23,8 @@ class UserServices {
         axios.delete(baseUrlLocal + '/Users/' + userName);
     }
 
-    deleteAccount(userName, accoutType, id){
-        return axios.patch(baseUrlLocal + '/Users/' + userName + '/' + accoutType + '/' + id);
+    deleteAccount(userName, accoutType, id, closingTo){
+        return axios.patch(baseUrlLocal + '/Users/' + userName + '/' + accoutType + '/' + id + '/' + closingTo);
     }
 }
 

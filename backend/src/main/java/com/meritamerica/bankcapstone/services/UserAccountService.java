@@ -97,7 +97,8 @@ public class UserAccountService {
 		return savingsAccount;
 	}
 	
-	public void deleteSavingsAccount(Long id) {
+	public void deleteSavingsAccount(Long id, String userName) {
+		userRepository.deleteUserById(userName);
 		savingsAccountRepository.deleteById(id);
 	}
 	
@@ -113,7 +114,8 @@ public class UserAccountService {
 		return checkingAccount;
 	}
 	
-	public void deleteCheckingAccount(Long id) {
+	public void deleteCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
 		checkingAccountRepository.deleteById(id);
 	}
 	
@@ -137,7 +139,17 @@ public class UserAccountService {
 		return cdAccount;
 	}
 	
-	public void deleteCdAccount(Long id) {
+	public void deleteCdAccount(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
 		cdAccountRepository.deleteById(id);
 	}
 	
@@ -179,7 +191,8 @@ public class UserAccountService {
 		return dbaAccount;
 	}
 	
-	public void deleteDbaAccount(Long id) {
+	public void deleteDbaAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
 		dbaRepository.deleteById(id);
 	}
 	
@@ -203,7 +216,17 @@ public class UserAccountService {
 		return regularIra;
 	}
 	
-	public void deleteRegularIra(Long id) {
+	public void deleteRegularIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
 		regularIRARepository.deleteById(id);
 	}
 	
@@ -227,7 +250,17 @@ public class UserAccountService {
 		return rolloverIra;
 	}
 	
-	public void deleteRolloverIra(Long id) {
+	public void deleteRolloverIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
 		rolloverIRARepository.deleteById(id);
 	}
 	
@@ -251,7 +284,17 @@ public class UserAccountService {
 		return rothIra;
 	}
 	
-	public void deleteRothIra(Long id) {
+	public void deleteRothIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
 		rothIRARepository.deleteById(id);
 	}
 	
@@ -275,7 +318,8 @@ public class UserAccountService {
 		return personalCheckingAccount;
 	}
 	
-	public void deletePersonalCheckingAccount(Long id) {
+	public void deletePersonalCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
 		personalCheckingAccountRepository.deleteById(id);
 	}
 }

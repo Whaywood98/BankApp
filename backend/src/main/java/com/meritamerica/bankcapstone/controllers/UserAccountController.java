@@ -136,60 +136,59 @@ public class UserAccountController {
 	
 	// Patch Mapping ======================================================
 	
-	@PatchMapping(value = "/Users/{userName}/Checking Accounts/{id}")
+	@PatchMapping(value = "/Users/{userName}/Checking Accounts/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
 	public void removeCheckingAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
 		service.getUserById(userName).deleteCheckingAccount(id);
-		service.deleteCheckingAccount(id);
+		service.deleteCheckingAccount(id, userName);
 	}
 		
-	@PatchMapping(value = "/Users/{userName}/Savings Account/{id}")
+	@PatchMapping(value = "/Users/{userName}/Savings Account/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
 	public void removeSavingsAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
-		service.getUserById(userName).deleteSavingsAccount();
-		service.deleteSavingsAccount(id);
+		service.deleteSavingsAccount(id, userName);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/Personal Checking Account/{id}")
+	@PatchMapping(value = "/Users/{userName}/Personal Checking Account/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
 	public void removePersonalAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
 		service.getUserById(userName).deletePersonalCheckingAccount();
-		service.deletePersonalCheckingAccount(id);
+		service.deletePersonalCheckingAccount(id, userName);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/DBA Checking Accounts/{id}")
+	@PatchMapping(value = "/Users/{userName}/DBA Checking Accounts/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
 	public void removeDBAAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
 		service.getUserById(userName).deleteDbaAccount(id);
-		service.deleteDbaAccount(id);
+		service.deleteDbaAccount(id, userName);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/Certificate of Deposit Accounts/{id}")
+	@PatchMapping(value = "/Users/{userName}/Certificate of Deposit Accounts/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeCDAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
-		service.getUserById(userName).deleteCdAccount(id);
-		service.deleteCdAccount(id);
+	public void removeCDAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteCdAccount(id, closingTo);
+		service.deleteCdAccount(id, userName, closingTo);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/Regular IRA/{id}")
+	@PatchMapping(value = "/Users/{userName}/Regular IRA/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRegularIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
-		service.getUserById(userName).deleteRegularIra();
-		service.deleteRegularIra(id);
+	public void removeRegularIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRegularIra(closingTo);
+		service.deleteRegularIra(id, userName, closingTo);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/Rollover IRA/{id}")
+	@PatchMapping(value = "/Users/{userName}/Rollover IRA/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRolloverIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
-		service.getUserById(userName).deleteRolloverIra();
-		service.deleteRolloverIra(id);
+	public void removeRolloverIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRolloverIra(closingTo);
+		service.deleteRolloverIra(id, userName, closingTo);
 	}
 	
-	@PatchMapping(value = "/Users/{userName}/Roth IRA/{id}")
+	@PatchMapping(value = "/Users/{userName}/Roth IRA/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
-	public void removeRothIra(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
-		service.getUserById(userName).deleteRothIra();
-		service.deleteRothIra(id);
+	public void removeRothIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRothIra(closingTo);
+		service.deleteRothIra(id, userName, closingTo);
 	}
 
 }
