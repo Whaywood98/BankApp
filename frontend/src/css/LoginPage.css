@@ -1,47 +1,64 @@
-.login {
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    height:100vh;
+.login-Wrapper {
+  background:  url('./undraw_Access_account_re_8spm\ \(1\).svg');
+  background-repeat: no-repeat;
+  height: 80vh;
+  -webkit-background-size: cover;
+  background-size: 600px;
+  background-color: #aca9a994;
+  padding-top:0px;
+    display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  
+
+  }
+
+  .login-container{
+    position:relavtive;
+    top:-1px;
+    margin-left:600px;
+    display:Right;
     align-items: center;
-    font-family: "Inter";
-}
-
-.login__form {
-    display:flex;
-    flex-direction: coloumn;
-
-}
-
-.login__form > h1 {
-    font-size: 35px;
-    margin-bottom: 15px;
-    padding-bottom:10px;
-    letter-spacing: -1px;
-
-}
-
-.login_form > input {
+    text-align:center;
+    padding: 50px;
+    position: relative;
+    color:#00b894;
+    
+  }
+  .input-div{
     min-width:380px;
     padding: 20px 0;
     padding-left: 15px;
     margin-bottom: 10px;
+    text-align: left;
     outline:none;
-    border: 1px solid rgba(0,0,0,0.24);
     font-family: "Inter";
     border-radius:2px;
     font-size:15px;
+    color:#fff;
+    
 
+  }
+  .Input-Box{
+    width:100%;
+    overflow:hidden;
+    font-size:20px;
+    padding: 8px 0;
+    margin:8px 0;
+    border: 1px solid #00b894;
+    background: none;
 
-}
+  }
+  
 
-.submit__btn {
-    padding:17px 30px;
-    margin-top:10px;
-    background:black;
-    border:none;
-    color:black;
-    font-size:14px;
-    font-family: "Inter";
-    border-radius: 3px;
+.btn{
+  width:100%;
+  background: none;
+  border: 2px solid #00b894;
+  color: white;
+  padding:5px;
+  font-size:20px;
+  cursor: pointer;
+  margin:12px 0;
 }

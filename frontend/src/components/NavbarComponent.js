@@ -79,9 +79,9 @@ function Navbar() {
                                     <Button buttonStyle='btn--outline'
                                     buttonSize= 'btn--mobile'>
 
-                                        SIGN IN
+                                          LOGIN
                                         </Button>
-                                </Link>
+                                       </Link>
                                  
  
                             )}
@@ -89,7 +89,7 @@ function Navbar() {
                 </ul>
             </div>
             </div>
-            </IconContext.Provider>/
+            </IconContext.Provider>
         </>
     );
 }

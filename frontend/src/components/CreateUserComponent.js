@@ -7,6 +7,7 @@ import { baseUrlLocal } from '../shared/baseUrl';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addUser } from '../redux/ActionCreators';
+import '../css/CreateUser.css';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
@@ -46,27 +47,47 @@ class CreateUser extends Component {
     render(){
         return(
             
-            <div>
+            <html>
+               
+            <body class= "Registration-Wrapper">
+
+                <div class ="Registration-container">
                 
-                <h3>Register</h3>
+                <h1> User Registration</h1>
+                
                 <form onSubmit={this.handleSubmit}>
-                    First Name: <input type= "text" name="firstName" onChange={this.handleInputChange}/>
+
+                    <div class="input-div">
+                    First Name: <input class = "input-Box"type= "text" name="firstName" onChange={this.handleInputChange}/>
                     <br/>
-                    Middle Name: (optional) <input type= "text" name= "middleName" onChange={this.handleInputChange}/>
+                  
+                    Middle Name: (optional) <input class = "input-Box" type= "text" name= "middleName" onChange={this.handleInputChange}/>
                     <br/>
-                    Last Name: <input type= "text" name="lastName" onChange={this.handleInputChange}/>
+                    
+                    Last Name: <input class = "input-Box" type= "text" name="lastName" onChange={this.handleInputChange}/>
                     <br/>
-                    Username: <input type= "text" name= "userName" onChange={this.handleInputChange}/>
+                   
+                    Username: <input class = "input-Box" type= "text" name= "userName" onChange={this.handleInputChange}/>
                     <br/>
-                    Email: <input type= "text" name= "email" onChange={this.handleInputChange}/>
+                    
+                    Email: <input class = "input-Box" type= "text" name= "email" onChange={this.handleInputChange}/>
                     <br/>
-                    Date of Birth: <input type= "text" name= "dob" onChange={this.handleInputChange}/>
+                   
+                    Date of Birth: <input class = "input-Box" type= "text" name= "dob" onChange={this.handleInputChange}/>
                     <br/>
-                    SSN: <input type= "text" name= "ssn" onChange={this.handleInputChange}/>
+                   
+                    SSN: <input class = "input-Box" type= "text" name= "ssn" onChange={this.handleInputChange}/>
                     <br/>
-                    <input type ="submit" value= "Create Account" onChange={this.handleInputChange}/>
-                </form>
+                    
+                    <input type ="submit" class="btn btn-success" value= "Create Account" onChange={this.handleInputChange}/>
+                </div>
+            </form>
             </div>
+            </body>
+            </html>
+           
+          
+           
         );
     }
 }
