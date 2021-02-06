@@ -1,6 +1,8 @@
 .footer-container {
-    background-color: #353b38;
-    padding: 4rem 0 2rem 0;
+    background-color: #aaa5a5;
+    padding: 2rem 0 2rem 0;
+    height: 150px;
+  
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -156,4 +158,8 @@
     .social-media-wrap {
       flex-direction: column;
     }
+
+    .footer-shadow {
+      background-size: 100%;
+  }
   }
