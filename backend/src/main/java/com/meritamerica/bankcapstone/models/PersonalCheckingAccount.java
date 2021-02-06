@@ -10,5 +10,9 @@ public class PersonalCheckingAccount extends BankAccount {
 	public PersonalCheckingAccount() {
 		
 	}
-
+	
+	public PersonalCheckingAccount(double interestRate, double balance) {
+		this.setBalance(balance);
+		this.setInterestRate(interestRate);
+	}
 }

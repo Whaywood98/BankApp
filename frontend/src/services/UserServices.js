@@ -18,6 +18,14 @@ class UserServices {
     postAccount(accountType, userName, data){
         return axios.post(baseUrlLocal + '/Users/' + userName + '/' + accountType, data);
     }
+
+    deleteUser(userName){
+        axios.delete(baseUrlLocal + '/Users/' + userName);
+    }
+
+    deleteAccount(userName, accoutType, id, closingTo){
+        return axios.patch(baseUrlLocal + '/Users/' + userName + '/' + accoutType + '/' + id + '/' + closingTo);
+    }
 }
 
 export default  new UserServices();

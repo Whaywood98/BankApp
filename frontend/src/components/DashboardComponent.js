@@ -2,8 +2,11 @@ import React from 'react'
 import HomeSection from './HomeSectionComponent';
 import { SavingsAccountCard, CheckingAccountsCard, CDAccountsCard, PersonalCheckingAccountCard, DBACheckingAccountsCard, UserCard,
           RegularIraCard, RolloverIraCard, RothIraCard } from './AccountCardsComponent';
+import { Button } from './ButtonComponent';
+import {Link} from 'react-router-dom'
 
 function Dashboard(props) {
+  if(props.user.userName.length != 0)
     return (
         <>
         <div className="col-12 col-md-6 m-1">
@@ -35,5 +38,17 @@ function Dashboard(props) {
         </div>
         </>
     );
+    else{
+      return(
+        <div>
+          <Link to="/register">
+            <Button>Sign Up</Button>
+          </Link>
+          <Link to="/signin">
+            <Button>Sign In</Button>
+          </Link>
+        </div>
+      )
+    }
 }
 export default Dashboard; 

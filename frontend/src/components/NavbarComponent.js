@@ -68,7 +68,7 @@ function Navbar() {
                                 Register
                             </Link>
                         </li>
-                       
+                        
                         <li className="nav-btn">
                             {button ? (
                                 <Link to= '/signin' className= "btn-link" >

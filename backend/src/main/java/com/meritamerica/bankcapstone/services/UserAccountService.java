@@ -85,8 +85,8 @@ public class UserAccountService {
 	}
 	
 	// Remove user by id:
-	public void removeUserById(long id) {
-		userRepository.deleteById(id);
+	public void removeUserById(String userName) {
+		userRepository.deleteUserById(userName);
 	}
 	
 	// Savings account methods:
@@ -95,6 +95,11 @@ public class UserAccountService {
 		getUserById(userName).setSavingsAccount(savingsAccount);
 		savingsAccountRepository.save(savingsAccount);
 		return savingsAccount;
+	}
+	
+	public void deleteSavingsAccount(Long id, String userName) {
+		userRepository.deleteUserById(userName);
+		savingsAccountRepository.deleteById(id);
 	}
 	
 	public List<SavingsAccount> getSavingsAccounts(){
@@ -107,6 +112,11 @@ public class UserAccountService {
 		getUserById(userName).addCheckingAccount(checkingAccount);
 		checkingAccountRepository.save(checkingAccount);
 		return checkingAccount;
+	}
+	
+	public void deleteCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		checkingAccountRepository.deleteById(id);
 	}
 	
 	public List<CheckingAccount> getCheckingAccounts(){
@@ -127,6 +137,20 @@ public class UserAccountService {
 		getUserById(userName).addCdAccount(cdAccount);
 		cdAccountRepository.save(cdAccount);
 		return cdAccount;
+	}
+	
+	public void deleteCdAccount(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
+		cdAccountRepository.deleteById(id);
 	}
 	
 	public List<CDAccount> getCDAccounts(){
@@ -167,6 +191,11 @@ public class UserAccountService {
 		return dbaAccount;
 	}
 	
+	public void deleteDbaAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		dbaRepository.deleteById(id);
+	}
+	
 	public List<DBAAccount> getDBAAccount(){
 		return dbaRepository.findAll();
 	}
@@ -185,6 +214,20 @@ public class UserAccountService {
 		getUserById(userName).setRegularIra(regularIra);
 		regularIRARepository.save(regularIra);
 		return regularIra;
+	}
+	
+	public void deleteRegularIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
+		regularIRARepository.deleteById(id);
 	}
 	
 	public List<RegularIRA> getRegularIRAccount(){
@@ -207,6 +250,20 @@ public class UserAccountService {
 		return rolloverIra;
 	}
 	
+	public void deleteRolloverIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
+		rolloverIRARepository.deleteById(id);
+	}
+	
 	public List<RolloverIRA> getRolloverIRAccount(){
 		return rolloverIRARepository.findAll();
 	}
@@ -227,6 +284,20 @@ public class UserAccountService {
 		return rothIra;
 	}
 	
+	public void deleteRothIra(Long id, String userName, String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+				personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+				savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
+		}
+		rothIRARepository.deleteById(id);
+	}
+	
 	public List<RothIRA> getRothIRAccount(){
 		return rothIRARepository.findAll();
 	}
@@ -245,5 +316,10 @@ public class UserAccountService {
 		getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
 		personalCheckingAccountRepository.save(personalCheckingAccount);
 		return personalCheckingAccount;
+	}
+	
+	public void deletePersonalCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		personalCheckingAccountRepository.deleteById(id);
 	}
 }

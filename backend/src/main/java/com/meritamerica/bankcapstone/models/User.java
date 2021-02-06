@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.sun.istack.NotNull;
 
 
@@ -164,8 +166,6 @@ public class User {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
-	
 	
 	// Hashcode, toString, and equals methods:
 
@@ -173,6 +173,10 @@ public class User {
 		return checkingAccounts;
 	}
 
+	public void setCheckingAccounts(List<CheckingAccount> checkingAccounts) {
+		this.checkingAccounts = checkingAccounts;
+	}
+	
 	public void addCheckingAccount(CheckingAccount checkingAccount) {
 		this.checkingAccounts.add(checkingAccount);
 	}
@@ -197,6 +201,10 @@ public class User {
 		return dbaAccounts;
 	}
 
+	public void setDbaAccounts(List<DBAAccount> dbaAccounts) {
+		this.dbaAccounts = dbaAccounts;
+	}
+	
 	public void addDbaAccount(DBAAccount dbaAccount) {
 		this.dbaAccounts.add(dbaAccount);
 	}
@@ -205,6 +213,10 @@ public class User {
 		return cdAccounts;
 	}
 
+	public void setCdAccounts(List<CDAccount> cdAccounts) {
+		this.cdAccounts = cdAccounts;
+	}
+	
 	public void addCdAccount(CDAccount cdAccount) {
 		this.cdAccounts.add(cdAccount);
 	}
@@ -233,6 +245,153 @@ public class User {
 		this.rothIra = rothIra;
 	}
 
+	// Delete Methods ==============================================
+	
+	public CheckingAccount deleteCheckingAccount(long id) {
+		for(int i = 0; i < this.checkingAccounts.size(); i++) {
+			if(checkingAccounts.get(i).getId() == id) {
+				if(this.savingsAccounts == null) {
+					this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+					this.savingsAccounts.addBalance(this.checkingAccounts.get(i).getBalance());
+				}else {
+					this.savingsAccounts.addBalance(this.checkingAccounts.get(i).getBalance());
+				}
+				return this.checkingAccounts.remove(i);
+			}
+		}
+		return null;
+	}
+	
+	public void deleteSavingsAccount() {	
+		this.savingsAccounts = null;
+	}
+	
+	public void deletePersonalCheckingAccount() {
+		if(this.savingsAccounts == null) {
+			this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+			this.savingsAccounts.addBalance(this.personalCheckingAccount.getBalance());
+		}else {
+			this.savingsAccounts.addBalance(this.personalCheckingAccount.getBalance());
+		}
+		this.personalCheckingAccount = null;
+	}
+	
+	public DBAAccount deleteDbaAccount(long id) {
+		for(int i = 0; i < this.dbaAccounts.size(); i++) {
+			if(dbaAccounts.get(i).getId() == id) {
+				if(this.savingsAccounts == null) {
+					this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+					this.savingsAccounts.addBalance(this.dbaAccounts.get(i).getBalance());
+				} else {
+					this.savingsAccounts.addBalance(this.dbaAccounts.get(i).getBalance());
+				}
+				return this.dbaAccounts.remove(i);
+			}
+		}
+		return null;
+	}
+	
+	public CDAccount deleteCdAccount(long id, String closingTo) {
+		for(int i = 0; i < this.cdAccounts.size(); i++) {
+			if(this.cdAccounts.get(i).getId() == id) {
+				switch(closingTo) {
+				case "Checking":
+					if(this.personalCheckingAccount == null) {
+						this.setPersonalCheckingAccount(new PersonalCheckingAccount(0.0, 0.0));
+						this.personalCheckingAccount.addBalance(this.cdAccounts.get(i).getBalance());
+					} else {
+						this.personalCheckingAccount.addBalance(this.cdAccounts.get(i).getBalance());
+					}
+					break;
+				case "Savings":
+					if(this.savingsAccounts == null) {
+						this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+						this.savingsAccounts.addBalance(this.cdAccounts.get(i).getBalance());
+					}else {
+						this.savingsAccounts.addBalance(this.cdAccounts.get(i).getBalance());
+					}
+					break;
+				default:
+					break;
+				}
+			return this.cdAccounts.remove(i);
+			}
+		}
+		return null;
+	}
+	
+	public void deleteRegularIra(String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+			if(this.personalCheckingAccount == null) {
+				this.setPersonalCheckingAccount(new PersonalCheckingAccount(0.0, 0.0));
+				this.personalCheckingAccount.addBalance(this.regularIra.getBalance() * 0.8);
+			} else {
+				this.personalCheckingAccount.addBalance(this.regularIra.getBalance() * 0.8);
+			}
+			break;
+		case "Savings":
+			if(this.savingsAccounts == null) {
+				this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+				this.savingsAccounts.addBalance(this.regularIra.getBalance() * 0.8);
+			} else {
+				this.savingsAccounts.addBalance(this.regularIra.getBalance() * 0.8);
+			}
+			break;
+		default:
+			break;
+		}
+		this.regularIra = null;
+	}
+	
+	public void deleteRolloverIra(String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+			if(this.personalCheckingAccount == null) {
+				this.setPersonalCheckingAccount(new PersonalCheckingAccount(0.0, 0.0));
+				this.personalCheckingAccount.addBalance(this.rolloverIra.getBalance() * 0.8);
+			} else {
+				this.personalCheckingAccount.addBalance(this.rolloverIra.getBalance() * 0.8);
+			}
+			break;
+		case "Savings":
+			if(this.savingsAccounts == null) {
+				this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+				this.savingsAccounts.addBalance(this.rolloverIra.getBalance() * 0.8);
+			} else {
+				this.savingsAccounts.addBalance(this.rolloverIra.getBalance() * 0.8);
+			}
+			break;
+		default:
+			break;
+		}
+		this.rolloverIra = null;
+	}
+	
+	public void deleteRothIra(String closingTo) {
+		switch(closingTo) {
+		case "Checking":
+			if(this.personalCheckingAccount == null) {
+				this.setPersonalCheckingAccount(new PersonalCheckingAccount(0.0, 0.0));
+				this.personalCheckingAccount.addBalance(this.rothIra.getBalance() * 0.8);
+			} else {
+				this.personalCheckingAccount.addBalance(this.rothIra.getBalance() * 0.8);
+			}
+			break;
+		case "Savings":
+			if(this.savingsAccounts == null) {
+				this.setSavingsAccount(new SavingsAccount(0.0, 0.0));
+				this.savingsAccounts.addBalance(this.rothIra.getBalance() * 0.8);
+			} else {
+				this.savingsAccounts.addBalance(this.rothIra.getBalance() * 0.8);
+			}
+			break;
+		default:
+			break;
+		}
+		this.rothIra = null;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

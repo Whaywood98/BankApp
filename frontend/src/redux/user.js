@@ -37,6 +37,7 @@ export const User = (state = {
             return { ...state, isLoading: false, errMess: null, accounts: [], firstName: '',
                 middleName: '', lastName: '' }
 
+            
         default: 
             return state;
     }
