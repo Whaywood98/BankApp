@@ -15,6 +15,7 @@ import UserServices from '../services/UserServices';
 import AccountSummary from './AccountSummaryComponent';
 import Home from './HomeComponent';
 import MyProfile from './MyProfileComponent';
+import axios from 'axios';
 
 const mapStateToProps = state => {
     return {
@@ -32,6 +33,10 @@ class Main extends Component {
     constructor(props) {
         super(props);
 
+    }
+
+    componentDidMount(){
+        axios.get("");
     }
 
     render() {

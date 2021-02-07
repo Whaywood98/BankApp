@@ -3,8 +3,8 @@ package com.meritamerica.bankcapstone.services;
 
 import org.springframework.stereotype.Service;
 
-
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +74,14 @@ public class UserAccountService {
 		return userRepository.save(user);
 	}
 	
+	// Check if user exists
+	public boolean userExists(String userName) {
+		if(getUserById(userName) == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	// Get a list of all users. Admin Only.
 	public List<User> getUsers(){
 		return userRepository.findAll();
@@ -81,7 +89,7 @@ public class UserAccountService {
 	
 	// Search for user by id:
 	public User getUserById(String userName) {
-		return userRepository.findUserById(userName);
+			return userRepository.findUserById(userName);
 	}
 	
 	// Remove user by id:
@@ -133,7 +141,17 @@ public class UserAccountService {
 	
 	// CD Account methods:
 	
+	public double futureValue(CDOffering cdOffering, double balance) {
+		return balance * Math.pow(1 + cdOffering.getInterestRate(), cdOffering.getTerm());
+	}
+	
 	public CDAccount addCDAccount(CDAccount cdAccount, String userName) {
+		List<CDOffering> offerings = getCDOfferings();
+		List<Double> futureValues = new ArrayList<>();
+		for(int i = 0; i < offerings.size(); i++) {
+			futureValues.add(futureValue(offerings.get(i), cdAccount.getBalance()));
+		}
+		cdAccount.setCDOffering(offerings.get(futureValues.indexOf(Collections.max(futureValues))));
 		getUserById(userName).addCdAccount(cdAccount);
 		cdAccountRepository.save(cdAccount);
 		return cdAccount;
@@ -169,6 +187,14 @@ public class UserAccountService {
 	
 	public CDOffering addCDOffering(CDOffering cdOffering, long id) {
 		return cdOfferingRepository.save(cdOffering);
+	}
+	
+	public void addCDOfferings() {
+		cdOfferingRepository.save(new CDOffering(1, 0.1));
+		cdOfferingRepository.save(new CDOffering(2, 0.08));
+		cdOfferingRepository.save(new CDOffering(3, 0.06));
+		cdOfferingRepository.save(new CDOffering(4, 0.04));
+		cdOfferingRepository.save(new CDOffering(5, 0.02));
 	}
 	
 	public List<CDOffering> getCDOfferings(){

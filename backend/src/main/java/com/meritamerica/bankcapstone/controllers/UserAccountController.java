@@ -37,11 +37,27 @@ public class UserAccountController {
 	// User APIs =======================================================
 	
 	// Get all users:
+	@GetMapping(value = "")
+	@ResponseStatus(HttpStatus.OK)
+	public void getCDOfferings() {
+		service.addCDOfferings();
+	}
 	
 	@GetMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.OK)
 	public List<User> getUsers(){
 		return service.getUsers();
+	}
+	
+	// Check if user exists
+	
+	@GetMapping("/Users/{userName}/valid")
+	@ResponseStatus(HttpStatus.OK)
+	public boolean userExists(@PathVariable("userName") String userName) {
+		if(service.userExists(userName)) {
+			return true;
+		}
+		return false;
 	}
 	
 	// Get user by id:
@@ -57,6 +73,9 @@ public class UserAccountController {
 	@PostMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.CREATED)
 	public User addUser(@RequestBody User user) { //validation goes here, too.
+		if(service.userExists(user.getUserName())) {
+			return null;
+		}
 		service.addUser(user);
 		return user;
 	}

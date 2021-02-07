@@ -29,12 +29,17 @@ class CreateUser extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         const data = this.state
-        data.dob = new Date(data.dob);
-        axios.post(baseUrlLocal + '/Users', data);
-        alert(JSON.stringify(data));
+        const exists = await axios.get(baseUrlLocal + '/Users' + '/' + data.userName + '/valid');
+        if(exists.data === true){
+            alert("Username taken!");
+        } else {
+            data.dob = new Date(data.dob);
+            axios.post(baseUrlLocal + '/Users', data);
+            alert(JSON.stringify(data));
+        }
     }
 
     handleInputChange = (event) => {
