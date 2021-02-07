@@ -18,7 +18,7 @@ public class JWTUtility implements Serializable {
 
 	private static final long serialVersionUID = 521311302310767291L;
 	
-	private String SECRET_KEY = "Windows96"; // Change this to whatever you want.
+	private String SECRET_KEY = "--==XX Windows96 XX==--"; // Change this to whatever you want.
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -44,6 +44,13 @@ public class JWTUtility implements Serializable {
 	// Generate token for user:
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
+		
+		// Debugging:
+		System.out.println("========================================");
+		System.out.println("Generating token for user: " + userDetails.getUsername());
+		System.out.println("========================================");
+		// /Debugging
+		
 		return createToken(claims, userDetails.getUsername());
 	}
 	

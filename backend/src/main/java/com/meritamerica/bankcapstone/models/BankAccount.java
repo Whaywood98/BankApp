@@ -31,6 +31,7 @@ public abstract class BankAccount {
 	//@ManyToOne
 	//private User bankAccountHolder;					// A bank account should only have one user.
 	private Date bankAccountOpened = new Date();
+	boolean isActive = true;
 	
 	// Constructors:
 	
@@ -64,17 +65,17 @@ public abstract class BankAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-/*
-	public User getBankAccountHolder() {
-		return bankAccountHolder;
-	}
 
-	public void setBankAccountHolder(User bankAccountHolder) {
-		this.bankAccountHolder = bankAccountHolder;
-	}
-*/
 	public Date getBankAccountOpened() {
 		return bankAccountOpened;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	// Class methods:

@@ -29,6 +29,7 @@ public abstract class IRAccount {
 	private double balance;
 	//private User bankAccountHolder;
 	private Date bankAccountOpened = new Date();
+	private boolean isActive;
 	
 	// Constructors:
 	
@@ -39,7 +40,7 @@ public abstract class IRAccount {
 	public IRAccount(double interestRate, double balance, User bankAccountHolder) {
 		this.interestRate = interestRate;
 		this.balance = balance;
-		//this.bankAccountHolder = bankAccountHolder;
+		this.setActive(true);
 	}
 
 	public long getId() {
@@ -72,6 +73,14 @@ public abstract class IRAccount {
 */
 	public Date getBankAccountOpened() {
 		return bankAccountOpened;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 		

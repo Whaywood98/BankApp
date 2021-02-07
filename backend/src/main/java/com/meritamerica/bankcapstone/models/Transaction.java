@@ -8,6 +8,8 @@
 
 package com.meritamerica.bankcapstone.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,8 +25,11 @@ public class Transaction {
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String targetAccountId;
-	private String sourceAccountId;
+	private String sourceUser;
+	private String targetUser;
+	private long sourceAccountId;
+	private long targetAccountId;
+	Date transactionDate = new Date();
 	private double amount;
 	private String type; 		// Check, cash, ATM, or transfer?
 	
@@ -33,38 +38,59 @@ public class Transaction {
 	public Transaction() {
 		
 	}
-
-	public Transaction(String targetAccountId, String sourceAccountId, double amount, String type) {
-		this.targetAccountId = targetAccountId;
+	
+	public Transaction(String sourceUser, String targetUser, long sourceAccountId, long targetAccountId,
+			double amount, String type) {
+		this.sourceUser = sourceUser;
+		this.targetUser = targetUser;
 		this.sourceAccountId = sourceAccountId;
+		this.targetAccountId = targetAccountId;
 		this.amount = amount;
 		this.type = type;
 	}
-	
-	// Getters and setters:
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public String getSourceUser() {
+		return sourceUser;
 	}
 
-	public String getTargetAccountId() {
-		return targetAccountId;
+	public void setSourceUser(String sourceUser) {
+		this.sourceUser = sourceUser;
 	}
 
-	public void setTargetAccountId(String targetAccountId) {
-		this.targetAccountId = targetAccountId;
+	public String getTargetUser() {
+		return targetUser;
 	}
 
-	public String getSourceAccountId() {
+	public void setTargetUser(String targetUser) {
+		this.targetUser = targetUser;
+	}
+
+	public long getSourceAccountId() {
 		return sourceAccountId;
 	}
 
-	public void setSourceAccountId(String sourceAccountId) {
+	public void setSourceAccountId(long sourceAccountId) {
 		this.sourceAccountId = sourceAccountId;
+	}
+
+	public long getTargetAccountId() {
+		return targetAccountId;
+	}
+
+	public void setTargetAccountId(long targetAccountId) {
+		this.targetAccountId = targetAccountId;
+	}
+
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
 	}
 
 	public double getAmount() {
@@ -82,5 +108,13 @@ public class Transaction {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	public void transferFunds() {
+		
+	}
+
+	// Getters and setters:
+
+
 	
 }
