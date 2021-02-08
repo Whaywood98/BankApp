@@ -6,6 +6,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.meritamerica.bankcapstone.models.CDAccount;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
+import com.meritamerica.bankcapstone.models.JwtRequest;
+import com.meritamerica.bankcapstone.models.JwtResponse;
 import com.meritamerica.bankcapstone.models.PersonalCheckingAccount;
 import com.meritamerica.bankcapstone.models.RegularIRA;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
 import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
 import com.meritamerica.bankcapstone.models.User;
+import com.meritamerica.bankcapstone.services.MyUserDetailsService;
 import com.meritamerica.bankcapstone.services.UserAccountService;
+import com.meritamerica.bankcapstone.utility.JWTUtility;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -34,7 +42,50 @@ public class UserAccountController {
 	@Autowired
 	UserAccountService service;
 	
+	@Autowired
+	private JWTUtility jwtUtility;
+
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private MyUserDetailsService myUserDetailsService;
+	
+	
 	// User APIs =======================================================
+	
+	@PostMapping(value = "/authenticate")
+	public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
+
+		// Debugging:
+		System.out.println("=============================");
+		System.out.println("Authentication requested by:");
+		System.out.println(jwtRequest.getUserName());
+		System.out.println("Using password:");
+		System.out.println(jwtRequest.getPassword());
+		System.out.println("=============================");
+		// /Debugging
+
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(jwtRequest.getUserName(), jwtRequest.getPassword()));
+		} catch (BadCredentialsException e) {
+			throw new Exception("Invalid credentials.", e);
+		}
+
+		// Now that authentication is done, let's create a token. First, get the user
+		// details:
+
+		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(jwtRequest.getUserName());
+
+		// Now we generate a token using the user details as a parameter:
+
+		final String token = jwtUtility.generateToken(userDetails);
+
+		// Return the token in a JwtResponse:
+
+		return new JwtResponse(token);
+	}
 	
 	// Get all users:
 	@GetMapping(value = "")

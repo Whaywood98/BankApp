@@ -40,6 +40,9 @@ public class User {
 	private String userName;
 	@Column
 	@NotNull
+	private String password;
+	@Column
+	@NotNull
 	private String email;
 	@Column
 	@NotNull
@@ -53,7 +56,10 @@ public class User {
 	@Column
 	@NotNull
 	private boolean active;
-
+	@Column
+	@NotNull
+	private String roles = "USER"; // Initialize to user since I only want one admin account.
+	
 	// If sets don't work, use lists instead:
 	
 	@OneToMany
@@ -124,6 +130,14 @@ public class User {
 		return userName;
 	}
 
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
@@ -240,6 +254,14 @@ public class User {
 
 	public void setRothIra(RothIRA rothIra) {
 		this.rothIra = rothIra;
+	}
+	
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 	// Delete Methods ==============================================
