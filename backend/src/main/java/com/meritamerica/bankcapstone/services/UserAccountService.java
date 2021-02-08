@@ -1,14 +1,14 @@
 package com.meritamerica.bankcapstone.services;
 
 
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.meritamerica.bankcapstone.models.CDAccount;
@@ -67,10 +67,14 @@ public class UserAccountService {
 	@Autowired
 	CDAccountRepository cdAccountRepository;
 	
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
 	// User methods:
 	
 	// Add a new user. Admin only.
 	public User addUser(User user) {
+		String encodedPassword = this.passwordEncoder.encode(user.getPassword()); // Before saving, we encode the password!
+		user.setPassword(encodedPassword);
 		return userRepository.save(user);
 	}
 	
