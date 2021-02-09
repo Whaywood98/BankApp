@@ -1,18 +1,16 @@
 import axios from 'axios';
 import React from 'react';
 import'../css/LoginPage.css';
-import { addUser } from '../redux/ActionCreators';
+import { addToken, addUser } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
 import UserServices from '../services/UserServices';
 import {MdFingerprint} from 'react-icons/md';
 
-
-
-
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser()),
+    addToken: () => dispatch(addToken())
 });
 
 
@@ -37,11 +35,8 @@ class LoginPage extends React.Component {
         event.preventDefault();
         const user = this.state.userName
         const pass = this.state.password
-        const token = await axios.post(baseUrlLocal + '/authenticate', {
-            userName: user,
-            password: pass
-        });
-        console.log(token);
+        const token = await axios.post(baseUrlLocal + '/authenticate', { userName: user, password: pass });
+        this.props.dispatch(addToken(token.data.jwtToken));
         axios.get(baseUrlLocal + '/Users/' + user, { headers: {"Authorization" : `Bearer ${token.data.jwtToken}`}})
             .then((response) => this.props.dispatch(addUser(response.data)));
      }

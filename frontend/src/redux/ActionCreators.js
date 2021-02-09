@@ -24,3 +24,12 @@ export const addUser = (user) => ({
 export const userLoading = () => ({
     type: ActionTypes.USER_LOADING
 })
+
+export const addToken = (token) => ({
+    type: ActionTypes.ADD_TOKEN,
+    payload: token
+})
+
+export const deleteToken = () => ({
+    type: ActionTypes.DELETE_TOKEN
+})

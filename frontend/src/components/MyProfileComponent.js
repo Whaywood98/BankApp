@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addUser } from '../redux/ActionCreators';
+import { addUser, deleteToken } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button } from './ButtonComponent';
@@ -7,9 +7,11 @@ import {Link} from 'react-router-dom'
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { InitialUserState } from '../shared/InitialUserState';
 import UserServices from '../services/UserServices';
+import { jwt } from './LoginPageComponent';
 
 const mapDispatchToProps = (dispatch) => ({
-    addUser: () => dispatch(addUser())
+    addUser: () => dispatch(addUser()),
+    deleteToken: () => dispatch(deleteToken())
 });
 
 class MyProfile extends Component {
@@ -22,6 +24,7 @@ class MyProfile extends Component {
     logout = (event) => {
         event.preventDefault();
         this.props.dispatch(addUser(InitialUserState));
+        this.props.dispatch(deleteToken);
     }
 
     deleteAccount = (event) => {

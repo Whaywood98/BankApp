@@ -1,6 +1,4 @@
-import axios from 'axios';
 import * as ActionTypes from './ActionTypes';
-import { baseUrlLocal } from '../shared/baseUrl';
 
 export const User = (state = {
     isLoading: true,

@@ -19,7 +19,8 @@ import axios from 'axios';
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user,
+        token: state.token
     }
 }
 
@@ -35,9 +36,9 @@ class Main extends Component {
 
     }
 
-    componentDidMount(){
-        axios.get("");
-    }
+    // componentDidMount(){
+    //     axios.get("");
+    // }
 
     render() {
 
@@ -55,7 +56,7 @@ class Main extends Component {
                     <Route path='/dashboard' component={DashDisplay} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
                     <Route path='/signin' component={() => <LoginPage addUser={this.props.addUser}/>} />
-                    <Route path='/createaccount' component={() => <CreateAccount user={this.props.user}/>} />
+                    <Route path='/createaccount' component={() => <CreateAccount user={this.props.user} token={this.props.token}/>} />
                     <Route path='/register' component={() => <CreateUser /> }/>
                     <Route path='/accountsummary/checking' component={() => <AccountSummary accountType="Checking Accounts" accounts={this.props.user.checkingAccounts} />} />
                     <Route path='/accountsummary/savings' component={() => <AccountSummary accountType="Savings Account" accounts={this.props.user.savingsAccount} />} />
@@ -65,8 +66,8 @@ class Main extends Component {
                     <Route path='/accountsummary/regular' component={() => <AccountSummary accountType="Regular IRA" accounts={this.props.user.regularIra} />} />
                     <Route path='/accountsummary/rollover' component={() => <AccountSummary accountType="Rollover IRA" accounts={this.props.user.rolloverIra} />} />
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
-                    <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user}/>} />
-                    <Route path='/myprofile' component={() => <MyProfile user={this.props.user} />} />
+                    <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user} token={this.props.token}/>} />
+                    <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
                 </Switch>
                 <Footer/>
             </div>

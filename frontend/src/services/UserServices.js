@@ -15,8 +15,8 @@ class UserServices {
         return axios.post(baseUrlLocal + '/Users', user);
     }
 
-    postAccount(accountType, userName, data){
-        return axios.post(baseUrlLocal + '/Users/' + userName + '/' + accountType, data);
+    postAccount(accountType, userName, data, token){
+        return axios.post(baseUrlLocal + '/Users/' + userName + '/' + accountType, { headers: {"Authorization" : `Bearer ${token}`}}, data);
     }
 
     deleteUser(userName){

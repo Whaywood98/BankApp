@@ -42,7 +42,7 @@ class CreateAccount extends Component {
         } else if(this.props.user.rothIra != null && this.state.accountType == 'Roth IRA'){
             alert("Cannot create any more than 1 Roth IRA!");
         }else{
-            await UserServices.postAccount(this.state.accountType, this.props.user.userName, data);
+            await UserServices.postAccount(this.state.accountType, this.props.user.userName, data, this.props.token.token);
             UserServices.getUserById(this.props.user.userName)
                 .then((response) => {
                     console.log(response);
