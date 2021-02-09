@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated()
 			//.and().formLogin()
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-			
+		http.cors();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	

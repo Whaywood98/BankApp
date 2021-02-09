@@ -33,10 +33,16 @@ class LoginPage extends React.Component {
     }
 
 
-     handleSubmit = (event) =>{
+     handleSubmit = async (event) =>{
         event.preventDefault();
         const user = this.state.userName
-        UserServices.getUserById(user)
+        const pass = this.state.password
+        const token = await axios.post(baseUrlLocal + '/authenticate', {
+            userName: user,
+            password: pass
+        });
+        console.log(token);
+        axios.get(baseUrlLocal + '/Users/' + user, { headers: {"Authorization" : `Bearer ${token.data.jwtToken}`}})
             .then((response) => this.props.dispatch(addUser(response.data)));
      }
 

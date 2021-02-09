@@ -55,6 +55,7 @@ public class UserAccountController {
 	// User APIs =======================================================
 	
 	@PostMapping(value = "/authenticate")
+	@ResponseStatus(HttpStatus.OK)
 	public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
 
 		// Debugging:
