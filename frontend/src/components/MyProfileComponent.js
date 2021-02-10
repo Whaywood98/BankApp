@@ -7,7 +7,8 @@ import {Link} from 'react-router-dom'
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { InitialUserState } from '../shared/InitialUserState';
 import UserServices from '../services/UserServices';
-import { jwt } from './LoginPageComponent';
+import axios from 'axios';
+import { baseUrlLocal } from '../shared/baseUrl';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser()),
@@ -29,7 +30,7 @@ class MyProfile extends Component {
 
     deleteAccount = (event) => {
         event.preventDefault();
-        UserServices.deleteUser(this.props.user.userName);
+        axios.delete(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
         this.props.dispatch(addUser(InitialUserState));
     }
 

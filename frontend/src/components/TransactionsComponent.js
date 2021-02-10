@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import UserServices from '../services/UserServices';
 import { InitialUserState } from '../shared/InitialUserState';
+import { baseUrlLocal } from '../shared/baseUrl';
+import axios from 'axios';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
@@ -17,27 +19,45 @@ class Transactions extends Component {
     }
 
     deleteToSavingsAccount = async (event) => {
+
+
         const closingTo = 'Savings'
-        await UserServices.deleteAccount(this.props.user.userName, this.props.match.params.accountType, this.props.match.params.id, closingTo);
-        UserServices.getUserById(this.props.user.userName)
-            .then((response) => this.props.dispatch(addUser(response.data)));
+
+
+        await axios.patch(baseUrlLocal + '/Users/' + this.props.user.userName + '/' + this.props.match.params.accountType 
+                    + '/' + this.props.match.params.id + '/' + closingTo, null, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
+
+
+              axios.get(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}})
+                    .then((response) => this.props.dispatch(addUser(response.data)));
         
         event.preventDefault();
     }
 
     deleteUser = async (event) => {
+
         const closingTo = 'Savings'
-        await UserServices.deleteAccount(this.props.user.userName, this.props.match.params.accountType, this.props.match.params.id, closingTo);
+
+        await axios.patch(baseUrlLocal + '/Users/' + this.props.user.userName + '/' + this.props.match.params.accountType 
+        + '/' + this.props.match.params.id + '/' + closingTo, null, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
+
         this.props.dispatch(addUser(InitialUserState))
         
         event.preventDefault();
     }
 
     deleteToCheckingAccount = async (event) => {
+
+
         const closingTo = 'Checking'
-        await UserServices.deleteAccount(this.props.user.userName, this.props.match.params.accountType, this.props.match.params.id, closingTo);
-        UserServices.getUserById(this.props.user.userName)
-            .then((response) => this.props.dispatch(addUser(response.data)));
+
+
+        await axios.patch(baseUrlLocal + '/Users/' + this.props.user.userName + '/' + this.props.match.params.accountType 
+                    + '/' + this.props.match.params.id + '/' + closingTo, null, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
+
+                    
+              axios.get(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}})
+                    .then((response) => this.props.dispatch(addUser(response.data)));
         
         event.preventDefault();
     }

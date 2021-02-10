@@ -55,7 +55,7 @@ public class User {
 	private int ssn;
 	@Column
 	@NotNull
-	private boolean active;
+	private boolean active = true;
 	@Column
 	@NotNull
 	private String roles = "USER"; // Initialize to user since I only want one admin account.

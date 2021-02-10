@@ -5,8 +5,7 @@ import { addUser } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
-import UserServices from '../services/UserServices';
-
+import axios from 'axios';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser()),
@@ -42,8 +41,9 @@ class CreateAccount extends Component {
         } else if(this.props.user.rothIra != null && this.state.accountType == 'Roth IRA'){
             alert("Cannot create any more than 1 Roth IRA!");
         }else{
-            await UserServices.postAccount(this.state.accountType, this.props.user.userName, data, this.props.token.token);
-            UserServices.getUserById(this.props.user.userName)
+            await axios.post(baseUrlLocal + '/Users/' + this.props.user.userName + '/' + this.state.accountType, this.state,
+                         { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
+            axios.get(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}})
                 .then((response) => {
                     console.log(response);
                     this.props.dispatch(addUser(response.data));

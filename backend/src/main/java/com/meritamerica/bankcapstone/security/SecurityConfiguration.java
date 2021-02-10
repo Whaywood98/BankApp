@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/authenticate").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/Users").permitAll()
+			.antMatchers("/Users/{userName}/valid").permitAll()
 			.anyRequest().authenticated()
 			//.and().formLogin()
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -72,4 +73,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 
-}	
+}
