@@ -373,8 +373,6 @@ public class UserAccountService {
 
 	public Transaction addTransaction(Transaction transaction, String userName) {
 
-		getUserById(userName).addTransaction(transaction);
-
 		// Process transaction:
 		String type = transaction.getAccountType();
 
@@ -471,6 +469,7 @@ public class UserAccountService {
 			transaction.setProcessed(false);
 		}
 
+		getUserById(userName).addTransaction(transaction);
 		transactionRepository.save(transaction);
 		return transaction;
 	}
