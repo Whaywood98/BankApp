@@ -60,26 +60,25 @@ public class User {
 	@NotNull
 	private String roles = "USER"; // Initialize to user since I only want one admin account.
 	
-	// If sets don't work, use lists instead:
-	
 	@OneToMany
 	private List<CheckingAccount> checkingAccounts = new ArrayList<>(); // Can have multiple.
-	@OneToOne
-	private SavingsAccount savingsAccounts; // Can only have one.
-	@OneToOne
-	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToMany
 	private List<DBAAccount> dbaAccounts = new ArrayList<>(); // Can only have 3.
 	@OneToMany
 	private List<CDAccount> cdAccounts = new ArrayList<>(); // Can have multiple.
+	@OneToMany
+	private List<Transaction> transactions = new ArrayList<>();
+	
+	@OneToOne
+	private SavingsAccount savingsAccounts; // Can only have one.
+	@OneToOne
+	private PersonalCheckingAccount personalCheckingAccount; // Can only have one.
 	@OneToOne
 	private RegularIRA regularIra;
 	@OneToOne
 	private RolloverIRA rolloverIra;
 	@OneToOne
 	private RothIRA rothIra;
-	@OneToMany
-	private List<Transaction> transactions = new ArrayList<>();
 	
 	// Constructors:
 
@@ -180,7 +179,15 @@ public class User {
 		this.active = active;
 	}
 	
-	// Hashcode, toString, and equals methods:
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+	
+	// Checking Account methods: ===================================
 
 	public List<CheckingAccount> getCheckingAccounts() {
 		return checkingAccounts;
@@ -193,6 +200,8 @@ public class User {
 	public void addCheckingAccount(CheckingAccount checkingAccount) {
 		this.checkingAccounts.add(checkingAccount);
 	}
+	
+	// Savings Account methods: ====================================
 
 	public SavingsAccount getSavingsAccount() {
 		return savingsAccounts;
@@ -201,6 +210,8 @@ public class User {
 	public void setSavingsAccount(SavingsAccount savingsAccount) {
 		this.savingsAccounts = savingsAccount;
 	}
+	
+	// Personal Checking Account methods: ==========================
 
 	public PersonalCheckingAccount getPersonalCheckingAccount() {
 		return personalCheckingAccount;
@@ -209,6 +220,8 @@ public class User {
 	public void setPersonalCheckingAccount(PersonalCheckingAccount personalCheckingAccount) {
 		this.personalCheckingAccount = personalCheckingAccount;
 	}
+	
+	// DBA Account methods: ========================================
 
 	public List<DBAAccount> getDbaAccounts() {
 		return dbaAccounts;
@@ -221,6 +234,8 @@ public class User {
 	public void addDbaAccount(DBAAccount dbaAccount) {
 		this.dbaAccounts.add(dbaAccount);
 	}
+	
+	// CD Account methods: =========================================
 
 	public List<CDAccount> getCdAccounts() {
 		return cdAccounts;
@@ -233,6 +248,8 @@ public class User {
 	public void addCdAccount(CDAccount cdAccount) {
 		this.cdAccounts.add(cdAccount);
 	}
+	
+	// IR Account methods: =========================================
 
 	public RegularIRA getRegularIra() {
 		return regularIra;
@@ -258,15 +275,21 @@ public class User {
 		this.rothIra = rothIra;
 	}
 	
-	public String getRoles() {
-		return roles;
+	// Transaction methods: ========================================
+	
+	public List<Transaction> getTransactions() {
+		return this.transactions;
+	}
+	
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+	
+	public void addTransaction(Transaction transaction) {
+		this.transactions.add(transaction);
 	}
 
-	public void setRoles(String roles) {
-		this.roles = roles;
-	}
-
-	// Delete Methods ==============================================
+	// Delete methods: =============================================
 	
 	public CheckingAccount deleteCheckingAccount(long id) {
 		for(int i = 0; i < this.checkingAccounts.size(); i++) {
@@ -413,14 +436,8 @@ public class User {
 		this.rothIra = null;
 	}
 	
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void addTransaction(Transaction transaction) {
-		this.transactions.add(transaction);
-	}
-
+	// Hashcode, toString, and equals methods:
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
