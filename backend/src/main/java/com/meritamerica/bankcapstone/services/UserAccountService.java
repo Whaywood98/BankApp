@@ -20,6 +20,7 @@ import com.meritamerica.bankcapstone.models.RegularIRA;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
 import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
+import com.meritamerica.bankcapstone.models.Transaction;
 import com.meritamerica.bankcapstone.models.User;
 import com.meritamerica.bankcapstone.repositories.CDAccountRepository;
 import com.meritamerica.bankcapstone.repositories.CDOfferingRepository;
@@ -30,6 +31,7 @@ import com.meritamerica.bankcapstone.repositories.RegularIRARepository;
 import com.meritamerica.bankcapstone.repositories.RolloverIRARepository;
 import com.meritamerica.bankcapstone.repositories.RothIRARepository;
 import com.meritamerica.bankcapstone.repositories.SavingsAccountRepository;
+import com.meritamerica.bankcapstone.repositories.TransactionRepository;
 import com.meritamerica.bankcapstone.repositories.UserRepository;
 
 @Service
@@ -66,6 +68,9 @@ public class UserAccountService {
 	
 	@Autowired
 	CDAccountRepository cdAccountRepository;
+	
+	@Autowired
+	TransactionRepository transactionRepository;
 	
 	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -150,11 +155,12 @@ public class UserAccountService {
 	}
 	
 	public CDAccount addCDAccount(CDAccount cdAccount, String userName) {
-		List<CDOffering> offerings = getCDOfferings();
+		List<CDOffering> offerings = addCDOfferings();
 		List<Double> futureValues = new ArrayList<>();
 		for(int i = 0; i < offerings.size(); i++) {
 			futureValues.add(futureValue(offerings.get(i), cdAccount.getBalance()));
 		}
+		System.out.println(futureValues);
 		cdAccount.setCDOffering(offerings.get(futureValues.indexOf(Collections.max(futureValues))));
 		getUserById(userName).addCdAccount(cdAccount);
 		cdAccountRepository.save(cdAccount);
@@ -193,12 +199,16 @@ public class UserAccountService {
 		return cdOfferingRepository.save(cdOffering);
 	}
 	
-	public void addCDOfferings() {
-		cdOfferingRepository.save(new CDOffering(1, 0.1));
-		cdOfferingRepository.save(new CDOffering(2, 0.08));
-		cdOfferingRepository.save(new CDOffering(3, 0.06));
-		cdOfferingRepository.save(new CDOffering(4, 0.04));
-		cdOfferingRepository.save(new CDOffering(5, 0.02));
+	public List<CDOffering> addCDOfferings() {
+		List<CDOffering> offerings = cdOfferingRepository.findAll();
+		if(offerings.isEmpty()) {
+			cdOfferingRepository.save(new CDOffering(1, 0.1));
+			cdOfferingRepository.save(new CDOffering(2, 0.08));
+			cdOfferingRepository.save(new CDOffering(3, 0.06));
+			cdOfferingRepository.save(new CDOffering(4, 0.04));
+			cdOfferingRepository.save(new CDOffering(5, 0.02));
+		}
+		return cdOfferingRepository.findAll();
 	}
 	
 	public List<CDOffering> getCDOfferings(){
@@ -351,5 +361,124 @@ public class UserAccountService {
 	public void deletePersonalCheckingAccount(Long id, String userName) {
 		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
 		personalCheckingAccountRepository.deleteById(id);
+	}
+	
+	// Transaction Methods
+	// ================================================================================
+	
+	public Transaction addTransaction(Transaction transaction, String userName) {
+
+		getUserById(userName).addTransaction(transaction);
+
+		// Process transaction:
+		String type = transaction.getAccountType();
+
+		switch (type) {
+		case "Checking":
+			CheckingAccount checkingAccount = checkingAccountRepository.getOne(transaction.getAccountId());
+			if (checkingAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				checkingAccount.setBalance(checkingAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				checkingAccountRepository.save(checkingAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+
+		case "Saving":
+			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
+			if (savingsAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				savingsAccountRepository.save(savingsAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "CD":
+			CDAccount cdAccount = cdAccountRepository.getOne(transaction.getAccountId());
+			if (cdAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				cdAccount.setBalance(cdAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				cdAccountRepository.save(cdAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "DBA":
+			DBAAccount DBAAccount = dbaRepository.getOne(transaction.getAccountId());
+			if (DBAAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				DBAAccount.setBalance(DBAAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				dbaRepository.save(DBAAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "PersonalChecking":
+			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
+			if (pcAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				personalCheckingAccountRepository.save(pcAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RegularIRA":
+			RegularIRA regIRAccount = regularIRARepository.getOne(transaction.getAccountId());
+			if (regIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				regIRAccount.setBalance(regIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				regularIRARepository.save(regIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RolloverIRA":
+			RolloverIRA rollIRAccount = rolloverIRARepository.getOne(transaction.getAccountId());
+			if (rollIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				rollIRAccount.setBalance(rollIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				rolloverIRARepository.save(rollIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RothIRA":
+			RothIRA rothIRAccount = rothIRARepository.getOne(transaction.getAccountId());
+			if (rothIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				rothIRAccount.setBalance(rothIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				rothIRARepository.save(rothIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		default:
+			transaction.setProcessed(false);
+		}
+
+		transactionRepository.save(transaction);
+		return transaction;
+	}
+
+	public List<Transaction> getTransactions() {
+		return transactionRepository.findAll();
+	}
+
+	public List<Transaction> getTransactionsByUser(String user) {
+		return getUserById(user).getTransactions();
+	}
+
+	public Optional<Transaction> getTransactionById(long id) {
+		return transactionRepository.findById(id);
 	}
 }

@@ -5,7 +5,7 @@ import LoginPage from './LoginPageComponent';
 import CreateAccount from './CreateAccountComponent';
 import AboutUs from './AboutComponent';
 import CreateUser from './CreateUserComponent';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter, Router } from 'react-router-dom';
 import Dashboard from './DashboardComponent';
 import Transactions from './TransactionsComponent';
 import { addUser } from '../redux/ActionCreators';
@@ -37,7 +37,7 @@ class Main extends Component {
     }
 
     // componentDidMount(){
-    //     axios.get("");
+    //     Router.push("/home");
     // }
 
     render() {
@@ -68,6 +68,7 @@ class Main extends Component {
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
                     <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user} token={this.props.token}/>} />
                     <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
+                    <Redirect exact from="/" to="/home" />
                 </Switch>
                 <Footer/>
             </div>

@@ -58,8 +58,8 @@ function Navbar() {
                             </Link>
                         </li>
                         <li className='nav-item'>
-                            <Link to= '/services' className= 'nav-links' onClick={closeMobileMenu}>
-                                Accounts
+                            <Link to= '/maketransaction' className= 'nav-links' onClick={closeMobileMenu}>
+                                Transactions
                             </Link>
                         </li>
 

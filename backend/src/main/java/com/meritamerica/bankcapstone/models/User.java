@@ -78,6 +78,8 @@ public class User {
 	private RolloverIRA rolloverIra;
 	@OneToOne
 	private RothIRA rothIra;
+	@OneToMany
+	private List<Transaction> transactions = new ArrayList<>();
 	
 	// Constructors:
 
@@ -411,6 +413,14 @@ public class User {
 		this.rothIra = null;
 	}
 	
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void addTransaction(Transaction transaction) {
+		this.transactions.add(transaction);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
