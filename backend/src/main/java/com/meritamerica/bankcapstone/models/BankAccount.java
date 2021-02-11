@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -24,14 +26,17 @@ public abstract class BankAccount {
 	
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	
+	@Column
 	private double interestRate;
+	
+	@Column
 	private double balance;
-	//@ManyToOne
-	//private User bankAccountHolder;					// A bank account should only have one user.
-	private Date bankAccountOpened = new Date();
-	boolean isActive = true;
+	
+	@Column
+	private Date accountOpened = new Date();
 	
 	// Constructors:
 	
@@ -41,7 +46,6 @@ public abstract class BankAccount {
 	public BankAccount(double interestRate, double balance) {
 		this.interestRate = interestRate;
 		this.balance = balance;
-		//this.bankAccountHolder = bankAccountHolder;
 	}
 	
 	// Getters and setters:
@@ -65,17 +69,15 @@ public abstract class BankAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	public void addBalance(double balance) {
+		this.balance += balance;
+	}
+
+	
 
 	public Date getBankAccountOpened() {
-		return bankAccountOpened;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+		return accountOpened;
 	}
 	
 	// Class methods:

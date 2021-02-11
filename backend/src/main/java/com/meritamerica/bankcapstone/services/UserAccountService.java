@@ -1,23 +1,19 @@
 package com.meritamerica.bankcapstone.services;
 
-
-import org.springframework.stereotype.Service;
-
-
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-import com.meritamerica.bankcapstone.models.BankAccount;
 import com.meritamerica.bankcapstone.models.CDAccount;
 import com.meritamerica.bankcapstone.models.CDOffering;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
-import com.meritamerica.bankcapstone.models.IRAccount;
 import com.meritamerica.bankcapstone.models.PersonalCheckingAccount;
 import com.meritamerica.bankcapstone.models.RegularIRA;
 import com.meritamerica.bankcapstone.models.RolloverIRA;
@@ -25,9 +21,15 @@ import com.meritamerica.bankcapstone.models.RothIRA;
 import com.meritamerica.bankcapstone.models.SavingsAccount;
 import com.meritamerica.bankcapstone.models.Transaction;
 import com.meritamerica.bankcapstone.models.User;
-import com.meritamerica.bankcapstone.repositories.BankAccountRepository;
+import com.meritamerica.bankcapstone.repositories.CDAccountRepository;
 import com.meritamerica.bankcapstone.repositories.CDOfferingRepository;
-import com.meritamerica.bankcapstone.repositories.IRARepository;
+import com.meritamerica.bankcapstone.repositories.CheckingAccountRepository;
+import com.meritamerica.bankcapstone.repositories.DBARepository;
+import com.meritamerica.bankcapstone.repositories.PersonalCheckingAccountRepository;
+import com.meritamerica.bankcapstone.repositories.RegularIRARepository;
+import com.meritamerica.bankcapstone.repositories.RolloverIRARepository;
+import com.meritamerica.bankcapstone.repositories.RothIRARepository;
+import com.meritamerica.bankcapstone.repositories.SavingsAccountRepository;
 import com.meritamerica.bankcapstone.repositories.TransactionRepository;
 import com.meritamerica.bankcapstone.repositories.UserRepository;
 
@@ -35,306 +37,454 @@ import com.meritamerica.bankcapstone.repositories.UserRepository;
 public class UserAccountService {
 
 	// Repositories:
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
+	@Autowired
+	SavingsAccountRepository savingsAccountRepository;
+
+	@Autowired
+	RothIRARepository rothIRARepository;
+
+	@Autowired
+	RolloverIRARepository rolloverIRARepository;
+
+	@Autowired
+	RegularIRARepository regularIRARepository;
+
+	@Autowired
+	PersonalCheckingAccountRepository personalCheckingAccountRepository;
+
+	@Autowired
+	DBARepository dbaRepository;
+
+	@Autowired
+	CheckingAccountRepository checkingAccountRepository;
+
+	@Autowired
+	CDOfferingRepository cdOfferingRepository;
+
+	@Autowired
+	CDAccountRepository cdAccountRepository;
+
 	@Autowired
 	TransactionRepository transactionRepository;
-	
-	@Autowired
-	BankAccountRepository bankAccountRepository;
-	
-	@Autowired
-	IRARepository iraRepository;
-	
-	@Autowired
-	CDOfferingRepository cdoRepository;
-	
-	PasswordEncoder passwordEncoder;
-	
-	// Constructor:
-	
-	public UserAccountService() {
-		this.passwordEncoder = new BCryptPasswordEncoder();
-	}
-	
-	// Bank account methods:
-	
-	public BankAccount getBankAccountById(long id) {
-		return bankAccountRepository.findBankAccountById(id);
-	}
-	
-	// User methods:
-	
+
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+	// User methods
+	// ======================================================================
+
+	// Add a new user.
+	// Before saving, we encode the password!
 	public User addUser(User user) {
-		String encodedPassword = this.passwordEncoder.encode(user.getPassword()); // Before saving, we encode the password!
+		String encodedPassword = this.passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		return userRepository.save(user);
 	}
-	
-	public List<User> getUsers(){
+
+	// Check if user exists
+	public boolean userExists(String userName) {
+		if (getUserById(userName) == null) {
+			return false;
+		}
+		return true;
+	}
+
+	// Get a list of all users.
+	public List<User> getUsers() {
 		return userRepository.findAll();
 	}
-	
-	public User getUserByName(String userName) {
-		System.out.println("Searching for user: " + userName + ", and found: " + userRepository.findUserById(userName));
+
+	// Search for user by id:
+	public User getUserById(String userName) {
 		return userRepository.findUserById(userName);
 	}
-	
-	public void removeUserById(long id) {
-		userRepository.deleteById(id);
+
+	// Remove user by id:
+	public void removeUserById(String userName) {
+		userRepository.deleteUserById(userName);
 	}
-	
-	// Savings account methods:
-	
-	public BankAccount getSavingsAccount(String userName) {
-		return getUserByName(userName).getSavingsAccount();
-	}
-	
-	public Optional<BankAccount> getSavingsAccountById(long id) {
-		return bankAccountRepository.findById(id);
-	}
-	
+
+	// Savings account methods
+	// ======================================================================
+
 	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount, String userName) {
-		getUserByName(userName).addSavingsAccount(savingsAccount);
-		bankAccountRepository.save(savingsAccount);
+		getUserById(userName).setSavingsAccount(savingsAccount);
+		savingsAccountRepository.save(savingsAccount);
 		return savingsAccount;
 	}
-	
-	public Boolean removeSavingsAccountById(long id) {
-		try {
-			bankAccountRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
-		}
-	}
-	
 
-	// Checking account methods:
-	
+	public void deleteSavingsAccount(Long id, String userName) {
+		userRepository.deleteUserById(userName);
+		savingsAccountRepository.deleteById(id);
+	}
+
+	public List<SavingsAccount> getSavingsAccounts() {
+		return savingsAccountRepository.findAll();
+	}
+
+	// Checking account methods
+	// ======================================================================
+
 	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount, String userName) {
-		getUserByName(userName).addCheckingAccount(checkingAccount);
-		bankAccountRepository.save(checkingAccount);
+		getUserById(userName).addCheckingAccount(checkingAccount);
+		checkingAccountRepository.save(checkingAccount);
 		return checkingAccount;
 	}
-	
-	public List<BankAccount> getCheckingAccounts(String userName){
-		return getUserByName(userName).getCheckingAccounts();
+
+	public void deleteCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		checkingAccountRepository.deleteById(id);
 	}
-	
-	public Optional<BankAccount> getCheckingAccountById(long id) {
-		return bankAccountRepository.findById(id);
+
+	public List<CheckingAccount> getCheckingAccounts() {
+		return checkingAccountRepository.findAll();
 	}
-	
-	public boolean removeCheckingAccountById(long id) {
-		try {
-			bankAccountRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
-		}
+
+	public Optional<CheckingAccount> getCheckingAccountById(long id) {
+		return checkingAccountRepository.findById(id);
 	}
-	
-	// CD Account methods:
-	
+
+	public void removeCheckingAccountById(long id) {
+		checkingAccountRepository.deleteById(id);
+	}
+
+	// CD Account methods
+	// ======================================================================
+
+	public double futureValue(CDOffering cdOffering, double balance) {
+		return balance * Math.pow(1 + cdOffering.getInterestRate(), cdOffering.getTerm());
+	}
+
 	public CDAccount addCDAccount(CDAccount cdAccount, String userName) {
-		getUserByName(userName).addCdAccount(cdAccount);
-		bankAccountRepository.save(cdAccount);
+		List<CDOffering> offerings = getCDOfferings();
+		List<Double> futureValues = new ArrayList<>();
+		for (int i = 0; i < offerings.size(); i++) {
+			futureValues.add(futureValue(offerings.get(i), cdAccount.getBalance()));
+		}
+		cdAccount.setCDOffering(offerings.get(futureValues.indexOf(Collections.max(futureValues))));
+		getUserById(userName).addCdAccount(cdAccount);
+		cdAccountRepository.save(cdAccount);
 		return cdAccount;
 	}
-	
-	public List<BankAccount> getCDAccounts(String userName){
-		return getUserByName(userName).getCDAccounts();
-	}
-	
-	public Optional<BankAccount> getCDAccountById(long id) {
-		return bankAccountRepository.findById(id);
-	}
-	
-	public boolean removeCDAccountById(long id) {
-		try {
-			bankAccountRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
+
+	public void deleteCdAccount(Long id, String userName, String closingTo) {
+		switch (closingTo) {
+		case "Checking":
+			personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+			savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
 		}
+		cdAccountRepository.deleteById(id);
 	}
-	
-	// DBA Account methods:
+
+	public List<CDAccount> getCDAccounts() {
+		return cdAccountRepository.findAll();
+	}
+
+	public Optional<CDAccount> getCDAccountById(long id) {
+		return cdAccountRepository.findById(id);
+	}
+
+	public void removeCDAccountById(long id) {
+		cdAccountRepository.deleteById(id);
+	}
+
+	// CD Offering methods
+	// ======================================================================
+
+	public CDOffering addCDOffering(CDOffering cdOffering, long id) {
+		return cdOfferingRepository.save(cdOffering);
+	}
+
+	public void addCDOfferings() {
+		cdOfferingRepository.save(new CDOffering(1, 0.1));
+		cdOfferingRepository.save(new CDOffering(2, 0.08));
+		cdOfferingRepository.save(new CDOffering(3, 0.06));
+		cdOfferingRepository.save(new CDOffering(4, 0.04));
+		cdOfferingRepository.save(new CDOffering(5, 0.02));
+	}
+
+	public List<CDOffering> getCDOfferings() {
+		return cdOfferingRepository.findAll();
+	}
+
+	public Optional<CDOffering> getCDOfferingsById(long id) {
+		return cdOfferingRepository.findById(id);
+	}
+
+	public void removeCDOfferingById(long id) {
+		cdOfferingRepository.deleteById(id);
+	}
+
+	// DBA Account methods
+	// ======================================================================
 
 	public DBAAccount addDBAAccount(DBAAccount dbaAccount, String userName) {
-		getUserByName(userName).addDbaAccount(dbaAccount);
-		bankAccountRepository.save(dbaAccount);
+		getUserById(userName).addDbaAccount(dbaAccount);
+		dbaRepository.save(dbaAccount);
 		return dbaAccount;
 	}
-	
-	public List<BankAccount> getDBAAccounts(String userName){
-		return getUserByName(userName).getDBAAccounts();
+
+	public void deleteDbaAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		dbaRepository.deleteById(id);
 	}
-	
-	public Optional<BankAccount> getDBAAccountById(long id) {
-		return bankAccountRepository.findById(id);
+
+	public List<DBAAccount> getDBAAccount() {
+		return dbaRepository.findAll();
 	}
-	
-	public boolean removeDBAAccountById(long id) {
-		try {
-			bankAccountRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
+
+	public Optional<DBAAccount> getDBAAccountById(long id) {
+		return dbaRepository.findById(id);
+	}
+
+	public void removeDBAAccountById(long id) {
+		dbaRepository.deleteById(id);
+	}
+
+	// RegularIRAccount methods
+	// ======================================================================
+
+	public RegularIRA addRegularIraAccount(RegularIRA regularIra, String userName) {
+		getUserById(userName).setRegularIra(regularIra);
+		regularIRARepository.save(regularIra);
+		return regularIra;
+	}
+
+	public void deleteRegularIra(Long id, String userName, String closingTo) {
+		switch (closingTo) {
+		case "Checking":
+			personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+			savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
 		}
+		regularIRARepository.deleteById(id);
 	}
-	
-	// Personal Checking Account methods:
-	
-	public PersonalCheckingAccount addPersonalCheckingAccount(PersonalCheckingAccount account, String userName) {
-		getUserByName(userName).addPersonalCheckingAccount(account);
-		bankAccountRepository.save(account);
-		return account;
+
+	public List<RegularIRA> getRegularIRAccount() {
+		return regularIRARepository.findAll();
 	}
-	
-	public BankAccount getPersonalCheckingAccount(String userName){
-		return getUserByName(userName).getPersonalCheckingAccount();
+
+	public Optional<RegularIRA> getRegularIRAccountById(long id) {
+		return regularIRARepository.findById(id);
 	}
-	
-	public Optional<BankAccount> getPersonalCheckingAccountById(long id) {
-		return bankAccountRepository.findById(id);
+
+	public void removeRegularIRAccountById(long id) {
+		regularIRARepository.deleteById(id);
 	}
-	
-	public boolean removePersonalCheckingAccountById(long id) {
-		try {
-			bankAccountRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
+
+	// RolloverIRAccount methods
+	// ======================================================================
+
+	public RolloverIRA addRolloverIraAccount(RolloverIRA rolloverIra, String userName) {
+		getUserById(userName).setRolloverIra(rolloverIra);
+		rolloverIRARepository.save(rolloverIra);
+		return rolloverIra;
+	}
+
+	public void deleteRolloverIra(Long id, String userName, String closingTo) {
+		switch (closingTo) {
+		case "Checking":
+			personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+			savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
 		}
+		rolloverIRARepository.deleteById(id);
 	}
-	
-	// Regular IR Account methods:
-	
-	public RegularIRA addRegularIRAccount(RegularIRA account, String userName) {
-		getUserByName(userName).addRegularIRAccount(account);
-		iraRepository.save(account);
-		return account;
+
+	public List<RolloverIRA> getRolloverIRAccount() {
+		return rolloverIRARepository.findAll();
 	}
-	
-	public IRAccount getRegularIRA(String userName){
-		return getUserByName(userName).getRegularIRAccount();
+
+	public Optional<RolloverIRA> getRolloverIRAccountById(long id) {
+		return rolloverIRARepository.findById(id);
 	}
-	
-	public Optional<IRAccount> getRegularIRAccountById(long id) {
-		return iraRepository.findById(id);
+
+	public void removeRolloverIRAccountById(long id) {
+		rolloverIRARepository.deleteById(id);
 	}
-	
-	public boolean removeRegularIRAccountById(long id) {
-		try {
-			iraRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
+
+	// RothIRAccount methods:
+
+	public RothIRA addRothIraAccount(RothIRA rothIra, String userName) {
+		getUserById(userName).setRothIra(rothIra);
+		rothIRARepository.save(rothIra);
+		return rothIra;
+	}
+
+	public void deleteRothIra(Long id, String userName, String closingTo) {
+		switch (closingTo) {
+		case "Checking":
+			personalCheckingAccountRepository.save(getUserById(userName).getPersonalCheckingAccount());
+			break;
+		case "Savings":
+			savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+			break;
+		default:
+			break;
 		}
+		rothIRARepository.deleteById(id);
 	}
-	
-	// Roth IR Account methods:
-	
-	public RothIRA addRothIRAccount(RothIRA account, String userName) {
-		getUserByName(userName).addRothIRAccount(account);
-		iraRepository.save(account);
-		return account;
+
+	public List<RothIRA> getRothIRAccount() {
+		return rothIRARepository.findAll();
 	}
-	
-	public IRAccount getRothIRA(String userName){
-		return getUserByName(userName).getRothIRAccount();
+
+	public Optional<RothIRA> getRothIRAccountById(long id) {
+		return rothIRARepository.findById(id);
 	}
-	
-	public Optional<IRAccount> getRothIRAccountById(long id) {
-		return iraRepository.findById(id);
+
+	public void removeRothIRAccountById(long id) {
+		rothIRARepository.deleteById(id);
 	}
-	
-	public boolean removeRothIRAccountById(long id) {
-		try {
-			iraRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
-		}
+
+	// Personal Checking Account Methods
+	// ======================================================================
+
+	public PersonalCheckingAccount addPersonalCheckingAccount(PersonalCheckingAccount personalCheckingAccount,
+			String userName) {
+		getUserById(userName).setPersonalCheckingAccount(personalCheckingAccount);
+		personalCheckingAccountRepository.save(personalCheckingAccount);
+		return personalCheckingAccount;
 	}
-	
-	// Rollover IR Account methods:
-	
-	public RolloverIRA addRolloverIRAccount(RolloverIRA account, String userName) {
-		getUserByName(userName).addRolloverIRAccount(account);
-		iraRepository.save(account);
-		return account;
+
+	public void deletePersonalCheckingAccount(Long id, String userName) {
+		savingsAccountRepository.save(getUserById(userName).getSavingsAccount());
+		personalCheckingAccountRepository.deleteById(id);
 	}
-	
-	public IRAccount getRolloverIRA(String userName){
-		return getUserByName(userName).getRolloverIRAccount();
-	}
-	
-	public Optional<IRAccount> getRolloverIRAccountById(long id) {
-		return iraRepository.findById(id);
-	}
-	
-	public boolean removeRolloverIRAccountById(long id) {
-		try {
-			iraRepository.deleteById(id);
-			return true;
-		} catch (Exception e) {
-			return true;
-		}
-	}
-	
-	// CD Offering methods:
-	
-	public CDOffering addCDOffering(CDOffering cdOffering, long id) {
-		return cdoRepository.save(cdOffering);
-	}
-	
-	public List<CDOffering> getCDOfferings(){
-		return cdoRepository.findAll();
-	}
-	
-	public Optional<CDOffering> getCDOfferingsById(long id) {
-		return cdoRepository.findById(id);
-	}
-	
-	public void removeCDOfferingById(long id) {
-		cdoRepository.deleteById(id);
-	}
-	
+
 	// Transaction methods
-	
+	// ======================================================================
+
 	public Transaction addTransaction(Transaction transaction, String userName) {
-		getUserByName(userName).addTransaction(transaction);
+
+		getUserById(userName).addTransaction(transaction);
+
+		// Process transaction:
+		String type = transaction.getAccountType();
+
+		switch (type) {
+		case "Checking":
+			CheckingAccount checkingAccount = checkingAccountRepository.getOne(transaction.getAccountId());
+			if (checkingAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				checkingAccount.setBalance(checkingAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				checkingAccountRepository.save(checkingAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+
+		case "Saving":
+			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
+			if (savingsAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				savingsAccountRepository.save(savingsAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "CD":
+			CDAccount cdAccount = cdAccountRepository.getOne(transaction.getAccountId());
+			if (cdAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				cdAccount.setBalance(cdAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				cdAccountRepository.save(cdAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "DBA":
+			DBAAccount DBAAccount = dbaRepository.getOne(transaction.getAccountId());
+			if (DBAAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				DBAAccount.setBalance(DBAAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				dbaRepository.save(DBAAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "PersonalChecking":
+			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
+			if (pcAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				personalCheckingAccountRepository.save(pcAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RegularIRA":
+			RegularIRA regIRAccount = regularIRARepository.getOne(transaction.getAccountId());
+			if (regIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				regIRAccount.setBalance(regIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				regularIRARepository.save(regIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RolloverIRA":
+			RolloverIRA rollIRAccount = rolloverIRARepository.getOne(transaction.getAccountId());
+			if (rollIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				rollIRAccount.setBalance(rollIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				rolloverIRARepository.save(rollIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		case "RothIRA":
+			RothIRA rothIRAccount = rothIRARepository.getOne(transaction.getAccountId());
+			if (rothIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+				rothIRAccount.setBalance(rothIRAccount.getBalance() + transaction.getAmount());
+				transaction.setProcessed(true);
+				rothIRARepository.save(rothIRAccount);
+			} else {
+				transaction.setProcessed(false);
+			}
+			break;
+			
+		default:
+			transaction.setProcessed(false);
+		}
+
 		transactionRepository.save(transaction);
-		
-		// Processing transaction:
-		// Re-add additional logic here:
-		BankAccount sourceAccount = getBankAccountById(transaction.getSourceAccountId());
-		BankAccount targetAccount = getBankAccountById(transaction.getTargetAccountId());
-		
-		sourceAccount.setBalance(sourceAccount.getBalance() - transaction.getAmount());
-		targetAccount.setBalance(targetAccount.getBalance() + transaction.getAmount());
-		
 		return transaction;
 	}
 
-	public List<Transaction> getTransactions(){
+	public List<Transaction> getTransactions() {
 		return transactionRepository.findAll();
 	}
-	
-	public List<Transaction> getTransactionsByUser(String user){
-		return getUserByName(user).getTransactions();
+
+	public List<Transaction> getTransactionsByUser(String user) {
+		return getUserById(user).getTransactions();
 	}
 
 	public Optional<Transaction> getTransactionById(long id) {
 		return transactionRepository.findById(id);
 	}
 
-	public void removeTransactionById(long id) {
-		transactionRepository.deleteById(id);
-	}
 }

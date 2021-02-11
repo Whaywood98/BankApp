@@ -9,4 +9,9 @@ public class SavingsAccount extends BankAccount {
 	public SavingsAccount() {
 		
 	}
+	
+	public SavingsAccount(double balance, double interestRate) {
+		this.setBalance(balance);
+		this.setInterestRate(interestRate);
+	}
 }

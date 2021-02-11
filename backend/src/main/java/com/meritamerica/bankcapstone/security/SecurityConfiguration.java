@@ -39,20 +39,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf()
 			.disable()
 			.authorizeRequests()
-			
 			.antMatchers("/h2-console").permitAll()
 			.antMatchers("/secured-test").hasAnyAuthority("USER", "ADMIN")
 			.antMatchers("/admin-test").hasAuthority("ADMIN")
 			.antMatchers("/home").permitAll()
-			//.antMatchers("/Users").permitAll() // This will be removed after an admin is either hard-coded or already placed in a persistent database!
-			// Finish locking down endpoints here:
 			.antMatchers("/authenticate").permitAll()
 			.antMatchers("/login").permitAll()
-			
+			.antMatchers("/Users").permitAll()
+			.antMatchers("/Users/**/valid").permitAll()
 			.anyRequest().authenticated()
-			//.and().formLogin()
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-			
+		http.cors();
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 	

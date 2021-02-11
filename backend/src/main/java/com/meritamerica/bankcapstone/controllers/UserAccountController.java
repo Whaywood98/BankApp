@@ -3,6 +3,8 @@ package com.meritamerica.bankcapstone.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,17 +15,17 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.meritamerica.bankcapstone.models.BankAccount;
 import com.meritamerica.bankcapstone.models.CDAccount;
+import com.meritamerica.bankcapstone.models.CDOffering;
 import com.meritamerica.bankcapstone.models.CheckingAccount;
 import com.meritamerica.bankcapstone.models.DBAAccount;
-import com.meritamerica.bankcapstone.models.IRAccount;
 import com.meritamerica.bankcapstone.models.JwtRequest;
 import com.meritamerica.bankcapstone.models.JwtResponse;
 import com.meritamerica.bankcapstone.models.PersonalCheckingAccount;
@@ -37,8 +39,7 @@ import com.meritamerica.bankcapstone.services.MyUserDetailsService;
 import com.meritamerica.bankcapstone.services.UserAccountService;
 import com.meritamerica.bankcapstone.utility.JWTUtility;
 
-//@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:31337"})
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserAccountController {
 
@@ -54,36 +55,19 @@ public class UserAccountController {
 	@Autowired
 	private MyUserDetailsService myUserDetailsService;
 
-	// Test APIs =======================================================
-
-	@GetMapping(value = "/home")
-	@ResponseStatus(HttpStatus.OK)
-	public String homeTest() {
-		return "Homepage!";
-	}
-
-	@GetMapping(value = "/admin-test")
-	@ResponseStatus(HttpStatus.OK)
-	public String publicTest() {
-		return "Admin test passed.";
-	}
-
-	@GetMapping(value = "/user-test")
-	@ResponseStatus(HttpStatus.OK)
-	public String securedTest() {
-		return "User test passed.";
-	}
+	// User APIs =======================================================
 
 	@PostMapping(value = "/authenticate")
+	@ResponseStatus(HttpStatus.OK)
 	public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception {
 
 		// Debugging:
-		System.out.println("=============================");
+		System.out.println("========================================");
 		System.out.println("Authentication requested by:");
 		System.out.println(jwtRequest.getUserName());
 		System.out.println("Using password:");
 		System.out.println(jwtRequest.getPassword());
-		System.out.println("=============================");
+		System.out.println("========================================");
 		// /Debugging
 
 		try {
@@ -106,261 +90,189 @@ public class UserAccountController {
 
 		return new JwtResponse(token);
 	}
-
-	// User APIs =======================================================
-
+	
 	// Get all users:
-	@GetMapping(value = "/api/users")
+	
+	@GetMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.OK)
-	public List<User> getUsers() {
+	public List<User> getUsers(){
 		return service.getUsers();
 	}
-
-	// Get user by userName:
-	@GetMapping("/api/users/{user}")
+	
+	// Check if user exists
+	
+	@GetMapping("/Users/{userName}/valid")
 	@ResponseStatus(HttpStatus.OK)
-	public User fetchUserById(@PathVariable("user") String userName) {
-		return service.getUserByName(userName);
+	public boolean userExists(@PathVariable("userName") String userName) {
+		if(service.userExists(userName)) {
+			return true;
+		}
+		return false;
 	}
-
+	
+	// Get user by id:
+	
+	@GetMapping("/Users/{userName}")
+	@ResponseStatus(HttpStatus.OK)
+	public User fetchUserById(@PathVariable("userName") String userName) {
+		return service.getUserById(userName);
+	}
+	
 	// Post user:
-	@PostMapping(value = "/api/users")
+	
+	@PostMapping(value = "/Users")
 	@ResponseStatus(HttpStatus.CREATED)
-	public User addUser(@RequestBody User user) {
+	public User addUser(@RequestBody User user) { //validation goes here, too.
+		if(service.userExists(user.getUserName())) {
+			return null;
+		}
 		service.addUser(user);
 		return user;
 	}
-
+	
 	// Delete user:
-	@DeleteMapping("/api/users/{id}")
+	
+	@DeleteMapping("/Users/{userName}")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<User> removeUserById(@PathVariable("id") Long id) {
-		service.removeUserById(id);
-		return null;
-	}
-
-	// Savings Account APIs =======================================================
-
-	@GetMapping(value = "/api/users/{id}/savings-account")
-	@ResponseStatus(HttpStatus.OK)
-	public BankAccount getSavingsAccount(@PathVariable("id") String userName) {
-		return service.getSavingsAccount(userName);
+	public void removeUserById(@PathVariable("userName") String userName) {
+		service.removeUserById(userName);
 	}
 	
-	@GetMapping(value = "/api/users/{id}/savings-account/{aid}")
+	// Get APIs =======================================================
+	
+	@GetMapping(value = "/Users/{userName}/Checking Account")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<BankAccount> getSavingsAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getSavingsAccountById(id);
+	public List<CheckingAccount> getCheckingAccounts(@PathVariable("userName") String userName){
+		return service.getUserById(userName).getCheckingAccounts();
 	}
-
-	@PostMapping(value = "/api/users/{id}/savings-account")
+	
+	@GetMapping(value = "/Users/{userName}/Savings Account")
+	@ResponseStatus(HttpStatus.OK)
+	public SavingsAccount getSavingsAccount(@PathVariable("userName") String userName){
+		return service.getUserById(userName).getSavingsAccount();
+	}
+	
+	/*
+	@GetMapping(value = "")
+	@ResponseStatus(HttpStatus.OK)
+	public List<CDOffering> getCDOfferings() {
+		service.addCDOfferings();
+	}
+	*/
+	
+	// Post APIs ======================================================
+	
+	@PostMapping(value = "/Users/{userName}/Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public SavingsAccount postSavingsAccount(@PathVariable("id") String userName,
-			@RequestBody SavingsAccount account) {
-		return service.addSavingsAccount(account, userName);
+	public CheckingAccount postCheckingAccount(@PathVariable("userName") String userName, @RequestBody @Valid CheckingAccount checkingAccount) {
+		return service.addCheckingAccount(checkingAccount, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/savings-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Boolean deleteSavingsAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeSavingsAccountById(aid);
-	}
-
-	// Checking Account APIs ======================================================
-
-	@GetMapping(value = "/api/users/{id}/checking-account")
-	@ResponseStatus(HttpStatus.OK)
-	public List<BankAccount> getCheckingAccounts(@PathVariable("id") String userName) {
-		return service.getCheckingAccounts(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/checking-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<BankAccount> getCheckingAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getCheckingAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/checking-account")
+	@PostMapping(value = "/Users/{userName}/Savings Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount postCheckingAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated CheckingAccount account) {
-		return service.addCheckingAccount(account, userName);
+	public SavingsAccount postSavingsAccount(@PathVariable("userName") String userName, @RequestBody @Valid SavingsAccount savingsAccount) {
+		return service.addSavingsAccount(savingsAccount, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/checking-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteCheckingAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeCheckingAccountById(aid);
-	}
-	
-	// CD Account APIs =============================================================
-
-	@GetMapping(value = "/api/users/{id}/certificate-of-deposit-accounts")
-	@ResponseStatus(HttpStatus.OK)
-	public List<BankAccount> getCDAccounts(@PathVariable("id") String userName) {
-		return service.getCDAccounts(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/certificate-of-deposit-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<BankAccount> getCDAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getCDAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/certificate-of-deposit-account")
+	@PostMapping(value = "/Users/{userName}/Personal Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CDAccount postCDAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated CDAccount account) {
-		return service.addCDAccount(account, userName);
+	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("userName") String userName, @RequestBody @Valid PersonalCheckingAccount personalCheckingAccount) {
+		return service.addPersonalCheckingAccount(personalCheckingAccount, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/certificate-of-deposit-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteCDAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeCDAccountById(aid);
-	}
-	
-	// DBA Account APIs ============================================================
-
-	@GetMapping(value = "/api/users/{id}/dba-accounts")
-	@ResponseStatus(HttpStatus.OK)
-	public List<BankAccount> getDBAAccounts(@PathVariable("id") String userName) {
-		return service.getDBAAccounts(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/dba-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<BankAccount> getDBAAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getDBAAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/dba-account")
+	@PostMapping(value = "/Users/{userName}/DBA Checking Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public DBAAccount postDBAAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated DBAAccount account) {
-		return service.addDBAAccount(account, userName);
+	public DBAAccount postDBAAccount(@PathVariable("userName") String userName, @RequestBody @Valid DBAAccount dbaAccount) {
+		return service.addDBAAccount(dbaAccount, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/dba-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteDBAAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeDBAAccountById(aid);
-	}
-
-	// Personal Checking Account APIs =============================================
-
-	@GetMapping(value = "/api/users/{id}/personal-checking-accounts")
-	@ResponseStatus(HttpStatus.OK)
-	public List<BankAccount> getPersonalCheckingAccount(@PathVariable("id") String userName) {
-		return service.getDBAAccounts(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/personal-checking-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<BankAccount> getPersonalCheckingAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getDBAAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/personal-checking-account")
+	@PostMapping(value = "/Users/{userName}/Certificate of Deposit Account")
 	@ResponseStatus(HttpStatus.CREATED)
-	public PersonalCheckingAccount postPersonalCheckingAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated PersonalCheckingAccount account) {
-		return service.addPersonalCheckingAccount(account, userName);
+	public CDAccount postCDAccount(@PathVariable("userName") String userName, @RequestBody @Valid CDAccount cdAccount) {
+		return service.addCDAccount(cdAccount, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/personal-checking-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deletePersonalCheckingAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removePersonalCheckingAccountById(aid);
-	}
-
-	// Regular IRA APIs ============================================================
-
-	@GetMapping(value = "/api/users/{id}/regular-ira-account")
-	@ResponseStatus(HttpStatus.OK)
-	public IRAccount getRegularIRAccount(@PathVariable("id") String userName) {
-		return service.getRegularIRA(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/regular-ira-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<IRAccount> getRegularIRAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getRegularIRAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/regular-ira-account")
+	@PostMapping(value = "/Users/{userName}/Regular IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public IRAccount postRegularIRAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated RegularIRA account) {
-		return service.addRegularIRAccount(account, userName);
+	public RegularIRA postRegularIraAccount(@PathVariable("userName") String userName, @RequestBody @Valid RegularIRA regularIra) {
+		return service.addRegularIraAccount(regularIra, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/regular-ira-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteRegularIRAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeRegularIRAccountById(aid);
-	}
-
-	// Rollover IRA APIs ===========================================================
-
-	@GetMapping(value = "/api/users/{id}/rollover-ira-account")
-	@ResponseStatus(HttpStatus.OK)
-	public IRAccount getRolloverIRAccount(@PathVariable("id") String userName) {
-		return service.getRolloverIRA(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/rollover-ira-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<IRAccount> getRolloverIRAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getRolloverIRAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/rollover-ira-account")
+	@PostMapping(value = "/Users/{userName}/Rollover IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public IRAccount postRolloverIRAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated RolloverIRA account) {
-		return service.addRolloverIRAccount(account, userName);
+	public RolloverIRA postRolloverIRA(@PathVariable("userName") String userName, @RequestBody @Valid RolloverIRA rolloverIra) {
+		return service.addRolloverIraAccount(rolloverIra, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/rollover-ira-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteRolloverIRAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeRolloverIRAccountById(aid);
-	}
-
-	// Roth IRA APIs ===============================================================
-
-	@GetMapping(value = "/api/users/{id}/roth-ira-account")
-	@ResponseStatus(HttpStatus.OK)
-	public IRAccount getRothIRAccount(@PathVariable("id") String userName) {
-		return service.getRothIRA(userName);
-	}
-	
-	@GetMapping(value = "/api/users/{id}/roth-ira-account/{aid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<IRAccount> getRothIRAccountById(@PathVariable("id") String userName, @PathVariable("aid") long id) {
-		return service.getRothIRAccountById(id);
-	}
-
-	@PostMapping(value = "/api/users/{id}/roth-ira-account")
+	@PostMapping(value = "/Users/{userName}/Roth IRA")
 	@ResponseStatus(HttpStatus.CREATED)
-	public IRAccount postRothIRAccount(@PathVariable("id") String userName,
-			@RequestBody @Validated RothIRA account) {
-		return service.addRothIRAccount(account, userName);
+	public RothIRA postRothIRA(@PathVariable("userName") String userName, @RequestBody @Valid RothIRA rothIra) {
+		return service.addRothIraAccount(rothIra, userName);
 	}
 	
-	@DeleteMapping(value = "/api/users/{id}/roth-ira-account/{aid}")
+	// Patch Mapping ======================================================
+	
+	@PatchMapping(value = "/Users/{userName}/Checking Accounts/{id}/{closingTo}")
 	@ResponseStatus(HttpStatus.OK)
-	public boolean deleteRothIRAccount(@PathVariable("id") String userName, @PathVariable("aid") long aid) {
-		return service.removeRothIRAccountById(aid);
+	public void removeCheckingAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteCheckingAccount(id);
+		service.deleteCheckingAccount(id, userName);
 	}
-
+		
+	@PatchMapping(value = "/Users/{userName}/Savings Account/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeSavingsAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.deleteSavingsAccount(id, userName);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/Personal Checking Account/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removePersonalAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deletePersonalCheckingAccount();
+		service.deletePersonalCheckingAccount(id, userName);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/DBA Checking Accounts/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeDBAAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id) {
+		service.getUserById(userName).deleteDbaAccount(id);
+		service.deleteDbaAccount(id, userName);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/Certificate of Deposit Accounts/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeCDAccount(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteCdAccount(id, closingTo);
+		service.deleteCdAccount(id, userName, closingTo);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/Regular IRA/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRegularIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRegularIra(closingTo);
+		service.deleteRegularIra(id, userName, closingTo);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/Rollover IRA/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRolloverIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRolloverIra(closingTo);
+		service.deleteRolloverIra(id, userName, closingTo);
+	}
+	
+	@PatchMapping(value = "/Users/{userName}/Roth IRA/{id}/{closingTo}")
+	@ResponseStatus(HttpStatus.OK)
+	public void removeRothIra(@PathVariable("userName") String userName, @PathVariable("id") Long id, @PathVariable("closingTo") String closingTo) {
+		service.getUserById(userName).deleteRothIra(closingTo);
+		service.deleteRothIra(id, userName, closingTo);
+	}
+	
 	// Transaction APIs ============================================================
 
 	// Return a list of transactions for a particular user:
-	@GetMapping(value = "/api/users/{id}/transactions")
+	@GetMapping(value = "/api/users/{userName}/transactions")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Transaction> getTransactions(@PathVariable("id") String userName) {
+	public List<Transaction> getTransactions(@PathVariable("userName") String userName) {
 		return service.getTransactionsByUser(userName);
 	}
 
@@ -372,19 +284,11 @@ public class UserAccountController {
 	}
 
 	// Add transaction for a particular user:
-	@PostMapping(value = "/api/users/{id}/transactions")
+	@PostMapping(value = "/api/users/{userName}/transactions")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Transaction postTransaction(@PathVariable("id") String userName,
+	public Transaction postTransaction(@PathVariable("userName") String userName,
 			@RequestBody @Validated Transaction transaction) {
 		return service.addTransaction(transaction, userName);
-	}
-
-	// Delete transaction:
-	@DeleteMapping("/api/transactions/{tid}")
-	@ResponseStatus(HttpStatus.OK)
-	public Optional<User> removeTransactionById(@PathVariable("id") Long userName, @PathVariable("tid") Long tid) {
-		service.removeTransactionById(tid);
-		return null;
 	}
 
 }

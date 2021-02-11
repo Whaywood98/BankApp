@@ -9,6 +9,8 @@ import java.util.Date;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -24,12 +26,12 @@ public abstract class IRAccount {
 	// Class attributes:
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private double interestRate;
 	private double balance;
 	//private User bankAccountHolder;
 	private Date bankAccountOpened = new Date();
-	private boolean isActive;
 	
 	// Constructors:
 	
@@ -37,10 +39,10 @@ public abstract class IRAccount {
 		
 	}
 
-	public IRAccount(double interestRate, double balance, User bankAccountHolder) {
+	public IRAccount(double interestRate, double balance) {
 		this.interestRate = interestRate;
 		this.balance = balance;
-		this.setActive(true);
+		//this.bankAccountHolder = bankAccountHolder;
 	}
 
 	public long getId() {
@@ -73,14 +75,6 @@ public abstract class IRAccount {
 */
 	public Date getBankAccountOpened() {
 		return bankAccountOpened;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 	
 		

@@ -1,4 +1,3 @@
-
 package com.meritamerica.bankcapstone.models;
 
 import java.util.Arrays;
