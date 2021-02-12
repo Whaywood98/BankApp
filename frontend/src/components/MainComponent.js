@@ -16,6 +16,7 @@ import AccountSummary from './AccountSummaryComponent';
 import Home from './HomeComponent';
 import MyProfile from './MyProfileComponent';
 import axios from 'axios';
+import MakeTransactionComponent from './MakeTransactionComponent';
 
 const mapStateToProps = state => {
     return {
@@ -68,6 +69,7 @@ class Main extends Component {
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
                     <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user} token={this.props.token}/>} />
                     <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
+                    <Route path='/maketransaction' component={() => <MakeTransactionComponent user={this.props.user} token={this.props.token} />} />
                     <Redirect exact from="/" to="/home" />
                 </Switch>
                 <Footer/>

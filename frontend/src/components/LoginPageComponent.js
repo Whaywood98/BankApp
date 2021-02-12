@@ -5,7 +5,6 @@ import { addToken, addUser } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
-import UserServices from '../services/UserServices';
 import {MdFingerprint} from 'react-icons/md';
 
 const mapDispatchToProps = (dispatch) => ({

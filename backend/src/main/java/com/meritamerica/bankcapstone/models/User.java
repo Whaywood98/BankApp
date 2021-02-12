@@ -288,7 +288,7 @@ public class User {
 	public void addTransaction(Transaction transaction) {
 		this.transactions.add(transaction);
 	}
-
+	
 	// Delete methods: =============================================
 	
 	public CheckingAccount deleteCheckingAccount(long id) {

@@ -64,15 +64,16 @@ class Transactions extends Component {
 
     render(){
         
-        
+            
+
             const transactions = (this.props.user.transactions != undefined) ? this.props.user.transactions.map((transaction) => {
                 return(
-                    <div key={transaction.id}>
+                    <div key={transaction.accountType}>
                         <Card>
                             <CardBody>
-                                Type: {transaction.type}
-                                Amount: {transaction.amount}
-                                Processed: {transaction.processed}
+                                <p>Type: {transaction.type}</p>
+                                <p>Amount: {transaction.amount}</p>
+                                <p>Processed: {transaction.processed}</p>
                             </CardBody>
                         </Card>
                     </div>
@@ -87,10 +88,11 @@ class Transactions extends Component {
         this.props.match.params.accountType == 'Personal Checking Account'){
             return(
                 <>
-                <h1>{this.props.match.params.accountType} 
-                ID: {this.props.match.params.id}
-                Transaction History:
-                {transactions}
+                <h1>
+                <p>{this.props.match.params.accountType}</p>
+                <p>ID: {this.props.match.params.id}</p>
+                <p>Transaction History:</p>
+                <p>{transactions}</p>
                 </h1>
                 <Button onClick={this.deleteToSavingsAccount}>Close Account</Button>
                 </>
@@ -98,10 +100,11 @@ class Transactions extends Component {
         } else if(this.props.match.params.accountType == 'Savings Account'){
             return(    
                 <>
-                <h1>{this.props.match.params.accountType} 
-                ID: {this.props.match.params.id}
-                Transaction History:
-                {transactions}
+                <h1>
+                <p>{this.props.match.params.accountType}</p>
+                <p>ID: {this.props.match.params.id}</p>
+                <p>Transaction History:</p>
+                <p>{transactions}</p>
                 </h1>
                 <Button onClick={this.deleteUser}>Delete Account</Button>
                 </>
@@ -109,10 +112,11 @@ class Transactions extends Component {
         } else {
             return(
                 <>
-                <h1>{this.props.match.params.accountType} 
-                ID: {this.props.match.params.id}
-                Transaction History:
-                {transactions}
+                <h1>
+                <p>{this.props.match.params.accountType}</p>
+                <p>ID: {this.props.match.params.id}</p>
+                <p>Transaction History:</p>
+                <p>{transactions}</p>
                 </h1>
                 <Button onClick={this.deleteToSavingsAccount}>Close to Savings Account</Button>
                 <Button onClick={this.deleteToCheckingAccount}>Close to Personal Checking Account</Button>

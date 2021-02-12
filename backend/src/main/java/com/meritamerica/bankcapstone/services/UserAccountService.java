@@ -388,7 +388,7 @@ public class UserAccountService {
 			}
 			break;
 
-		case "Saving":
+		case "Savings":
 			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
 			if (savingsAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
@@ -421,7 +421,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "PersonalChecking":
+		case "Personal Checking":
 			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
 			if (pcAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
@@ -432,7 +432,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "RegularIRA":
+		case "Regular IRA":
 			RegularIRA regIRAccount = regularIRARepository.getOne(transaction.getAccountId());
 			if (regIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				regIRAccount.setBalance(regIRAccount.getBalance() + transaction.getAmount());
@@ -443,7 +443,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "RolloverIRA":
+		case "Rollover IRA":
 			RolloverIRA rollIRAccount = rolloverIRARepository.getOne(transaction.getAccountId());
 			if (rollIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				rollIRAccount.setBalance(rollIRAccount.getBalance() + transaction.getAmount());
@@ -454,7 +454,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "RothIRA":
+		case "Roth IRA":
 			RothIRA rothIRAccount = rothIRARepository.getOne(transaction.getAccountId());
 			if (rothIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				rothIRAccount.setBalance(rothIRAccount.getBalance() + transaction.getAmount());
@@ -473,7 +473,7 @@ public class UserAccountService {
 		transactionRepository.save(transaction);
 		return transaction;
 	}
-
+	
 	public List<Transaction> getTransactions() {
 		return transactionRepository.findAll();
 	}
