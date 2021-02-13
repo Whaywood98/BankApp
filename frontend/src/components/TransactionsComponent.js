@@ -66,9 +66,14 @@ class Transactions extends Component {
         
             
 
-            const transactions = (this.props.user.transactions != undefined) ? this.props.user.transactions.map((transaction) => {
+            const transactions = (this.props.user.transactions != undefined) ? this.props.user.transactions.filter(transaction => 
+                                                                                transaction.accountType == this.props.match.params.accountType): null;
+            
+                console.log(transactions);
+
+            const transactionCards = (this.props.user.transactions != undefined) ? transactions.map((transaction) => {
                 return(
-                    <div key={transaction.accountType}>
+                    <div key={transaction.id}>
                         <Card>
                             <CardBody>
                                 <p>Type: {transaction.type}</p>
@@ -92,7 +97,7 @@ class Transactions extends Component {
                 <p>{this.props.match.params.accountType}</p>
                 <p>ID: {this.props.match.params.id}</p>
                 <p>Transaction History:</p>
-                <p>{transactions}</p>
+                <p>{transactionCards}</p>
                 </h1>
                 <Button onClick={this.deleteToSavingsAccount}>Close Account</Button>
                 </>
@@ -104,7 +109,7 @@ class Transactions extends Component {
                 <p>{this.props.match.params.accountType}</p>
                 <p>ID: {this.props.match.params.id}</p>
                 <p>Transaction History:</p>
-                <p>{transactions}</p>
+                <p>{transactionCards}</p>
                 </h1>
                 <Button onClick={this.deleteUser}>Delete Account</Button>
                 </>
@@ -116,7 +121,7 @@ class Transactions extends Component {
                 <p>{this.props.match.params.accountType}</p>
                 <p>ID: {this.props.match.params.id}</p>
                 <p>Transaction History:</p>
-                <p>{transactions}</p>
+                <p>{transactionCards}</p>
                 </h1>
                 <Button onClick={this.deleteToSavingsAccount}>Close to Savings Account</Button>
                 <Button onClick={this.deleteToCheckingAccount}>Close to Personal Checking Account</Button>

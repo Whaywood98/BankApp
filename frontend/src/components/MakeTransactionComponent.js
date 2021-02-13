@@ -55,11 +55,11 @@ class MakeTransaction extends Component {
                 <br/>
             
                 <h2> Account Type: </h2><select name="accountType" onChange={this.handleInputChange}>
-                                        <option>Checking</option>
-                                        <option>Savings</option> 
-                                        <option>Personal Checking</option> 
-                                        <option>DBA</option> 
-                                        <option>CD</option> 
+                                        <option>Checking Accounts</option>
+                                        <option>Savings Account</option> 
+                                        <option>Personal Checking Account</option> 
+                                        <option>DBA Checking Accounts</option> 
+                                        <option>Certificate of Deposit Accounts</option> 
                                         <option>Regular IRA</option> 
                                         <option>Rollover IRA</option> 
                                         <option>Roth IRA</option> 

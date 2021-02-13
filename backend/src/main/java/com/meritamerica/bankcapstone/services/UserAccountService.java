@@ -377,7 +377,7 @@ public class UserAccountService {
 		String type = transaction.getAccountType();
 
 		switch (type) {
-		case "Checking":
+		case "Checking Accounts":
 			CheckingAccount checkingAccount = checkingAccountRepository.getOne(transaction.getAccountId());
 			if (checkingAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				checkingAccount.setBalance(checkingAccount.getBalance() + transaction.getAmount());
@@ -388,7 +388,7 @@ public class UserAccountService {
 			}
 			break;
 
-		case "Savings":
+		case "Savings Account":
 			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
 			if (savingsAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
@@ -399,7 +399,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "CD":
+		case "Certificate of Deposit Accounts":
 			CDAccount cdAccount = cdAccountRepository.getOne(transaction.getAccountId());
 			if (cdAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				cdAccount.setBalance(cdAccount.getBalance() + transaction.getAmount());
@@ -410,7 +410,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "DBA":
+		case "DBA Checking Accounts":
 			DBAAccount DBAAccount = dbaRepository.getOne(transaction.getAccountId());
 			if (DBAAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				DBAAccount.setBalance(DBAAccount.getBalance() + transaction.getAmount());
@@ -421,7 +421,7 @@ public class UserAccountService {
 			}
 			break;
 			
-		case "Personal Checking":
+		case "Personal Checking Account":
 			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
 			if (pcAccount.getBalance() >= Math.abs(transaction.getAmount())) {
 				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
