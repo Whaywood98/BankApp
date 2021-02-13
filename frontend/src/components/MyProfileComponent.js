@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { InitialUserState } from '../shared/InitialUserState';
 import UserServices from '../services/UserServices';
+import'../css/MyProfile.css';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
@@ -14,8 +15,10 @@ const mapDispatchToProps = (dispatch) => ({
 
 class MyProfile extends Component {
 
+    
     constructor(props){
         super(props);
+        
 
     }
 
@@ -34,6 +37,7 @@ class MyProfile extends Component {
         if(this.props.user.userName.length != 0)
         return(
             <>
+            <div class= "My-Profile-Wrapper">
                 <Card>
                     <CardTitle>{this.props.user.userName}</CardTitle>
                     <CardBody>
@@ -41,11 +45,13 @@ class MyProfile extends Component {
                         <p>{this.props.user.ssn}</p>
                     </CardBody>
                 </Card>
-                <Link to="/">
+                <Link to="/" >
                     <Button onClick={this.logout}>Logout</Button>
                 </Link>
                 <Button onClick={this.deleteAccount}>Delete Profile</Button>
+                </div>
             </>
+            
         );
         else{
             return(
@@ -54,6 +60,7 @@ class MyProfile extends Component {
                         <Button>Sign Up</Button>
                     </Link>
                 </div>
+                
             );
         }
     }

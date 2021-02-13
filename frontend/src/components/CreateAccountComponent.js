@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
 import UserServices from '../services/UserServices';
+import'../css/CreateAccount.css';
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -62,10 +63,14 @@ class CreateAccount extends Component {
         return(
             
             <div>
+                <div class= "Create-Account-Wrapper">
+
+                    <div class ="Account-Container">
                 
-                <h3>Register</h3>
+                    <h8 id= "Account-Title"> New Account Registration </h8>
+
                 <form onSubmit={this.handleSubmit}>
-                    Account Type: <select name="accountType" onChange={this.handleInputChange}>
+                    Account Type: <select class ="select-box" name="accountType" onChange={this.handleInputChange}>
                                     <option onClick={this.setAccountType}>Checking Account</option>
                                     <option onClick={this.setAccountType}>Savings Account</option> 
                                     <option onClick={this.setAccountType}>Personal Checking Account</option> 
@@ -76,13 +81,15 @@ class CreateAccount extends Component {
                                     <option onClick={this.setAccountType}>Roth IRA</option> 
                                     </select>
                     <br/>
-                    Opening Balance: <input type= "text" name= "balance" onChange={this.handleInputChange}/>
+                    Opening Balance: <input class = "input-box" type= "text" name= "balance" onChange={this.handleInputChange}/>
                     <br/>
-                    Interest Rate: <input type= "select" name="interestRate" onChange={this.handleInputChange}/>
+                    Interest Rate: <input class = "input-box" type= "select" name="interestRate" onChange={this.handleInputChange}/>
                     <br/>
-                    <input type ="submit" value= "Create Account" />
+                    <input type ="submit" class="Btn btn-success" value= "Create Account" />
 
                 </form>
+                </div>
+                </div>
             </div>
         );
     }

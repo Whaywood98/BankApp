@@ -1,11 +1,14 @@
 import React from 'react';
 import {Card, CardTitle, CardBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import '../css/AccountSummary.css';
 
 function AccountSummaryCard(props) {
         return(
         <>
-        <Link to={`/transactions/${props.accountType}/${props.account.id}`}>
+
+        <div className= "Account-Summary-Wrapper">
+        <Link to={`/transactions/${props.accountType}/${props.account.id}`} style={{ textDecoration: 'none' }}>
             <Card>
                 <CardTitle>Summary</CardTitle>
                 <CardBody>
@@ -15,6 +18,7 @@ function AccountSummaryCard(props) {
                 </CardBody>
             </Card>
         </Link>
+        </div>
         </>
         );     
 }
