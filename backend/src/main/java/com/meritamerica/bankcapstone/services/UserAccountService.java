@@ -379,7 +379,7 @@ public class UserAccountService {
 		switch (type) {
 		case "Checking":
 			CheckingAccount checkingAccount = checkingAccountRepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= checkingAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > checkingAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				checkingAccount.setBalance(checkingAccount.getBalance() + transaction.getAmount());
@@ -390,7 +390,7 @@ public class UserAccountService {
 
 		case "Savings":
 			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= savingsAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > savingsAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
@@ -401,7 +401,7 @@ public class UserAccountService {
 			
 		case "CD":
 			CDAccount cdAccount = cdAccountRepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= cdAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > cdAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				cdAccount.setBalance(cdAccount.getBalance() + transaction.getAmount());
@@ -412,7 +412,7 @@ public class UserAccountService {
 			
 		case "DBA":
 			DBAAccount DBAAccount = dbaRepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= DBAAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > DBAAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				DBAAccount.setBalance(DBAAccount.getBalance() + transaction.getAmount());
@@ -423,7 +423,7 @@ public class UserAccountService {
 			
 		case "Personal Checking":
 			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= pcAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > pcAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
@@ -434,7 +434,7 @@ public class UserAccountService {
 			
 		case "Regular IRA":
 			RegularIRA regIRAccount = regularIRARepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= regIRAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > regIRAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				regIRAccount.setBalance(regIRAccount.getBalance() + transaction.getAmount());
@@ -445,7 +445,7 @@ public class UserAccountService {
 			
 		case "Rollover IRA":
 			RolloverIRA rollIRAccount = rolloverIRARepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= rollIRAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > rollIRAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				rollIRAccount.setBalance(rollIRAccount.getBalance() + transaction.getAmount());
@@ -456,7 +456,7 @@ public class UserAccountService {
 			
 		case "Roth IRA":
 			RothIRA rothIRAccount = rothIRARepository.getOne(transaction.getAccountId());
-			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) >= rothIRAccount.getBalance()) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > rothIRAccount.getBalance()) {
 				transaction.setProcessed(false);
 			} else {
 				rothIRAccount.setBalance(rothIRAccount.getBalance() + transaction.getAmount());
