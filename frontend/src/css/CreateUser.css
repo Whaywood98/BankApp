@@ -17,7 +17,7 @@
 
   .Registration-container{
     position:relavtive;
-    top:-1px;
+    top:20px;
     margin-left:600px;
     display:Right;
     align-items: center;
@@ -25,6 +25,7 @@
     padding: 50px;
     position: relative;
     color:#00b894;
+    
     
   }
   .input-div{
@@ -47,8 +48,9 @@
     padding: 2px 0;
     margin:2px 0;
     border: 1px solid #00b894;
-    
     background: none;
+    
+
 
   }
   
@@ -57,7 +59,7 @@
   width:100%;
   background: none;
   border: 2px solid #00b894;
-  color: white;
+  color: black;
   padding:5px;
   font-size:20px;
   cursor: pointer;

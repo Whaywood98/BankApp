@@ -379,89 +379,89 @@ public class UserAccountService {
 		switch (type) {
 		case "Checking Accounts":
 			CheckingAccount checkingAccount = checkingAccountRepository.getOne(transaction.getAccountId());
-			if (checkingAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > checkingAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				checkingAccount.setBalance(checkingAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				checkingAccountRepository.save(checkingAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 
 		case "Savings Account":
 			SavingsAccount savingsAccount = savingsAccountRepository.getOne(transaction.getAccountId());
-			if (savingsAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > savingsAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				savingsAccount.setBalance(savingsAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				savingsAccountRepository.save(savingsAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "Certificate of Deposit Accounts":
 			CDAccount cdAccount = cdAccountRepository.getOne(transaction.getAccountId());
-			if (cdAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > cdAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				cdAccount.setBalance(cdAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				cdAccountRepository.save(cdAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "DBA Checking Accounts":
 			DBAAccount DBAAccount = dbaRepository.getOne(transaction.getAccountId());
-			if (DBAAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > DBAAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				DBAAccount.setBalance(DBAAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				dbaRepository.save(DBAAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "Personal Checking Account":
 			PersonalCheckingAccount pcAccount = personalCheckingAccountRepository.getOne(transaction.getAccountId());
-			if (pcAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > pcAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				pcAccount.setBalance(pcAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				personalCheckingAccountRepository.save(pcAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "Regular IRA":
 			RegularIRA regIRAccount = regularIRARepository.getOne(transaction.getAccountId());
-			if (regIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > regIRAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				regIRAccount.setBalance(regIRAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				regularIRARepository.save(regIRAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "Rollover IRA":
 			RolloverIRA rollIRAccount = rolloverIRARepository.getOne(transaction.getAccountId());
-			if (rollIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > rollIRAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				rollIRAccount.setBalance(rollIRAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				rolloverIRARepository.save(rollIRAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
 		case "Roth IRA":
 			RothIRA rothIRAccount = rothIRARepository.getOne(transaction.getAccountId());
-			if (rothIRAccount.getBalance() >= Math.abs(transaction.getAmount())) {
+			if (transaction.getAmount() < 0 && Math.abs(transaction.getAmount()) > rothIRAccount.getBalance()) {
+				transaction.setProcessed(false);
+			} else {
 				rothIRAccount.setBalance(rothIRAccount.getBalance() + transaction.getAmount());
 				transaction.setProcessed(true);
 				rothIRARepository.save(rothIRAccount);
-			} else {
-				transaction.setProcessed(false);
 			}
 			break;
 			
