@@ -291,7 +291,7 @@ public class UserAccountController {
 	public List<Transaction> getAllTransactions() {
 		return service.getTransactions();
 	}
-
+	
 	// Add transaction for a particular user:
 	@PostMapping(value = "/Users/{userName}/transactions")
 	@ResponseStatus(HttpStatus.CREATED)
