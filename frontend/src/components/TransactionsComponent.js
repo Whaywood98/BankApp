@@ -67,7 +67,7 @@ class Transactions extends Component {
             
 
             const transactions = (this.props.user.transactions != undefined) ? this.props.user.transactions.filter(transaction => 
-                                                                                transaction.accountType == this.props.match.params.accountType): null;
+                                                                                transaction.accountId == this.props.match.params.id): null;
             
                 console.log(transactions);
 
