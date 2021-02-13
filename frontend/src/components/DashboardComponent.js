@@ -13,7 +13,7 @@ function Dashboard(props) {
         <>
         
         <div class = "Dashboard-Wrapper">
-          <h7 id= "welcome-title"> Welcome to your Admin Dashboard! </h7>
+          <h7 id= "welcome-title"> Welcome to your User Dashboard! </h7>
          
 
         <div className="col-12 col-md-6 m-1">

@@ -6,9 +6,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
 import axios from 'axios';
-import UserServices from '../services/UserServices';
-
-import UserServices from '../services/UserServices';
 import'../css/CreateAccount.css';
 
 
