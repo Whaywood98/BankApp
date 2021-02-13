@@ -17,7 +17,7 @@ class MakeTransaction extends Component {
         super(props);
         this.state = {
             accountId: null,
-            accounType: 'Checking',
+            accountType: 'Checking Accounts',
             amount: null,
             type: 'Check'
         }
@@ -26,14 +26,13 @@ class MakeTransaction extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault();
-
+        console.log(this.state);
         await axios.post(baseUrlLocal + '/Users/' + this.props.user.userName + '/' + 'transactions', this.state,
                         { headers: {"Authorization" : `Bearer ${this.props.token.token}`}})
                         .catch((error) => alert(error.message));
                         
         axios.get(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}})
         .then((response) => {
-            console.log(response);
             this.props.dispatch(addUser(response.data));
         });
     }
