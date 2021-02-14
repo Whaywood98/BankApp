@@ -22,6 +22,7 @@ class CreateUser extends Component {
             middleName: '',
             lastName: '',
             userName: '',
+            password: '',
             email: '',
             accountOpened: new Date(),
             dob: '',
@@ -29,12 +30,17 @@ class CreateUser extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = async (event) => {
         event.preventDefault()
         const data = this.state
-        data.dob = new Date(data.dob);
-        axios.post(baseUrlLocal + '/Users', data);
-        alert(JSON.stringify(data));
+        const exists = await axios.get(baseUrlLocal + '/Users' + '/' + data.userName + '/valid');
+        if(exists.data === true){
+            alert("Username taken!");
+        } else {
+            data.dob = new Date(data.dob);
+            axios.post(baseUrlLocal + '/Users', data);
+            alert(JSON.stringify(data));
+        }
     }
 
     handleInputChange = (event) => {
@@ -70,9 +76,12 @@ class CreateUser extends Component {
                     Username: <input class = "input-Box" type= "text" name= "userName" onChange={this.handleInputChange}/>
                     <br/>
                     
+                    Password: <input class = "input-Box" type= "text" name= "password" onChange={this.handleInputChange}/>
+                    <br/>
+
                     Email: <input class = "input-Box" type= "text" name= "email" onChange={this.handleInputChange}/>
                     <br/>
-                   
+
                     Date of Birth: <input class = "input-Box" type= "text" name= "dob" onChange={this.handleInputChange}/>
                     <br/>
                    

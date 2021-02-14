@@ -1,58 +1,62 @@
-/*
- * Transaction
- * 
- * This class is primarily for logging. It will be added to a list of transactions in a database
- * that shows all deposits and withdrawals to and from accounts.
- * 
- */
-
 package com.meritamerica.bankcapstone.models;
 
-import javax.persistence.Entity;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Transaction {
 	
 	// Class attributes:
 	
+	@Id
+	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private User targetAccount;
-	private User sourceAccount;
+	private String user;
+	private long accountId;
+	private String accountType; 	// CD, Checking, DBA, PersonalChecking, RegularIRA, RothIra, RolloverIRA, Savings
 	private double amount;
-	private String type; 		// Check, cash, ATM, or transfer?
+	private String type; 			// Check, cash, ATM, or transfer?
+	private boolean isProcessed;	// Whether or not it was successfully processed.
+	Date transactionDate = new Date();
 	
 	// Constructors:
 	
 	public Transaction() {
 		
 	}
-
-	public Transaction(User targetAccount, User sourceAccount, double amount, String type) {
-		this.targetAccount = targetAccount;
-		this.sourceAccount = sourceAccount;
+	
+	public Transaction(String user,long accountId, String accountType, double amount, String type) {
+		this.user = user;
+		this.accountId = accountId;
+		this.accountType = accountType;
 		this.amount = amount;
 		this.type = type;
 	}
-	
-	// Getters and setters:
 
 	public long getId() {
 		return id;
 	}
 
-	public User getTargetAccount() {
-		return targetAccount;
+	public String getSourceUser() {
+		return user;
 	}
 
-	public void setTargetAccount(User targetAccount) {
-		this.targetAccount = targetAccount;
+	public void setSourceUser(String sourceUser) {
+		this.user = sourceUser;
 	}
 
-	public User getSourceAccount() {
-		return sourceAccount;
+	public Date getTransactionDate() {
+		return transactionDate;
 	}
 
-	public void setSourceAccount(User sourceAccount) {
-		this.sourceAccount = sourceAccount;
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
 	}
 
 	public double getAmount() {
@@ -70,7 +74,45 @@ public class Transaction {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	// Class methods:
+
+	public String getFromUser() {
+		return user;
+	}
+
+	public void setFromUser(String fromUser) {
+		this.user = fromUser;
+	}
+
+	public String getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public boolean isProcessed() {
+		return isProcessed;
+	}
+
+	public void setProcessed(boolean isProcessed) {
+		this.isProcessed = isProcessed;
+	}
+
+	public long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
+	}
 	
 }

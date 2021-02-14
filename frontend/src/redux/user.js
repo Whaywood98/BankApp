@@ -1,6 +1,4 @@
-import axios from 'axios';
 import * as ActionTypes from './ActionTypes';
-import { baseUrlLocal } from '../shared/baseUrl';
 
 export const User = (state = {
     isLoading: true,
@@ -19,7 +17,8 @@ export const User = (state = {
     cdAccounts: [],
     regularIra: null,
     rolloverIra: null,
-    rothIra: null
+    rothIra: null,
+    transactions: []
 }, action) => {
     switch (action.type) {
         case ActionTypes.ADD_USER:
@@ -27,7 +26,7 @@ export const User = (state = {
                 middleName: action.payload.middleName, lastName: action.payload.lastName, userName: action.payload.userName, email: action.payload.email,
                 dob: action.payload.dob, ssn: action.payload.ssn, checkingAccounts: action.payload.checkingAccounts, savingsAccount: action.payload.savingsAccount,
                 personalCheckingAccount: action.payload.personalCheckingAccount, dbaAccounts: action.payload.dbaAccounts, cdAccounts: action.payload.cdAccounts,
-                regularIra: action.payload.regularIra, rolloverIra: action.payload.rolloverIra, rothIra: action.payload.rothIra,}
+                regularIra: action.payload.regularIra, rolloverIra: action.payload.rolloverIra, rothIra: action.payload.rothIra, transactions: action.payload.transactions}
 
         case ActionTypes.USER_LOADING:
             return { ...state, isLoading: true, errMess: null, accounts: [], firstName: '',

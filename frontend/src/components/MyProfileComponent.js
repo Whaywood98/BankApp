@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { addUser } from '../redux/ActionCreators';
+import { addUser, deleteToken } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Button } from './ButtonComponent';
@@ -7,10 +7,13 @@ import {Link} from 'react-router-dom'
 import { Card, CardTitle, CardBody } from 'reactstrap';
 import { InitialUserState } from '../shared/InitialUserState';
 import UserServices from '../services/UserServices';
+import axios from 'axios';
+import { baseUrlLocal } from '../shared/baseUrl';
 import'../css/MyProfile.css';
 
 const mapDispatchToProps = (dispatch) => ({
-    addUser: () => dispatch(addUser())
+    addUser: () => dispatch(addUser()),
+    deleteToken: () => dispatch(deleteToken())
 });
 
 class MyProfile extends Component {
@@ -25,11 +28,12 @@ class MyProfile extends Component {
     logout = (event) => {
         event.preventDefault();
         this.props.dispatch(addUser(InitialUserState));
+        this.props.dispatch(deleteToken);
     }
 
     deleteAccount = (event) => {
         event.preventDefault();
-        UserServices.deleteUser(this.props.user.userName);
+        axios.delete(baseUrlLocal + '/Users/' + this.props.user.userName, { headers: {"Authorization" : `Bearer ${this.props.token.token}`}});
         this.props.dispatch(addUser(InitialUserState));
     }
 

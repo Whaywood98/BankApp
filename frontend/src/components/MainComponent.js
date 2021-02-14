@@ -5,7 +5,7 @@ import LoginPage from './LoginPageComponent';
 import CreateAccount from './CreateAccountComponent';
 import AboutUs from './AboutComponent';
 import CreateUser from './CreateUserComponent';
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { Route, Redirect, Switch, withRouter, Router } from 'react-router-dom';
 import Dashboard from './DashboardComponent';
 import Transactions from './TransactionsComponent';
 import { addUser } from '../redux/ActionCreators';
@@ -15,10 +15,13 @@ import UserServices from '../services/UserServices';
 import AccountSummary from './AccountSummaryComponent';
 import Home from './HomeComponent';
 import MyProfile from './MyProfileComponent';
+import axios from 'axios';
+import MakeTransactionComponent from './MakeTransactionComponent';
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user,
+        token: state.token
     }
 }
 
@@ -33,6 +36,10 @@ class Main extends Component {
         super(props);
 
     }
+
+    // componentDidMount(){
+    //     Router.push("/home");
+    // }
 
     render() {
 
@@ -50,7 +57,7 @@ class Main extends Component {
                     <Route path='/dashboard' component={DashDisplay} />
                     <Route path='/aboutus' component={() => <AboutUs />} />
                     <Route path='/signin' component={() => <LoginPage addUser={this.props.addUser}/>} />
-                    <Route path='/createaccount' component={() => <CreateAccount user={this.props.user}/>} />
+                    <Route path='/createaccount' component={() => <CreateAccount user={this.props.user} token={this.props.token}/>} />
                     <Route path='/register' component={() => <CreateUser /> }/>
                     <Route path='/accountsummary/checking' component={() => <AccountSummary accountType="Checking Accounts" accounts={this.props.user.checkingAccounts} />} />
                     <Route path='/accountsummary/savings' component={() => <AccountSummary accountType="Savings Account" accounts={this.props.user.savingsAccount} />} />
@@ -60,8 +67,10 @@ class Main extends Component {
                     <Route path='/accountsummary/regular' component={() => <AccountSummary accountType="Regular IRA" accounts={this.props.user.regularIra} />} />
                     <Route path='/accountsummary/rollover' component={() => <AccountSummary accountType="Rollover IRA" accounts={this.props.user.rolloverIra} />} />
                     <Route path='/accountsummary/roth' component={() => <AccountSummary accountType="Roth IRA" accounts={this.props.user.rothIra} />} />
-                    <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user}/>} />
-                    <Route path='/myprofile' component={() => <MyProfile user={this.props.user} />} />
+                    <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user} token={this.props.token}/>} />
+                    <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
+                    <Route path='/maketransaction' component={() => <MakeTransactionComponent user={this.props.user} token={this.props.token} />} />
+                    <Redirect exact from="/" to="/home" />
                 </Switch>
                 <Footer/>
             </div>

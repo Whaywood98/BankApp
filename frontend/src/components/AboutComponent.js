@@ -10,19 +10,19 @@ class AboutUs extends Component {
             <Card> 
                 <CardTitle>Allana Gray</CardTitle>
                 <CardSubtitle>Front-End Developer</CardSubtitle>
-                <CardImg src="/logo192.png" height="70" width="70" />
+                <CardImg src="/allana.jpg" height="70" width="70" />
                 <CardBody></CardBody>
             </Card>
             <Card> 
                 <CardTitle>Wiliam Haywood</CardTitle>
                 <CardSubtitle>Team Lead</CardSubtitle>
-                <CardImg src="/logo192.png" height="70" width="70" />
+                <CardImg src="/will.jpg" height="70" width="70" />
                 <CardBody></CardBody>
             </Card>
             <Card> 
                 <CardTitle>Rod Wombles</CardTitle>
                 <CardSubtitle>Back-End Developer</CardSubtitle>
-                <CardImg src="/logo192.png" height="70" width="70" />
+                <CardImg src="/rod.jpg" height="70" width="70" />
                 <CardBody></CardBody>
             </Card>
             </>
