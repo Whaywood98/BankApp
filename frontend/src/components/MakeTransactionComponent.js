@@ -4,7 +4,7 @@ import { addToken, addUser } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
-import '../css/Transactions.css';
+import '../css/MakeTransaction.css';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
@@ -46,8 +46,8 @@ class MakeTransaction extends Component {
     render(){
         return(
             <html>
-                <div class="Transaction-Wrapper">
-                    <div class="Transaction-container">
+                <div class="MakeTransaction-Wrapper">
+                    <div class="MakeTransaction-container">
                     <form onSubmit={this.handleSubmit}>
 
                     <div class= "input-div">

@@ -12,6 +12,7 @@ function AccountSummaryCard(props) {
             <Card className="Account">
                 <CardTitle>Summary</CardTitle>
                 <CardBody>
+                    <p>{props.accountType}</p>
                     <p>ID: {props.account.id}</p>
                     <p>Balance: {props.account.balance}</p>
                     <p>Interest Rate: {props.account.interestRate}</p>
@@ -34,7 +35,6 @@ const AccountSummary = (props) => {
         })
         return(
         <>
-            <p>{props.accountType}</p>
             <Link to={`/transactions/${props.accountType}`}>
                 <p>{summary}</p>
             </Link>
@@ -43,7 +43,6 @@ const AccountSummary = (props) => {
     } else {
         return(
             <>
-                <p>{props.accountType}</p>
                 <p><AccountSummaryCard account={props.accounts} accountType={props.accountType} /></p>
             </>
         );

@@ -93,40 +93,46 @@ class Transactions extends Component {
         if(this.props.match.params.accountType == 'Checking Accounts' || this.props.match.params.accountType == 'DBA Checking Accounts' ||
         this.props.match.params.accountType == 'Personal Checking Account'){
             return(
-                <>
-                <h1>
-                <p>{this.props.match.params.accountType}</p>
-                <p>ID: {this.props.match.params.id}</p>
-                <p>Transaction History:</p>
-                <p>{transactionCards}</p>
-                </h1>
-                <Button onClick={this.deleteToSavingsAccount}>Close Account</Button>
-                </>
+                <div class="Transaction-Wrapper">
+                    <div class="Transaction-container">
+                        <h1>
+                        <p>{this.props.match.params.accountType}</p>
+                        <p>ID: {this.props.match.params.id}</p>
+                        <p>Transaction History:</p>
+                        </h1>
+                        <p>{transactionCards}</p>
+                        <Button onClick={this.deleteToSavingsAccount}>Close Account</Button>
+                    </div>
+                </div>
             );
         } else if(this.props.match.params.accountType == 'Savings Account'){
             return(    
-                <>
-                <h1>
-                <p>{this.props.match.params.accountType}</p>
-                <p>ID: {this.props.match.params.id}</p>
-                <p>Transaction History:</p>
-                <p>{transactionCards}</p>
-                </h1>
-                <Button onClick={this.deleteUser}>Delete Account</Button>
-                </>
+                <div class="Transaction-Wrapper">
+                    <div>
+                        <h1 class="Transaction-Header">
+                        <p>{this.props.match.params.accountType}</p>
+                        <p>ID: {this.props.match.params.id}</p>
+                        <p>Transaction History:</p>
+                        </h1>
+                        <p class="Transaction-container">{transactionCards}</p>
+                        <Button onClick={this.deleteUser}>Delete Account</Button>
+                    </div>
+                </div>
             );
         } else {
             return(
-                <>
-                <h1>
-                <p>{this.props.match.params.accountType}</p>
-                <p>ID: {this.props.match.params.id}</p>
-                <p>Transaction History:</p>
-                <p>{transactionCards}</p>
-                </h1>
-                <Button onClick={this.deleteToSavingsAccount}>Close to Savings Account</Button>
-                <Button onClick={this.deleteToCheckingAccount}>Close to Personal Checking Account</Button>
-                </>
+                <div class="Transaction-Wrapper">
+                    <div class="Transaction-container">
+                        <h1 class="Transaction-Header">
+                        <p>{this.props.match.params.accountType}</p>
+                        <p>ID: {this.props.match.params.id}</p>
+                        <p>Transaction History:</p>
+                        </h1>
+                        <p>{transactionCards}</p>
+                        <Button onClick={this.deleteToSavingsAccount}>Close to Savings Account</Button>
+                        <Button onClick={this.deleteToCheckingAccount}>Close to Personal Checking Account</Button>
+                    </div>
+                </div>
             );
         }
     }

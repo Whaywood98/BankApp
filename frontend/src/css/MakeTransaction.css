@@ -1,17 +1,25 @@
-.Transaction-Wrapper {
-    background-color: lightgray;
-    background-size: cover;
-    padding-bottom:20px;
+.MakeTransaction-Wrapper {
+    background:  url('./undraw_Access_account_re_8spm\ \(1\).svg');
+    background-repeat: no-repeat;
+    height: 80vh;
+    -webkit-background-size: cover;
+    background-size: 600px;
+    background-color: #d1dbd9;
+    padding-top:0px;
+      display: flex;
+    align-items: center;
+    justify-content: center;
     
-   
   
 
   }
 
-  .Transaction-container{
+  .MakeTransaction-container{
+    position:relavtive;
     top:20px;
     margin-left:300px;
     margin-bottom: 150px;
+    display:Right;
     align-items: center;
     text-align:center;
     padding: 50px;
@@ -20,13 +28,6 @@
     
     
   }
-
-  .Transaction-Header{
-    position: relative;
-    text-align: center;
-    color:#00b894;
-  }
-
   .input-div{
     min-width:380px;
     padding: 20px 0;
@@ -55,7 +56,7 @@
   
 
 .btn{
-  width:20%;
+  width:100%;
   background: none;
   border: 2px solid #00b894;
   color: black;
