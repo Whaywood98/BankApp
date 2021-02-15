@@ -10,6 +10,8 @@ import UserServices from '../services/UserServices';
 import axios from 'axios';
 import { baseUrlLocal } from '../shared/baseUrl';
 import'../css/MyProfile.css';
+import { mockComponent } from 'react-dom/test-utils';
+import moment from 'moment';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser()),
@@ -21,7 +23,6 @@ class MyProfile extends Component {
     
     constructor(props){
         super(props);
-        
 
     }
 
@@ -45,7 +46,7 @@ class MyProfile extends Component {
                 <Card>
                     <CardTitle>{this.props.user.userName}</CardTitle>
                     <CardBody>
-                        <p>{this.props.user.dob}</p>
+                        <p>{moment(this.props.user.dob).format("YYYY/MM/DD")}</p>
                         <p>{this.props.user.ssn}</p>
                     </CardBody>
                 </Card>

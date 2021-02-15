@@ -9,7 +9,7 @@ function AccountSummaryCard(props) {
 
         <div className= "Account-Summary-Wrapper">
         <Link to={`/transactions/${props.accountType}/${props.account.id}`} style={{ textDecoration: 'none' }}>
-            <Card>
+            <Card className="Account">
                 <CardTitle>Summary</CardTitle>
                 <CardBody>
                     <p>ID: {props.account.id}</p>

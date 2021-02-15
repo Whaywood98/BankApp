@@ -20,7 +20,7 @@ function HomeSection({
         <h1> Welcome To Merit Bank</h1>
          <h2> Anytime Anywhere</h2>
         <h3>   Virtual Banking Made easy</h3>
-          <a href="#">Get Started Today</a>
+          <a href="/register">Get Started Today</a>
           </div>
           
     

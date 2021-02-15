@@ -48,13 +48,15 @@ function Dashboard(props) {
     );
     else{
       return(
-        <div>
-          <Link to="/register">
-            <Button>Sign Up</Button>
-          </Link>
-          <Link to="/signin">
-            <Button>Sign In</Button>
-          </Link>
+        <div class="Empty-Dashboard">
+          <div class="Dashboard-container">
+            <Link to="/register">
+              <Button>Sign Up</Button>
+            </Link>
+            <Link to="/signin">
+              <Button>Sign In</Button>
+            </Link>
+          </div>
         </div>
       )
     }

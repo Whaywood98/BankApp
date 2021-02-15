@@ -7,6 +7,7 @@ import { InitialUserState } from '../shared/InitialUserState';
 import { baseUrlLocal } from '../shared/baseUrl';
 import axios from 'axios';
 import { Card, CardBody } from 'reactstrap';
+import '../css/Transactions.css';
 
 const mapDispatchToProps = (dispatch) => ({
     addUser: () => dispatch(addUser())
