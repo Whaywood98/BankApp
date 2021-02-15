@@ -70,7 +70,7 @@ class Main extends Component {
                     <Route exact path="/transactions/:accountType/:id" component={() => <Transactions user={this.props.user} token={this.props.token}/>} />
                     <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
                     <Route path='/maketransaction' component={() => <MakeTransactionComponent user={this.props.user} token={this.props.token} />} />
-                    <Redirect exact from="/" to="/home" />
+                    <Redirect exact from="/index.html" to="/home" />
                 </Switch>
                 <Footer/>
             </div>
