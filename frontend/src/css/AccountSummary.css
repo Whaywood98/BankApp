@@ -1,9 +1,30 @@
 .Account-Summary-Wrapper{
   height: 80vh;
-  background-color: #aca9a994;
-  padding-top:0px;
-    display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  background: url(https://i.postimg.cc/W1dy51pb/denys-nevozhai-dq93a-Nzsr-H0-unsplash.jpg);
+  height: 100vh;
+background-size: cover;
+background-repeat: no-repeat;
+height: 100vh;
+padding-top:0px;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: auto;
+}
+
+
+.Account-Summary-Title{
+  position:relavtive;
+    top:0px;
+    background-color: #aca9a994;
+    display:Right;
+    align-items: center;
+    text-align:center;
+    color:#00b894;
+    size: 50px;
+}
+.props-style{
+  color:#5e6665;
+  text-size: 50px;
+
 }

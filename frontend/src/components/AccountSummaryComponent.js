@@ -9,12 +9,14 @@ function AccountSummaryCard(props) {
 
         <div className= "Account-Summary-Wrapper">
         <Link to={`/transactions/${props.accountType}/${props.account.id}`} style={{ textDecoration: 'none' }}>
-            <Card>
-                <CardTitle>Summary</CardTitle>
-                <CardBody>
-                    <p>ID: {props.account.id}</p>
-                    <p>Balance: {props.account.balance}</p>
-                    <p>Interest Rate: {props.account.interestRate}</p>
+            
+        <Card style={{  position:"relative", padding: '90px' , left: "-150px" ,top: "-10px"  }}>
+                <CardTitle style={{ width:"250px",  position:"relative", padding: '90px' , left: "-20px" ,top: "-100px", fontSize:"27px" }}> Account Summary</CardTitle>
+                <CardBody style={{  position:"relative" , left: "100px" ,top: "-130px", fontSize:"20px" }} >
+                    <p className="Props-Style">{props.accountType}</p>
+                    <p className="Props-Style">ID: {props.account.id}</p>
+                    <p className="Props-Style">Balance: {props.account.balance}</p>
+                    <p className="Props-Style">Interest Rate: {props.account.interestRate}</p>
                 </CardBody>
             </Card>
         </Link>
@@ -28,14 +30,14 @@ const AccountSummary = (props) => {
         const summary = props.accounts.map((account) => {
             return(
                 <div key={account.id}>
-                    <AccountSummaryCard account={account} accountType={props.accountType} />
+                    <AccountSummaryCard  account={account} accountType={props.accountType} />
                 </div>
             )
         })
         return(
         <>
-            <p>{props.accountType}</p>
-            <Link to={`/transactions/${props.accountType}`}>
+       
+            <Link to={`/transactions/${props.accountType}`} style={{ textDecoration: 'none' }}>
                 <p>{summary}</p>
             </Link>
         </>
@@ -43,8 +45,8 @@ const AccountSummary = (props) => {
     } else {
         return(
             <>
-                <p>{props.accountType}</p>
-                <p><AccountSummaryCard account={props.accounts} accountType={props.accountType} /></p>
+                
+                <p><AccountSummaryCard style={{  position:"relative", padding: '100px' , left: "-180px" ,top: "-550px"  }} account={props.accounts} accountType={props.accountType} /></p>
             </>
         );
     }

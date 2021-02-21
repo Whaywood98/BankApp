@@ -1,0 +1,132 @@
+.Transaction-Page-Wrapper{
+  background:  url( https://i.postimg.cc/vTzBW4FX/pexels-scott-webb-593158.jpg);
+background-repeat: no-repeat;
+height: 100vh;
+background-size: cover;
+height: 100vh;
+padding-top:0px;
+left: -100px;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: auto;
+}
+.Transaction-title{
+     font-size:30px;
+      font-weight: bold;
+      font-style: sans-serif;
+      color: #00b894;
+      margin-top: -300px;
+      position:center;
+      top: -150px;
+      margin-left: -110px;
+      
+
+}
+.Btn-1{
+ 
+  background: none;
+  border: 2px solid #00b894;
+  color: #00b894;
+  padding:5px;
+  font-size:20px;
+  top:50px; 
+  margin-left: 100px;
+  width:50%;
+  
+  
+}
+.Btn-2{
+ 
+  background: none;
+  border: 2px solid #00b894;
+  color: #00b894;
+  padding:5px;
+  font-size:20px;
+  margin-top:-70px; 
+  margin-left: 170px;
+  
+  width:100%;
+  background: none;
+  border: 2px solid #00b894;
+  color: #00b894;
+  padding:5px;
+  font-size:20px;
+  cursor: pointer;
+  margin:12px 0;
+}
+  
+  
+
+.Transaction-Title{
+  font-size:30px;
+   font-weight: bold;
+   font-style: sans-serif;
+   color: #00b894;
+   margin-top: -300px;
+   position:center;
+   top: -150px;
+   margin-left: -170px;
+   
+
+}
+.Btn-3{
+ 
+  background: none;
+  border: 2px solid #00b894;
+  color: #00b894;
+  padding:5px;
+  font-size:20px;
+  margin-top:0px; 
+  margin-left: -90px;
+  width:100%;
+  background: none;
+  border: 2px solid #00b894;
+  color: #00b894;
+  padding:5px;
+  font-size:20px;
+  cursor: pointer;
+  margin:12px 0;
+
+  
+  
+}
+.props-Style{
+  color:#00b894;
+  size: 50px;
+  margin-bottom:100px; 
+  font-size:25px;
+  margin-left:-190px;
+  text-align: center;
+}
+.props-Style-2{
+  color:#00b894;
+  size: 50px;
+  margin-bottom:100px; 
+  font-size:25px;
+  margin-left:-15px;
+  position:relative;
+  align-items: center;
+
+}
+.Props-Style{
+  color:#5e6665;
+  size: 50px;
+  margin-top:50px; 
+  font-size:20px;
+  margin-left:-180px;
+
+}
+.props-Style-1{
+  color:#00b894;
+  size: 50px;
+  margin-bottom:100px; 
+  font-size:25px;
+  margin-left:-190px;
+  text-align: center;
+
+}
+
+
+
+

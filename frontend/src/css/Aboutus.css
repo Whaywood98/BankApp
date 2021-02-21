@@ -1,0 +1,54 @@
+.Aboutus-Wrapper{
+    background:  url(https://i.postimg.cc/kGg8xYNt/ian-schneider-Tam-Mbr4okv4-unsplash.jpg);
+    background-repeat: no-repeat;
+   height: 100vh;
+    background-size: cover;
+   height: 100vh;
+   padding-top:0px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+    z-index: auto;
+}
+    
+  
+
+#h5{
+    font-size:45px;
+    font-weight: bold;
+    font-style: sans-serif;
+    color: #35413e;
+    
+    
+  
+    
+
+}
+
+#h6{
+    font-size:45px;
+    font-weight: bold;
+    font-style: sans-serif;
+    color: #294941;
+   
+
+}
+.mb-2{
+font-size:20px;
+color: rgb(58, 117, 112);
+position: relative;
+left: 50px;
+
+}
+.mb-1{
+font-size:20px;
+align-items: center ;
+}
+
+.mb-3{
+font-size:16px;
+color: rgb(58, 117, 112);
+position: relative;
+left: 15px;
+
+}

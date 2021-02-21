@@ -2,8 +2,8 @@
 .card{
   
     width:400px;
-    background: linear-gradient(to bottom left, #e9e7e7 40%, #cecdcd 100%);
-    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(to bottom left, #e6dddd 40%, #cecdcd 100%);
+    box-shadow: 0 20px 40px -14px rgba(46, 44, 44, 0.25);
     border-radius: 20px;
     display: flex;
     padding: 1rem;
@@ -16,7 +16,7 @@
     align-items:center;
     display:block;
     text-decoration: none;
-    margin-top: 30px;
+    margin-top: 50px;
   
 
 

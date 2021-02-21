@@ -5,6 +5,7 @@ import { addToken, addUser } from '../redux/ActionCreators';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { baseUrlLocal } from '../shared/baseUrl';
+import'../css/Transaction.css';
 
 
 const mapDispatchToProps = (dispatch) => ({
@@ -48,12 +49,15 @@ class MakeTransaction extends Component {
         return(
             <form onSubmit={this.handleSubmit}>
 
-            <div class= "input-div">
+            <div class= "Transaction-Wrapper">
+
+           <div class ="Transaction-Container">
+           <h8 id= "Transaction-Title">  Make A Transaction </h8>
                 
-                <h2> Account ID </h2> <input class= "Input-Box" type= "text" name="accountId" onChange={this.handleInputChange}/>
-                <br/>
+           <h3 id= "Title"> Account ID </h3> <input class= "input-Box" type= "text" name="accountId" onChange={this.handleInputChange}/>
+              <br/>
             
-                <h2> Account Type: </h2><select name="accountType" onChange={this.handleInputChange}>
+              <h3 id= "Title">  Account Type: </h3> <select class="select-box" name= "accountType" onChange={this.handleInputChange}>
                                         <option>Checking Accounts</option>
                                         <option>Savings Account</option> 
                                         <option>Personal Checking Account</option> 
@@ -64,20 +68,21 @@ class MakeTransaction extends Component {
                                         <option>Roth IRA</option> 
                                         </select>
                 
-                <h2> Transaction Type: </h2><select name="type" onChange={this.handleInputChange}>
+             <h3 id= "Title">  Transaction Type: </h3> <select class= "select-box" name="transactionType" onChange={this.handleInputChange}>
                                         <option>Check</option>
                                         <option>Cash</option> 
                                         <option>ATM</option> 
                                         <option>Transfer</option> 
                                         </select>
 
-                <h2> Amount </h2> <input class= "Input-Box" type= "text" name="amount" onChange={this.handleInputChange}/>
+             <h3 id= "Title">  Amount </h3> <input class= "input-Box" type= "text" name="amount" onChange={this.handleInputChange}/>
                 
                                                 
                 <br/>
-                <button type ="submit" class="btn btn-success">GO!</button>
+                <button type ="submit" class="Btn btn-success">GO!</button>
 
                 
+            </div>
             </div>
             </form>
         );

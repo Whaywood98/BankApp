@@ -7,14 +7,20 @@ import {Link} from 'react-router-dom';
 import'../css/Dashboard.css';
 
 
+
+
 function Dashboard(props) {
   if(props.user.userName.length != 0)
     return (
         <>
         
         <div class = "Dashboard-Wrapper">
-          <h7 id= "welcome-title"> Welcome to your User Dashboard! </h7>
+
+
+          <h7 className= "welcome-title"> Welcome to your User Dashboard! </h7>
+        
          
+      
 
         <div className="col-12 col-md-6 m-1">
           <UserCard user={props.user} />
@@ -48,7 +54,8 @@ function Dashboard(props) {
     );
     else{
       return(
-        <div>
+        <div  class = "Dashboard-wrapper">
+          
           <Link to="/register">
             <Button>Sign Up</Button>
           </Link>

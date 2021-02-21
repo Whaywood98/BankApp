@@ -2,14 +2,13 @@ import React from "react";
 import { Line } from "react-chartjs-2";
 import { MDBContainer } from "mdbreact";
 
-
 class ChartsPage extends React.Component {
   state = {
     dataLine: {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
         {
-          label: "My Monthly Spending",
+          label: "My First dataset",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(225, 204,230, .3)",
@@ -30,7 +29,7 @@ class ChartsPage extends React.Component {
           data: [65, 59, 80, 81, 56, 55, 40]
         },
         {
-          label: "My Monthly Spending",
+          label: "My Second dataset",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(184, 185, 210, .3)",

@@ -42,25 +42,26 @@ class MyProfile extends Component {
         return(
             <>
             <div class= "My-Profile-Wrapper">
-                <Card>
-                    <CardTitle>{this.props.user.userName}</CardTitle>
+                <Card style={{  position:"relative", padding: '100px' , left: "-70px" ,top: "-60px"  }}>
+                    <CardTitle style={{position:"relative" , left: "10px" ,top: "-80px", fontSize:"27px"  }}> My Profile Information</CardTitle>
                     <CardBody>
-                        <p>{this.props.user.dob}</p>
-                        <p>{this.props.user.ssn}</p>
+                        <p className= "prop-style">{this.props.user.userName}</p>
+                        <p className= "prop-style">{this.props.user.dob}</p>
+                        <p className= "prop-style">{this.props.user.ssn}</p>
                     </CardBody>
                 </Card>
                 <Link to="/" >
-                    <Button onClick={this.logout}>Logout</Button>
+                    <button onClick={this.logout} type ="submit" class="btn-1 btn-success" >Logout</button>
                 </Link>
-                <Button onClick={this.deleteAccount}>Delete Profile</Button>
+                <button onClick={this.deleteAccount} type ="submit" class="btn-1 btn-success">Delete Profile</button>
                 </div>
             </>
             
         );
         else{
             return(
-                <div>
-                    <Link to="/register">
+                <div  class = "Dashboard-wrapper">
+                    <Link to="/home">
                         <Button>Sign Up</Button>
                     </Link>
                 </div>
