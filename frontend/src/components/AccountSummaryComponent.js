@@ -10,9 +10,9 @@ function AccountSummaryCard(props) {
         <div className= "Account-Summary-Wrapper">
         <Link to={`/transactions/${props.accountType}/${props.account.id}`} style={{ textDecoration: 'none' }}>
             
-        <Card style={{  position:"relative", padding: '90px' , left: "-150px" ,top: "-10px"  }}>
+        <Card style={{ position:"relative", padding: '50px' , left: "-150px" ,top: "-30px"  }}>
                 <CardTitle style={{ width:"250px",  position:"relative", padding: '90px' , left: "-20px" ,top: "-100px", fontSize:"27px" }}> Account Summary</CardTitle>
-                <CardBody style={{  position:"relative" , left: "100px" ,top: "-130px", fontSize:"20px" }} >
+                <CardBody style={{  position:"center" , left: "100px" ,marginTop: "-150px", fontSize:"20px" }} >
                     <p className="Props-Style">{props.accountType}</p>
                     <p className="Props-Style">ID: {props.account.id}</p>
                     <p className="Props-Style">Balance: {props.account.balance}</p>

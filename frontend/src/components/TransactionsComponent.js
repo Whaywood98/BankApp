@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { InitialUserState } from '../shared/InitialUserState';
 import { baseUrlLocal } from '../shared/baseUrl';
 import axios from 'axios';
-import { Card, CardBody } from 'reactstrap';
+import { Card, CardBody,CardTitle } from 'reactstrap';
 import'../css/TransactionComp.css';
 
 
@@ -75,18 +75,16 @@ class Transactions extends Component {
 
             const transactionCards = (this.props.user.transactions != undefined) ? transactions.map((transaction) => {
                 return(
-                    <div className= "Transaction-Page-Wrapper">
+                  
                 
-                    <div key={transaction.id}>
-                        <Card style={{  position:"relative", padding: '100px' , left: "-180px" ,top: "-20px"  }}>
-                            <CardBody>
-                                <p className="props-Style" >Type: {transaction.type}</p>
-                                <p className="Props-Style">Amount: {transaction.amount}</p>
-                                <p className="Props-Style">Processed: {transaction.processed}</p>
-                            </CardBody>
-                        </Card>
+                    <div  key={transaction.id}>
+                        
+                                <p className="props-Styled">Type: {transaction.type}</p>
+                                <p className="props-Styled">Amount: {transaction.amount}</p>
+                                <p className="props-Styled">Processed: {transaction.processed}</p>
+                           
                     </div>
-                    </div>
+                    
                 );
             }):
                     <div>
@@ -102,10 +100,10 @@ class Transactions extends Component {
                 <div className= "Transaction-Page-Wrapper">
                 
                 <h1 className= "Transaction-title">
-                <Card style={{  position:"relative", padding: '150px' , left: "-130px" ,top: "90px"  }}>
-                <CardBody style={{  position:"relative" , left: "100px" ,top: "-40px", fontSize:"20px" }} >  
-                <p className="props-Style" >{this.props.match.params.accountType}</p>
-                <p className="Props-Style">ID: {this.props.match.params.id}</p>
+                <Card style={{  position:"relative", padding: '60px' , left: "-130px" ,top: "120px"  }}>
+                <CardTitle style={{ width:"250px",  position:"relative", padding: '90px' , left: "-20px" ,top: "-100px", fontSize:"27px" }}> {this.props.match.params.accountType}</CardTitle>
+                <CardBody style={{   position:"relative" , left: "-50px" ,marginTop: "-170px", fontSize:"20px",  }} > 
+                <p className="Props-Style"> Account ID: {this.props.match.params.id}</p>
                 <p className="Props-Style">Transaction History:</p>
                 <p>{transactionCards}</p>
                 </CardBody>
@@ -124,13 +122,12 @@ class Transactions extends Component {
                      
 
                 <h1 className= "Transaction-title">  
-                <Card style={{  position:"relative", padding: '150px' , left: "-150px" ,top: "90px"  }}>
-                <CardBody style={{  position:"relative" , left: "100px" ,top: "-40px", fontSize:"20px" }} >   
-                <p className="props-Style" >{this.props.match.params.accountType}</p>
-                <p className="Props-Style">ID: {this.props.match.params.id}</p>
+                <Card style={{  position:"relative", padding: '60px' , left: "-130px" ,top: "100px"  }}>
+                <CardTitle style={{ width:"250px",  position:"relative", padding: '90px' , left: "-20px" ,top: "-100px", fontSize:"27px" }}> {this.props.match.params.accountType}</CardTitle>
+                <CardBody style={{   position:"relative" , left: "-50px" ,marginTop: "-170px", fontSize:"20px",  }} > 
+                <p className="Props-Style">  Account ID: {this.props.match.params.id}</p>
                 <p className="Props-Style">Transaction History:</p>
                 <p>{transactionCards}</p>
-
                 </CardBody>
                 <button onClick={ this.deleteUser}type ="submit" class="Btn-1 btn-success">Delete Account</button>
                 </Card>
@@ -144,10 +141,10 @@ class Transactions extends Component {
                 <>
                 <div className= "Transaction-Page-Wrapper">
                 <h1 className= "Transaction-Title">
-                <Card style={{  position:"relative", padding: '130px' , left: "-100px" ,top: "90px"  }}>
-                <CardBody style={{  position:"relative" , left: "100px" ,top: "-40px", fontSize:"20px" }} >  
-                <p className="props-Style-1" >{this.props.match.params.accountType}</p>
-                <p className="Props-Style">ID: {this.props.match.params.id}</p>
+                <Card style={{  position:"relative", padding: '70px' , left: "-130px" ,top: "100px"  }}>
+                <CardTitle style={{ width:"250px",  position:"relative", padding: '90px' , left: "-20px" ,top: "-100px", fontSize:"27px" }}> {this.props.match.params.accountType}</CardTitle>
+                <CardBody style={{   position:"relative" , left: "-50px" ,marginTop: "-170px", fontSize:"20px",  }} >  
+                <p className="Props-Style"> Account ID: {this.props.match.params.id}</p>
                 <p className="Props-Style">Transaction History:</p>
                 <p>{transactionCards}</p>
                 </CardBody>
