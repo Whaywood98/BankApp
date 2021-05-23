@@ -37,9 +37,6 @@ class Main extends Component {
 
     }
 
-    // componentDidMount(){
-    //     Router.push("/home");
-    // }
 
     render() {
 
@@ -71,6 +68,7 @@ class Main extends Component {
                     <Route path='/myprofile' component={() => <MyProfile user={this.props.user} token={this.props.token}/>} />
                     <Route path='/maketransaction' component={() => <MakeTransactionComponent user={this.props.user} token={this.props.token} />} />
                     <Redirect exact from="/index.html" to="/home" />
+                    <Redirect exact from="" to="/home" />
                 </Switch>
                 <Footer/>
             </div>
